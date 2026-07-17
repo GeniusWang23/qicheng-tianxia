@@ -98,6 +98,8 @@
 </div>
 
 </main><div class="toast" id="toast"></div>
+<script>var GITHUB_TOKEN = null;</script>
+<script src="config.js"></script>
 <script>
 /* ============================================================
  * 器成天下走 · 瓷业长卷 — 游戏脚本（扩展版）
@@ -614,30 +616,55 @@ function submitFeedback() {
     document.getElementById("fbStatus").innerHTML = '<span style="color:var(--red)">请填写建议内容</span>';
     return;
   }
+  document.getElementById("fbSubmitBtn").disabled = true;
+  document.getElementById("fbStatus").innerHTML = "提交中...";
   var fb = { content: content, time: new Date().toISOString() };
 
-  // Try local server API first (launcher.py)
+  // 1) Try local API (launcher.py)
   fetch("/api/feedback", { method:"POST", headers:{"Content-Type":"application/json"}, body: JSON.stringify(fb) })
     .then(function(r) {
       if (r.ok) {
-        document.getElementById("fbStatus").innerHTML = '<div class="feedback-success">反馈已保存到项目 feedback/ 目录</div>';
-      } else {
-        saveLocal(fb);
+        done("反馈已保存到 feedback/ 目录");
+        return;
       }
+      // 2) Try GitHub Issues (if token configured)
+      trySubmitIssue(fb);
     })
-    .catch(function() {
-      saveLocal(fb);
-    });
-  document.getElementById("fbContent").value = "";
-  loadFeedbackList();
+    .catch(function() { trySubmitIssue(fb); });
+}
+function trySubmitIssue(fb) {
+  var token = (typeof GITHUB_TOKEN !== 'undefined' && GITHUB_TOKEN) ? GITHUB_TOKEN : null;
+  if (!token) { saveLocal(fb); return; }
+  fetch("https://api.github.com/repos/GeniusWang23/qicheng-tianxia/issues", {
+    method: "POST",
+    headers: { "Authorization": "Bearer " + token, "Content-Type": "application/json" },
+    body: JSON.stringify({
+      title: "游戏反馈: " + fb.content.slice(0, 40),
+      body: "时间: " + new Date().toLocaleString() + "
+
+" + fb.content,
+      labels: ["feedback"]
+    })
+  })
+  .then(function(r) {
+    if (r.ok) { done("反馈已提交到 GitHub Issues"); loadFeedbackList(); }
+    else { saveLocal(fb); }
+  })
+  .catch(function() { saveLocal(fb); });
 }
 function saveLocal(fb) {
   var list = JSON.parse(localStorage.getItem("fb_local") || "[]");
   list.unshift(fb);
   if (list.length > 50) list = list.slice(0, 50);
   localStorage.setItem("fb_local", JSON.stringify(list));
-  document.getElementById("fbStatus").innerHTML = '<div class="feedback-success">反馈已保存到本地</div>';
+  done("反馈已保存到本地（仅你可见）");
+  loadFeedbackList();
+}
+function done(msg) {
+  document.getElementById("fbStatus").innerHTML = '<div class="feedback-success">' + msg + '</div>';
+  document.getElementById("fbContent").value = "";
   document.getElementById("fbSubmitBtn").disabled = false;
+  loadFeedbackList();
 }
 
 // Save indicator update
