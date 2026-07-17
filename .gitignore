@@ -1,0 +1,19 @@
+# 打包文件
+器成天下走.exe
+*.exe
+
+# 备份文件
+*.bak
+*.bak2
+
+# Python 缓存
+__pycache__/
+*.pyc
+*.pyo
+
+# 系统文件
+Thumbs.db
+.DS_Store
+*.bak2
+*.bak
+config.js
