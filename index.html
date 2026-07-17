@@ -87,12 +87,17 @@
 <div class="modal-box" id="feedbackBox" style="display:none">
   <button class="modal-close" onclick="closeFeedback()">x</button>
   <h2>📝 反馈建议</h2>
-  <p style="margin-bottom:8px">感谢你的反馈！我们会认真阅读每一条建议。</p>
-  <input type="text" id="fbName" placeholder="你的称呼（选填）" />
-  <input type="text" id="fbContact" placeholder="联系方式（选填）" />
-  <textarea id="fbContent" placeholder="请写下你的建议或遇到的问题..."></textarea>
-  <div id="fbStatus"></div>
+  <p style="margin-bottom:8px;font-size:13px">反馈会提交到 GitHub Issues，所有人可见。</p>
+  <textarea id="fbContent" placeholder="请写下你的建议或遇到的问题..." style="min-height:60px"></textarea>
+  <div id="fbStatus" style="font-size:13px;min-height:20px"></div>
   <button class="modal-btn" id="fbSubmitBtn" onclick="submitFeedback()">提交反馈</button>
+  <div style="margin-top:10px;border-top:1px solid var(--line);padding-top:8px">
+    <div style="display:flex;justify-content:space-between;align-items:center">
+      <span style="font-size:13px;font-weight:700;color:#5b4527">· 已有反馈</span>
+      <span id="fbTokenStatus" style="font-size:11px;color:#887a60;cursor:pointer" onclick="setupToken()">配置 Token</span>
+    </div>
+    <div id="fbList" style="font-size:12px;color:#887a60;max-height:180px;overflow:auto">加载中...</div>
+  </div>
 </div>
 
 </main><div class="toast" id="toast"></div>
@@ -555,14 +560,44 @@ function showFeedback() {
   document.getElementById("feedbackOverlay").style.display = "block";
   document.getElementById("feedbackBox").style.display = "block";
   document.getElementById("fbStatus").innerHTML = "";
+  loadFeedbackList();
+  // Update token status
+  var ts = document.getElementById("fbTokenStatus");
+  if (ts) {
+    var t = getGHToken();
+    ts.textContent = t ? "✓ Token 已配置" : "配置 Token";
+    ts.style.color = t ? "var(--jade)" : "#887a60";
+  }
 }
 function closeFeedback() {
   document.getElementById("feedbackOverlay").style.display = "none";
   document.getElementById("feedbackBox").style.display = "none";
 }
+function getGHToken() {
+  var t = localStorage.getItem("gh_feedback_token");
+  if (!t || t.length < 10) return null;
+  return t;
+}
+function setupToken() {
+  var current = getGHToken() || "";
+  var token = prompt("输入你的 GitHub Personal Access Token（只需 issues:write 权限）
+
+获取方式：GitHub Settings → Developer settings → Personal access tokens → Tokens (classic)
+勾选 repo 或只勾 issues 权限后生成。
+
+Token 只保存在你的浏览器中，不会上传。", current);
+  if (token === null) return;
+  if (token.trim()) {
+    localStorage.setItem("gh_feedback_token", token.trim());
+    document.getElementById("fbTokenStatus").textContent = "✓ Token 已配置";
+    document.getElementById("fbTokenStatus").style.color = "var(--jade)";
+  } else {
+    localStorage.removeItem("gh_feedback_token");
+    document.getElementById("fbTokenStatus").textContent = "配置 Token";
+    document.getElementById("fbTokenStatus").style.color = "#887a60";
+  }
+}
 function submitFeedback() {
-  var name = document.getElementById("fbName").value.trim();
-  var contact = document.getElementById("fbContact").value.trim();
   var content = document.getElementById("fbContent").value.trim();
   if (!content) {
     document.getElementById("fbStatus").innerHTML = '<span style="color:var(--red)">请填写建议内容</span>';
@@ -571,38 +606,120 @@ function submitFeedback() {
   document.getElementById("fbSubmitBtn").disabled = true;
   document.getElementById("fbStatus").innerHTML = "提交中...";
 
-  var data = JSON.stringify({ name: name, contact: contact, content: content, time: new Date().toISOString() });
-
-  // Try local server API first
-  fetch("/api/feedback", { method:"POST", headers:{"Content-Type":"application/json"}, body: data })
+  // 1. Try local API (launcher.py)
+  var localData = JSON.stringify({ content: content, time: new Date().toISOString() });
+  fetch("/api/feedback", { method:"POST", headers:{"Content-Type":"application/json"}, body: localData })
     .then(function(r) {
       if (r.ok) {
-        document.getElementById("fbStatus").innerHTML = '<div class="feedback-success">反馈已收到，感谢你！</div>';
-        document.getElementById("fbName").value = "";
-        document.getElementById("fbContact").value = "";
+        document.getElementById("fbStatus").innerHTML = '<div class="feedback-success">反馈已保存到 feedback/ 目录</div>';
         document.getElementById("fbContent").value = "";
-      } else {
-        downloadFeedback(data);
+        document.getElementById("fbSubmitBtn").disabled = false;
+        loadFeedbackList();
+        return;
       }
+      // 2. Try GitHub Issues API
+      submitToGitHubIssues(content);
     })
     .catch(function() {
-      downloadFeedback(data);
-    })
-    .finally(function() {
-      document.getElementById("fbSubmitBtn").disabled = false;
+      submitToGitHubIssues(content);
     });
 }
-function downloadFeedback(data) {
-  // Fallback: download as file
-  var blob = new Blob([data], { type: "application/json" });
-  var a = document.createElement("a");
-  a.href = URL.createObjectURL(blob);
-  a.download = "feedback_" + new Date().toISOString().slice(0,19).replace(/[:-]/g,"") + ".json";
-  a.click();
-  document.getElementById("fbStatus").innerHTML = '<div class="feedback-success">反馈已下载保存，感谢你！</div>';
-  document.getElementById("fbName").value = "";
-  document.getElementById("fbContact").value = "";
+function submitToGitHubIssues(content) {
+  var token = getGHToken();
+  if (!token) {
+    // No token: save to localStorage
+    saveFeedbackLocal(content);
+    return;
+  }
+  document.getElementById("fbStatus").innerHTML = "提交到 GitHub...";
+  fetch("https://api.github.com/repos/GeniusWang23/qicheng-tianxia/issues", {
+    method: "POST",
+    headers: { "Authorization": "Bearer " + token, "Content-Type": "application/json" },
+    body: JSON.stringify({
+      title: "游戏反馈: " + content.slice(0, 40),
+      body: "反馈时间: " + new Date().toLocaleString() + "\n\n" + content,
+      labels: ["feedback"]
+    })
+  })
+  .then(function(r) {
+    if (r.ok) {
+      document.getElementById("fbStatus").innerHTML = '<div class="feedback-success">反馈已提交到 GitHub Issues！</div>';
+      document.getElementById("fbContent").value = "";
+      loadFeedbackList();
+    } else {
+      saveFeedbackLocal(content);
+    }
+  })
+  .catch(function() {
+    saveFeedbackLocal(content);
+  })
+  .finally(function() {
+    document.getElementById("fbSubmitBtn").disabled = false;
+  });
+}
+function saveFeedbackLocal(content) {
+  // Save to localStorage as fallback
+  var list = JSON.parse(localStorage.getItem("fb_local_list") || "[]");
+  list.unshift({ content: content, time: new Date().toISOString(), local: true });
+  localStorage.setItem("fb_local_list", JSON.stringify(list));
+  document.getElementById("fbStatus").innerHTML = '<div class="feedback-success">反馈已保存到本地（仅你可见）</div>';
   document.getElementById("fbContent").value = "";
+  document.getElementById("fbSubmitBtn").disabled = false;
+  loadFeedbackList();
+}
+function loadFeedbackList() {
+  var el = document.getElementById("fbList");
+  if (!el) return;
+  el.innerHTML = "加载中...";
+
+  // Load from GitHub Issues (public, no token needed)
+  fetch("https://api.github.com/repos/GeniusWang23/qicheng-tianxia/issues?labels=feedback&state=all&sort=created&direction=desc&per_page=10")
+    .then(function(r) {
+      if (!r.ok) throw new Error("HTTP " + r.status);
+      return r.json();
+    })
+    .then(function(issues) {
+      // Load local feedback
+      var localList = JSON.parse(localStorage.getItem("fb_local_list") || "[]");
+      var html = "";
+      // Show local feedback first
+      for (var i = 0; i < localList.length && i < 5; i++) {
+        var d = new Date(localList[i].time).toLocaleDateString();
+        html += '<div style="font-size:12px;padding:4px 0;border-bottom:1px dotted #b7a47b;color:#887a60">';
+        html += '<span style="color:var(--gold)">△</span> <em>本地</em> ' + localList[i].content.slice(0, 40) + ' <span style="float:right;font-size:11px">' + d + '</span>';
+        html += '</div>';
+      }
+      // Show GitHub Issues
+      for (var i = 0; i < issues.length; i++) {
+        var iss = issues[i];
+        var icon = iss.state === "open" ? "△" : "✓";
+        var color = iss.state === "open" ? "var(--red)" : "var(--jade)";
+        var d = new Date(iss.created_at).toLocaleDateString();
+        html += '<div style="font-size:12px;padding:4px 0;border-bottom:1px dotted #b7a47b">';
+        html += '<span style="color:' + color + '">' + icon + '</span> ';
+        html += '<a href="' + iss.html_url + '" target="_blank" style="color:#4a3d28;text-decoration:none">' + iss.title.slice(0, 50) + '</a>';
+        html += '<span style="float:right;font-size:11px;color:#887a60">' + d + '</span>';
+        html += '</div>';
+      }
+      if (!html) html = "暂无反馈";
+      el.innerHTML = html;
+    })
+    .catch(function() {
+      // GitHub failed, show local only
+      var localList = JSON.parse(localStorage.getItem("fb_local_list") || "[]");
+      if (localList.length > 0) {
+        var html = "";
+        for (var i = 0; i < localList.length; i++) {
+          var d = new Date(localList[i].time).toLocaleDateString();
+          html += '<div style="font-size:12px;padding:4px 0;border-bottom:1px dotted #b7a47b;color:#887a60">';
+          html += localList[i].content.slice(0, 50) + ' <span style="float:right;font-size:11px">' + d + '</span>';
+          html += '</div>';
+        }
+        el.innerHTML = html;
+      } else {
+        el.innerHTML = "加载失败，请稍后重试";
+      }
+    });
 }
 
 // Save indicator update
