@@ -2,6 +2,7 @@
 from __future__ import annotations
 
 import http.server
+import json
 import os
 import signal
 import socketserver
@@ -17,14 +18,53 @@ def resource_path(name: str) -> Path:
     return base / name
 
 
-class QuietHandler(http.server.SimpleHTTPRequestHandler):
+class FeedbackHandler(http.server.SimpleHTTPRequestHandler):
     def log_message(self, format: str, *args: object) -> None:
         pass
+
+    def do_POST(self) -> None:
+        """Handle POST /api/feedback - save feedback to feedback/ directory."""
+        if self.path != "/api/feedback":
+            self.send_response(404)
+            self.end_headers()
+            return
+
+        content_length = int(self.headers.get("Content-Length", 0))
+        body = self.rfile.read(content_length)
+        try:
+            data = json.loads(body)
+        except Exception:
+            self.send_response(400)
+            self.end_headers()
+            return
+
+        # Save feedback to feedback/ directory
+        feedback_dir = Path(self.directory) / "feedback"
+        feedback_dir.mkdir(exist_ok=True)
+        timestamp = data.get("time", "").replace(":", "-").replace("T", "_")[:19]
+        filename = f"feedback_{timestamp}.json"
+        (feedback_dir / filename).write_text(
+            json.dumps(data, ensure_ascii=False, indent=2),
+            encoding="utf-8"
+        )
+
+        self.send_response(200)
+        self.send_header("Content-Type", "application/json")
+        self.end_headers()
+        self.wfile.write(json.dumps({"status":"ok"}).encode("utf-8"))
+
+    def do_GET(self) -> None:
+        """Handle OPTIONS preflight for CORS if needed, else default."""
+        if self.path.startswith("/api/"):
+            self.send_response(404)
+            self.end_headers()
+            return
+        super().do_GET()
 
 
 def main() -> None:
     game_dir = resource_path("index.html").parent
-    handler = lambda *args, **kwargs: QuietHandler(*args, directory=str(game_dir), **kwargs)
+    handler = lambda *args, **kwargs: FeedbackHandler(*args, directory=str(game_dir), **kwargs)
 
     with socketserver.TCPServer(("127.0.0.1", 0), handler) as server:
         port = server.server_address[1]
