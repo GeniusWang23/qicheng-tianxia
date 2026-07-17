@@ -30,12 +30,72 @@
     @media(max-width:760px){.game{padding:0}header{padding:12px}.seal{display:none}h1{font-size:23px}.stats{margin-left:0}.ledger{border-width:4px}.scroll{height:410px}.bottom{grid-template-columns:1fr}.panel{border-right:0;border-bottom:1px solid var(--line);min-height:auto}.topbar{align-items:flex-start;flex-direction:column;gap:3px}.objective{margin-left:0}}
   
 .pigmentbtn{left:462px;top:340px}.decoratebtn{left:822px;top:270px}.achieve-btn{background:#5d4a2b;color:#f9efd2;border:0;padding:4px 8px;font-family:inherit;font-size:11px;cursor:pointer;margin-left:6px}.achieve-btn:hover{background:#a74632}.achieve-list{font-size:12px;line-height:1.7;max-height:150px;overflow:auto;padding:6px 0}.achieve-item{display:flex;justify-content:space-between;border-bottom:1px dotted #b7a47b;padding:3px 0}.achieve-done{color:var(--gold)}.achieve-locked{color:#887a60}.tax-warn{color:var(--red);font-weight:700}.danger-text{color:#a00}.success-rate{font-size:11px;color:#6a5a3a}.event-popup{position:fixed;left:50%;top:50%;transform:translate(-50%,-50%);background:var(--paper);border:3px solid var(--red);padding:20px 28px;z-index:100;box-shadow:0 8px 40px #000c;text-align:center;max-width:360px}.event-popup h3{margin:0 0 8px;color:var(--red)}.event-popup p{margin:8px 0;font-size:14px;color:#3b2f1e}.event-popup button{background:var(--jade);color:#f9efd2;border:0;padding:8px 18px;font-family:inherit;cursor:pointer;margin-top:8px}.event-popup button:hover{background:var(--red)}
+
+.help-btn{background:#4a5a3a;color:#f9efd2;border:0;padding:5px 10px;font-family:inherit;font-size:12px;cursor:pointer;margin-left:6px;white-space:nowrap}.help-btn:hover{background:#a74632}
+.save-indicator{font-size:11px;color:#7a9a6a;margin-left:8px;white-space:nowrap;opacity:.8}
+.modal-overlay{position:fixed;inset:0;background:#0008;z-index:99;display:none}.modal-overlay.show{display:block}
+.modal-box{position:fixed;left:50%;top:50%;transform:translate(-50%,-50%);background:var(--paper);border:3px solid #8b7a5a;padding:24px 28px;z-index:100;max-width:500px;width:90%;max-height:80vh;overflow:auto;box-shadow:0 8px 40px #000c;color:var(--ink)}
+.modal-box h2{margin:0 0 12px;color:#3b2f1e;font-size:18px;border-bottom:1px solid var(--line);padding-bottom:6px}.modal-box h3{font-size:14px;color:#5b4527;margin:10px 0 4px}
+.modal-box p,.modal-box li{font-size:13px;color:#4a3d28;line-height:1.7;margin:4px 0}.modal-box ul{padding-left:18px;margin:4px 0}
+.modal-box textarea{width:100%;min-height:72px;border:1px solid #a99162;background:#f8f0dd;padding:8px;font-family:inherit;font-size:13px;resize:vertical;box-sizing:border-box}
+.modal-box input[type=text]{width:100%;border:1px solid #a99162;background:#f8f0dd;padding:6px 8px;font-family:inherit;font-size:13px;margin-bottom:8px;box-sizing:border-box}
+.modal-close{float:right;background:0;border:0;font-size:24px;cursor:pointer;color:#7a6746;line-height:1}.modal-close:hover{color:var(--red)}
+.modal-btn{background:#334d42;color:#f9efd2;border:0;padding:8px 16px;font-family:inherit;cursor:pointer;margin:8px 6px 0 0}.modal-btn:hover{background:#a74632}.modal-btn:disabled{opacity:.5;cursor:not-allowed}
+.feedback-success{color:var(--jade);font-weight:700;text-align:center;padding:12px 0}
 </style>
 </head>
-<body><main class="game"><header><div class="seal">器成</div><div><h1>器成天下走</h1><div class="sub">景德镇瓷业长卷 · 经营试作</div></div><div class="stats"><div class="stat">银两<b id="silver">80</b></div><div class="stat">声望<b id="fame">0</b></div><div class="stat">品质<b id="quality">0</b></div><div class="stat">体力<b id="stamina">100</b></div><div class="stat">第<b id="day">1</b>日</div></div></header>
+<body><main class="game"><header><div class="seal">器成</div><div><h1>器成天下走</h1><div class="sub">景德镇瓷业长卷 · 经营试作</div></div><div class="stats"><div class="stat">银两<b id="silver">80</b></div><div class="stat">声望<b id="fame">0</b></div><div class="stat">品质<b id="quality">0</b></div><div class="stat">体力<b id="stamina">100</b></div><div class="stat">第<b id="day">1</b>日</div></div><button class="help-btn" onclick="showHelp()">📖 说明</button><button class="help-btn" onclick="showFeedback()">📝 反馈</button><span class="save-indicator" id="saveIndicator">💾 已存档</span></header>
 <section class="ledger"><div class="topbar"><div class="season">时令：<b id="season">春</b> · <span id="weather">风和日暖，晒坯顺遂</span></div><div class="objective"><span id="diffDisplay">普通</span> · <span id="objDisplay">通关：完成 5 单</span></div></div>
 <div class="scroll"><div class="map"><div class="river"></div><section class="site mountain"><h2>高岭山</h2><div class="art"></div><p>取土为始，瓷石为骨</p></section><button class="node minebtn" onclick="gather('clay')">采高岭土 +6</button><section class="site forest"><h2>松柴林</h2><div class="art"></div><p>积柴养火，窑焰不绝</p></section><button class="node woodbtn" onclick="gather('wood')">伐松柴 +5</button><button class="node glazebtn" onclick="gather('glaze')">采釉料 +3</button><button class="node pigmentbtn" onclick="gather('pigment')">采颜料 +3</button><section class="site works"><h2>瓷作坊</h2><div class="art"><div class="shop"><span>练泥坊</span></div><div class="shop"><span>拉坯坊</span></div><div class="shop"><span>画坯坊</span></div><div class="shop"><span>晒坯场</span></div></div><p>练泥、拉坯、绘制，匠心相续</p></section><button class="node produce" onclick="produce()">制作坯体</button><button class="node decoratebtn" onclick="decorate()">绘画装饰</button><section class="site kiln"><h2>镇窑</h2><div class="art"></div><p>一把柴火，决定万千釉色</p></section><button class="node fire" onclick="fireKiln()">入窑烧制</button><section class="site dock"><h2>昌江码头</h2><div class="art"></div><p>瓷行天下，舟楫不息</p></section><button class="node ship" onclick="deliver()">交付订单</button></div></div>
-<div class="bottom"><div class="panel"><h3>库 房</h3><div class="rows"><span>高岭土 <b id="clay">12</b></span><span>松柴 <b id="wood">10</b></span><span>釉料 <b id="glaze">5</b></span><span>素坯 <b id="blank">0</b></span><span>成瓷 <b id="ware">0</b></span><span>匠人 <b id="workers">2</b></span><span>体力 <b id="staminaDisplay">100</b></span><span>颜料 <b id="pigment">0</b></span><span>彩绘坯 <b id="paintedBlank">0</b></span></div></div><div class="panel"><h3>订单簿</h3><div style="display:flex;align-items:center;gap:6px"><span style="font-size:13px;font-weight:700">🎯 成就</span><button class="achieve-btn" onclick="toggleAchievements()">查看成就</button></div><div id="achieveList" class="achieve-list" style="display:none"></div><div class="orders" id="orders"><div>市集订单：成瓷 2 件 · 报酬 45 银</div><div>市集订单：成瓷 3 件 · 报酬 68 银</div><div class="order-active">御命（未解锁）：品质 ≥ 16，限时 5 日</div></div><div class="actions"><button class="action" onclick="hire()">招募匠人 · 35银</button><button class="action" onclick="upgrade()">升级镇窑 · 90银</button><button class="action" onclick="nextDay()">度过一日</button><button class="action" onclick="cycleDifficulty()">难度：<span id="diffBtn">普通</span></button><button class="action" onclick="resetGame()">重开长卷</button></div></div><div class="panel"><h3>掌柜手记</h3><div class="log" id="log">春日开窑。山土、松柴俱备，正宜起作。</div></div></div></section></main><div class="toast" id="toast"></div>
+<div class="bottom"><div class="panel"><h3>库 房</h3><div class="rows"><span>高岭土 <b id="clay">12</b></span><span>松柴 <b id="wood">10</b></span><span>釉料 <b id="glaze">5</b></span><span>素坯 <b id="blank">0</b></span><span>成瓷 <b id="ware">0</b></span><span>匠人 <b id="workers">2</b></span><span>体力 <b id="staminaDisplay">100</b></span><span>颜料 <b id="pigment">0</b></span><span>彩绘坯 <b id="paintedBlank">0</b></span></div></div><div class="panel"><h3>订单簿</h3><div style="display:flex;align-items:center;gap:6px"><span style="font-size:13px;font-weight:700">🎯 成就</span><button class="achieve-btn" onclick="toggleAchievements()">查看成就</button></div><div id="achieveList" class="achieve-list" style="display:none"></div><div class="orders" id="orders"><div>市集订单：成瓷 2 件 · 报酬 45 银</div><div>市集订单：成瓷 3 件 · 报酬 68 银</div><div class="order-active">御命（未解锁）：品质 ≥ 16，限时 5 日</div></div><div class="actions"><button class="action" onclick="hire()">招募匠人 · 35银</button><button class="action" onclick="upgrade()">升级镇窑 · 90银</button><button class="action" onclick="nextDay()">度过一日</button><button class="action" onclick="cycleDifficulty()">难度：<span id="diffBtn">普通</span></button><button class="action" onclick="resetGame()">重开长卷</button></div></div><div class="panel"><h3>掌柜手记</h3><div class="log" id="log">春日开窑。山土、松柴俱备，正宜起作。</div></div></div></section>
+<!-- 说明弹窗 -->
+<div class="modal-overlay" id="helpOverlay" onclick="closeHelp()"></div>
+<div class="modal-box" id="helpBox" style="display:none">
+  <button class="modal-close" onclick="closeHelp()">x</button>
+  <h2>📖 游戏说明</h2>
+  <h3>游戏目标</h3>
+  <p>经营景德镇瓷窑，从采集原料到烧制成瓷，交付订单赚取银两和声望。完成指定数量的订单即可通关。</p>
+  <h3>核心流程</h3>
+  <ul>
+    <li><b>采集</b>：高岭土、松柴、釉料、颜料（消耗体力）</li>
+    <li><b>制坯</b>：消耗瓷土+釉料制作素坯（匠人≥3产出翻倍）</li>
+    <li><b>绘画</b>：消耗素坯+颜料制作彩绘坯（烧制品质+3）</li>
+    <li><b>烧制</b>：消耗素坯/彩绘坯+柴火烧制成瓷（有成功率）</li>
+    <li><b>交付</b>：成瓷交付市集订单或御命订单</li>
+  </ul>
+  <h3>特色系统</h3>
+  <ul>
+    <li><b>💪 体力</b>：劳作消耗体力，度过一日恢复30点</li>
+    <li><b>🔥 成功率</b>：窑炉等级、匠人、季节影响烧制成功率</li>
+    <li><b>🏛️ 税收</b>：每5日官府按税率课税（难度决定税率）</li>
+    <li><b>🎯 难度</b>：简单/普通/困难，影响税率和通关要求</li>
+    <li><b>⚡ 事件</b>：每日有概率触发随机事件</li>
+    <li><b>🏆 成就</b>：达成特定目标解锁成就领取奖励</li>
+    <li><b>🍂 四季</b>：春夏秋冬影响生产效率</li>
+  </ul>
+  <h3>操作提示</h3>
+  <ul>
+    <li>点击大地图上的按钮进行操作</li>
+    <li>「度过一日」推进时间，恢复体力</li>
+    <li>每4天换一个季节</li>
+    <li>御命订单有期限，超时扣声望</li>
+  </ul>
+</div>
+
+<!-- 反馈弹窗 -->
+<div class="modal-overlay" id="feedbackOverlay" onclick="closeFeedback()"></div>
+<div class="modal-box" id="feedbackBox" style="display:none">
+  <button class="modal-close" onclick="closeFeedback()">x</button>
+  <h2>📝 反馈建议</h2>
+  <p style="margin-bottom:8px">感谢你的反馈！我们会认真阅读每一条建议。</p>
+  <input type="text" id="fbName" placeholder="你的称呼（选填）" />
+  <input type="text" id="fbContact" placeholder="联系方式（选填）" />
+  <textarea id="fbContent" placeholder="请写下你的建议或遇到的问题..."></textarea>
+  <div id="fbStatus"></div>
+  <button class="modal-btn" id="fbSubmitBtn" onclick="submitFeedback()">提交反馈</button>
+</div>
+
+</main><div class="toast" id="toast"></div>
 <script>
 /* ============================================================
  * 器成天下走 · 瓷业长卷 — 游戏脚本（扩展版）
@@ -481,6 +541,86 @@ if (G.load()) {
 } else {
   $$.log.textContent = "新卷展开。掌柜，请起作。";
 }
+
+// ======================== 说明 & 反馈 ========================
+function showHelp() {
+  document.getElementById("helpOverlay").style.display = "block";
+  document.getElementById("helpBox").style.display = "block";
+}
+function closeHelp() {
+  document.getElementById("helpOverlay").style.display = "none";
+  document.getElementById("helpBox").style.display = "none";
+}
+function showFeedback() {
+  document.getElementById("feedbackOverlay").style.display = "block";
+  document.getElementById("feedbackBox").style.display = "block";
+  document.getElementById("fbStatus").innerHTML = "";
+}
+function closeFeedback() {
+  document.getElementById("feedbackOverlay").style.display = "none";
+  document.getElementById("feedbackBox").style.display = "none";
+}
+function submitFeedback() {
+  var name = document.getElementById("fbName").value.trim();
+  var contact = document.getElementById("fbContact").value.trim();
+  var content = document.getElementById("fbContent").value.trim();
+  if (!content) {
+    document.getElementById("fbStatus").innerHTML = '<span style="color:var(--red)">请填写建议内容</span>';
+    return;
+  }
+  document.getElementById("fbSubmitBtn").disabled = true;
+  document.getElementById("fbStatus").innerHTML = "提交中...";
+
+  var data = JSON.stringify({ name: name, contact: contact, content: content, time: new Date().toISOString() });
+
+  // Try local server API first
+  fetch("/api/feedback", { method:"POST", headers:{"Content-Type":"application/json"}, body: data })
+    .then(function(r) {
+      if (r.ok) {
+        document.getElementById("fbStatus").innerHTML = '<div class="feedback-success">反馈已收到，感谢你！</div>';
+        document.getElementById("fbName").value = "";
+        document.getElementById("fbContact").value = "";
+        document.getElementById("fbContent").value = "";
+      } else {
+        downloadFeedback(data);
+      }
+    })
+    .catch(function() {
+      downloadFeedback(data);
+    })
+    .finally(function() {
+      document.getElementById("fbSubmitBtn").disabled = false;
+    });
+}
+function downloadFeedback(data) {
+  // Fallback: download as file
+  var blob = new Blob([data], { type: "application/json" });
+  var a = document.createElement("a");
+  a.href = URL.createObjectURL(blob);
+  a.download = "feedback_" + new Date().toISOString().slice(0,19).replace(/[:-]/g,"") + ".json";
+  a.click();
+  document.getElementById("fbStatus").innerHTML = '<div class="feedback-success">反馈已下载保存，感谢你！</div>';
+  document.getElementById("fbName").value = "";
+  document.getElementById("fbContact").value = "";
+  document.getElementById("fbContent").value = "";
+}
+
+// Save indicator update
+function updateSaveIndicator() {
+  var el = document.getElementById("saveIndicator");
+  if (el) {
+    el.textContent = "\u2713 \u5df2\u81ea\u52a8\u5b58\u6863";
+    el.style.opacity = "1";
+    setTimeout(function() { el.style.opacity = ".6"; }, 2000);
+  }
+}
+// Override G.save to show indicator
+var _origSave = G.save.bind(G);
+G.save = function() {
+  _origSave();
+  updateSaveIndicator();
+};
+
 render();
 </script>
 
