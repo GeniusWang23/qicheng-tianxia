@@ -19,7 +19,7 @@
     .scroll{height:470px;overflow-x:auto;overflow-y:hidden;position:relative;scroll-behavior:smooth;background:linear-gradient(#c1ddcf 0 36%,#e9dfc3 36%)}
     .map{width:1680px;height:100%;position:relative;background:linear-gradient(135deg,transparent 25%,#718d7030 25% 27%,transparent 27% 50%,#718d7030 50% 52%,transparent 52%);background-size:48px 48px}
     .river{position:absolute;right:-100px;top:190px;width:1100px;height:175px;background:#5f9e9e;border-radius:45% 0 0 48%;transform:rotate(-5deg);border-block:7px double #e4e0bd;opacity:.9}.river:after{content:"昌 江";position:absolute;left:45%;top:62px;color:#e6ecd7aa;letter-spacing:1em;font-size:28px}
-    .site{position:absolute;width:220px;text-align:center;z-index:1}.site h2{font-family:"ZCOOL XiaoWei";margin:0;color:#3b3927;font-size:24px}.site p{margin:5px;color:#665a43;font-size:12px}.site .art{height:130px;position:relative;margin:4px auto;background:#00000008;border:1px dashed #917e56}
+    .site{position:absolute;width:220px;text-align:center;z-index:1}.site h2{font-family:"ZCOOL XiaoWei";margin:0;color:#3b3927;font-size:24px}.site p{margin:5px;color:#665a43;font-size:12px}.site .art{height:130px;position:relative;margin:4px auto 20px auto;background:#00000008;border:1px dashed #917e56}
     .mountain{left:48px;top:62px}
     .forest{left:300px;top:76px}.forest .art{background:linear-gradient(#86a584 75%,#9b7950 75%)}.forest .art:before{content:"♠  ♠  ♠";position:absolute;bottom:30px;left:18px;font-size:73px;color:#365c41;letter-spacing:-15px}.forest .art:after{content:"松柴林场";position:absolute;bottom:8px;left:62px;color:#fff0cd;font-size:13px}
     .works{left:570px;top:42px;width:405px}.works .art{height:176px;background:#caa777;border:2px solid #7d5c3d;display:flex;align-items:end;justify-content:space-around;padding:12px}.shop{width:86px;height:88px;background:linear-gradient(#536856 0 16%,#dac48e 16%);border:2px solid #64472e;position:relative}.shop:before{content:"";position:absolute;top:-25px;left:-8px;border-left:49px solid transparent;border-right:49px solid transparent;border-bottom:29px solid #633f2e}.shop span{position:absolute;bottom:9px;left:0;width:100%;font-size:12px;color:#4f3926}
@@ -48,8 +48,8 @@
 <section class="ledger"><div class="topbar"><div class="season">时令：<b id="season">春</b> · <span id="weather">风和日暖，晒坯顺遂</span></div><div class="objective"><span id="diffDisplay">普通</span> · <span id="objDisplay">通关：完成 5 单</span></div></div>
 <div class="scroll"><div class="map"><div class="river"></div><section class="site mountain"><h2>高岭山</h2>
 <div class="art" style="overflow:hidden;position:relative">
-<svg viewBox="0 0 220 130" style="width:100%;height:100%" xmlns="http://www.w3.org/2000/svg">
-  <rect width="220" height="130" fill="#8B9E7A"/>
+<svg viewBox="0 0 220 150" style="width:100%;height:100%" xmlns="http://www.w3.org/2000/svg">
+  <rect width="220" height="150" fill="#8B9E7A"/>
   <rect width="220" height="40" fill="#B5D1E8" opacity="0.4"/>
   <polygon points="0,50 30,20 60,50" fill="#6B8A5A" opacity="0.5"/>
   <polygon points="40,50 80,15 120,50" fill="#5A7A4A" opacity="0.4"/>
@@ -66,11 +66,10 @@
   <circle cx="185" cy="40" r="10" fill="#4A7A3A" opacity="0.6"/>
   <circle cx="200" cy="48" r="7" fill="#3A6A2A" opacity="0.5"/>
   <rect x="0" y="110" width="220" height="20" fill="#7A8A5A" opacity="0.5"/>
-  <text x="110" y="125" text-anchor="middle" font-size="11" fill="#EFE8CA" font-weight="bold">高岭山</text>
 </svg>
 </div><p>高岭土矿 · 东埠码头古道 7km</p></section><button class="node minebtn" onclick="gather('clay')">采高岭土 +6</button><section class="site forest"><h2>松柴林</h2><div class="art" style="overflow:hidden;position:relative">
-<svg viewBox="0 0 220 130" style="width:100%;height:100%" xmlns="http://www.w3.org/2000/svg">
-  <rect width="220" height="130" fill="#86A584"/>
+<svg viewBox="0 0 220 150" style="width:100%;height:100%" xmlns="http://www.w3.org/2000/svg">
+  <rect width="220" height="150" fill="#86A584"/>
   <!-- Sky -->
   <rect width="220" height="25" fill="#C4D9B5" opacity="0.5"/>
   <!-- Ground -->
@@ -105,7 +104,6 @@
   <rect x="90" y="88" width="6" height="4" rx="1" fill="#9B7B50" transform="rotate(5,93,90)"/>
   <rect x="95" y="90" width="6" height="4" rx="1" fill="#8B6B40" transform="rotate(-8,98,92)"/>
   <rect x="88" y="94" width="6" height="4" rx="1" fill="#7A5A30" transform="rotate(10,91,96)"/>
-  <text x="110" y="125" text-anchor="middle" font-size="11" fill="#FFF0CD" font-weight="bold">松柴林场</text>
 </svg>
 </div><p>松柴燃料 · 龙窑依山而建 15-25°</p></section><button class="node woodbtn" onclick="gather('wood')">伐松柴 +5</button><button class="node glazebtn" onclick="gather('glaze')">采釉料 +3</button><button class="node pigmentbtn" onclick="gather('pigment')">采颜料 +3</button><section class="site works"><h2>瓷作坊</h2><div class="art"><div class="shop"><span>练泥坊</span></div><div class="shop"><span>拉坯坊</span></div><div class="shop"><span>画坯坊</span></div><div class="shop"><span>晒坯场</span></div></div><p>练泥、拉坯、绘制，匠心相续</p></section><button class="node produce" onclick="produce()">制作坯体</button><button class="node decoratebtn" onclick="decorate()">绘画装饰</button><section class="site kiln"><h2>镇窑</h2><div class="art" style="overflow:hidden;position:relative">
 <svg viewBox="0 0 220 130" style="width:100%;height:100%" xmlns="http://www.w3.org/2000/svg">
@@ -134,7 +132,6 @@
   <!-- Roof structure -->
   <rect x="55" y="40" width="90" height="3" fill="#3A1A08" opacity="0.3"/>
   <!-- Label -->
-  <text x="110" y="125" text-anchor="middle" font-size="11" fill="#FFDC7A" font-weight="bold">镇窑</text>
 </svg>
 </div><p>窑温 1280℃ · 宋元明清千年窑火</p></section><button class="node fire" onclick="fireKiln()">入窑烧制</button><section class="site dock"><h2>昌江码头</h2><div class="art" style="overflow:hidden;position:relative">
 <svg viewBox="0 0 220 130" style="width:100%;height:100%" xmlns="http://www.w3.org/2000/svg">
@@ -167,7 +164,6 @@
   <!-- Distant hills -->
   <polygon points="180,60 200,30 220,60" fill="#5A7A4A" opacity="0.3"/>
   <polygon points="200,55 215,35 220,55" fill="#4A6A3A" opacity="0.2"/>
-  <text x="110" y="125" text-anchor="middle" font-size="11" fill="#D4E8C8" font-weight="bold">昌江码头</text>
 </svg>
 </div><p>每船 2 吨 · 月行五六十船</p></section><button class="node ship" onclick="deliver()">交付订单</button></div></div>
 <div class="bottom"><div class="panel"><h3>库 房</h3><div class="rows"><span>高岭土 <b id="clay">12</b></span><span>松柴 <b id="wood">10</b></span><span>釉料 <b id="glaze">5</b></span><span>素坯 <b id="blank">0</b></span><span>成瓷 <b id="ware">0</b></span><span>匠人 <b id="workers">2</b></span><span>体力 <b id="staminaDisplay">100</b></span><span>颜料 <b id="pigment">0</b></span><span>彩绘坯 <b id="paintedBlank">0</b></span></div></div><div class="panel"><h3>订单簿</h3><div style="display:flex;align-items:center;gap:6px"><span style="font-size:13px;font-weight:700">🎯 成就</span><button class="achieve-btn" onclick="toggleAchievements()">查看成就</button></div><div id="achieveList" class="achieve-list" style="display:none"></div><div class="orders" id="orders"><div>市集订单：成瓷 2 件 · 报酬 45 银</div><div>市集订单：成瓷 3 件 · 报酬 68 银</div><div class="order-active">御命（未解锁）：品质 ≥ 16，限时 5 日</div></div><div class="actions"><button class="action" onclick="hire()">招募匠人 · 35银</button><button class="action" onclick="upgrade()">升级镇窑 · 90银</button><button class="action" onclick="nextDay()">度过一日</button><button class="action" onclick="cycleDifficulty()">难度：<span id="diffBtn">普通</span></button><button class="action" onclick="resetGame()">重开长卷</button></div></div><div class="panel"><h3>掌柜手记</h3><div class="log" id="log">春日开窑。山土、松柴俱备，正宜起作。</div></div></div></section>
@@ -210,9 +206,7 @@
 <div class="modal-box" id="feedbackBox" style="display:none">
   <button class="modal-close" onclick="closeFeedback()">x</button>
   <h2>📝 反馈建议</h2>
-  <p style="margin-bottom:8px">感谢你的反馈！我们会认真阅读每一条建议。</p>
-  <input type="text" id="fbName" placeholder="你的称呼（选填）" />
-  <input type="text" id="fbContact" placeholder="联系方式（选填）" />
+  <p style="margin-bottom:8px">感谢你的反馈！我们会认真阅读每一条建议。</p><p style="font-size:12px;color:#887a60">通过 launcher.py 启动：反馈保存到项目 feedback/ 目录<br>通过网页游玩：浏览器自动下载文件</p>
   <textarea id="fbContent" placeholder="请写下你的建议或遇到的问题..."></textarea>
   <div id="fbStatus"></div>
   <button class="modal-btn" id="fbSubmitBtn" onclick="submitFeedback()">提交反馈</button>
@@ -684,8 +678,6 @@ function closeFeedback() {
   document.getElementById("feedbackBox").style.display = "none";
 }
 function submitFeedback() {
-  var name = document.getElementById("fbName").value.trim();
-  var contact = document.getElementById("fbContact").value.trim();
   var content = document.getElementById("fbContent").value.trim();
   if (!content) {
     document.getElementById("fbStatus").innerHTML = '<span style="color:var(--red)">请填写建议内容</span>';
@@ -694,15 +686,13 @@ function submitFeedback() {
   document.getElementById("fbSubmitBtn").disabled = true;
   document.getElementById("fbStatus").innerHTML = "提交中...";
 
-  var data = JSON.stringify({ name: name, contact: contact, content: content, time: new Date().toISOString() });
+  var data = JSON.stringify({ content: content, time: new Date().toISOString() });
 
   // Try local server API first
   fetch("/api/feedback", { method:"POST", headers:{"Content-Type":"application/json"}, body: data })
     .then(function(r) {
       if (r.ok) {
-        document.getElementById("fbStatus").innerHTML = '<div class="feedback-success">反馈已收到，感谢你！</div>';
-        document.getElementById("fbName").value = "";
-        document.getElementById("fbContact").value = "";
+        document.getElementById("fbStatus").innerHTML = '<div class="feedback-success">反馈已保存到项目 feedback/ 目录，感谢你！</div>';
         document.getElementById("fbContent").value = "";
       } else {
         downloadFeedback(data);
@@ -716,15 +706,12 @@ function submitFeedback() {
     });
 }
 function downloadFeedback(data) {
-  // Fallback: download as file
   var blob = new Blob([data], { type: "application/json" });
   var a = document.createElement("a");
   a.href = URL.createObjectURL(blob);
   a.download = "feedback_" + new Date().toISOString().slice(0,19).replace(/[:-]/g,"") + ".json";
   a.click();
   document.getElementById("fbStatus").innerHTML = '<div class="feedback-success">反馈已下载保存，感谢你！</div>';
-  document.getElementById("fbName").value = "";
-  document.getElementById("fbContact").value = "";
   document.getElementById("fbContent").value = "";
 }
 
