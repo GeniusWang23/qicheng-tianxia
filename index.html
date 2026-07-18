@@ -128,7 +128,6 @@ h1{font-family:"ZCOOL XiaoWei";letter-spacing:.11em;margin:0;font-size:22px;font
         <span>匠人<b id="workers">2</b></span>
         <span>商誉<b id="merchantFavor">0</b></span>
         <span>皇恩<b id="imperialFavor">0</b></span>
-          <span>工艺<b id="craftLevel">新手</b></span>
       </div></div>
     </div>
 
@@ -159,6 +158,25 @@ h1{font-family:"ZCOOL XiaoWei";letter-spacing:.11em;margin:0;font-size:22px;font
         <div id="achieveList" class="achieve-list" style="display:none"></div>
       </div>
     </div>
+
+    <!-- 工艺看板 -->
+    <div class="float-card" id="craftCard">
+      <h3 onclick="toggleCard('craftCard')">工艺 <span id="craftBadge" style="font-size:12px;color:var(--muted)">新手</span> <span class="toggle">▶</span></h3>
+      <div class="card-body" style="display:none">
+        <div style="font-size:11px;color:var(--muted);margin-bottom:6px">市面主流工艺：<b id="marketLevel">新手(白色)</b></div>
+        <div style="font-size:12px;line-height:1.8">
+          <div id="craftCompare"></div>
+          <div style="margin-top:4px;font-size:11px;color:var(--muted);line-height:1.6">
+            ⬜白色 → 🟩绿色 → 🟦蓝色 → 🟪紫色 → 🟨黄色 → 🟥红色 → 🌈彩色<br>
+            高于市面：升值+3%/级 · 低于：贬值-2%/级
+          </div>
+        </div>
+      </div>
+    </div>
+    <script>
+    // Make craft card visible initially
+    (function(){ var c=document.getElementById("craftCard"); if(c)c.classList.remove("collapsed"); })();
+    </script>
 
     <!-- 商人看板 -->
     <div class="float-card collapsed" id="merchantCard">
@@ -857,16 +875,6 @@ function nextDay() {
       addLog("银两长期不足，窑工出走。体力上限-10");
     }
   }
-  // 体力归零 → GAME OVER
-  if (G.stamina <= 0 || (G.maxStamina||100) <= 30) {
-    addLog("窑工散尽，瓷窑倒闭。");
-    showToast("窑工散尽！GAME OVER", false);
-    G.gameOver = true;
-    setTimeout(function(){ resetGame(); }, 3000);
-    G.save(); render();
-    return;
-  }
-  
   G.stamina = Math.min(G.maxStamina || CONFIG.STAMINA.max, G.stamina + G.diffConfig.staminaRestore);
 
   // ---- 随机事件 (25% 概率) ----
@@ -987,7 +995,12 @@ if (G.load()) {
 // ======================== 说明 & 反馈 ========================
 function toggleCard(id) {
   var el = document.getElementById(id);
-  if (el) el.classList.toggle("collapsed");
+  if (!el) return;
+  el.classList.toggle("collapsed");
+  // Auto-render merchant when expanded
+  if (id === "merchantCard" && !el.classList.contains("collapsed")) {
+    if (typeof renderMerchant === "function") renderMerchant();
+  }
 }
 
 function showHelp() {
