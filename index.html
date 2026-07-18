@@ -160,6 +160,15 @@ h1{font-family:"ZCOOL XiaoWei";letter-spacing:.11em;margin:0;font-size:22px;font
       </div>
     </div>
 
+    <!-- 商人看板 -->
+    <div class="float-card collapsed" id="merchantCard">
+      <h3 onclick="toggleCard('merchantCard')">商人 <span class="toggle">▶</span></h3>
+      <div class="card-body" id="merchantBody">
+        <div style="font-size:11px;color:var(--muted);margin-bottom:4px">商誉：<b id="mFavor">0</b> · 折扣：<span id="mDisc">0%</span></div>
+        <div id="merchantList" style="font-size:12px;line-height:1.8"></div>
+      </div>
+    </div>
+
     <!-- 日志面板 -->
     <div class="float-card" id="logCard">
       <h3 onclick="toggleCard('logCard')">手记 <span class="toggle">▼</span></h3>
@@ -216,15 +225,6 @@ h1{font-family:"ZCOOL XiaoWei";letter-spacing:.11em;margin:0;font-size:22px;font
     <div style="font-size:15px;font-weight:700;color:#3a5a2a">杂帮 · 琢器行</div>
     <div style="font-size:12px;color:#4a6a3a">创新者 · 绘画品质+3</div>
   </div>
-</div>
-
-<!-- 商人面板 -->
-<div class="modal-overlay" id="merchantOverlay" onclick="closeMerchant()"></div>
-<div class="modal-box" id="merchantBox" style="display:none">
-  <button class="modal-close" onclick="closeMerchant()">x</button>
-  <h2>商人交易</h2>
-  <p style="font-size:12px;color:var(--muted)">银两-体力置换 · 商誉折扣：<span id="mFavor">0</span></p>
-  <div id="merchantList" style="font-size:12px;line-height:1.8"></div>
 </div>
 
 <!-- 新手引导 -->
@@ -405,19 +405,18 @@ function checkAchievements() {
 
 // ======================== 商人系统 ========================
 function showMerchant() {
-  document.getElementById("merchantOverlay").style.display = "block";
-  document.getElementById("merchantBox").style.display = "block";
+  var c = document.getElementById("merchantCard");
+  c.classList.remove("collapsed");
   renderMerchant();
 }
-function closeMerchant() {
-  document.getElementById("merchantOverlay").style.display = "none";
-  document.getElementById("merchantBox").style.display = "none";
-}
+function closeMerchant() {}
 function renderMerchant() {
+  if (document.getElementById("merchantCard").classList.contains("collapsed")) return;
   var f = G.merchantFavor || 0;
   var disc = Math.max(0.6, 1 - f / 200);
   var sdisc = Math.min(1.4, 1 + (100 - f) / 200);
   document.getElementById("mFavor").textContent = f;
+  document.getElementById("mDisc").textContent = Math.floor((1-disc)*100) + "%";
   var items = [
     {name:"高岭土", id:"clay", buy:Math.floor(8*disc), sell:Math.floor(3*sdisc)},
     {name:"松柴", id:"wood", buy:Math.floor(6*disc), sell:Math.floor(2*sdisc)},
