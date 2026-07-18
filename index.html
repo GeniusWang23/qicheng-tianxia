@@ -89,22 +89,22 @@ h1{font-family:"ZCOOL XiaoWei";letter-spacing:.11em;margin:0;font-size:22px;font
     <div class="map" id="mapArea">
       <div class="river"></div>
 
-      <section class="site mountain"><h2>高岭山</h2><div class="art"><div style="position:absolute;bottom:6px;left:40px;color:#efe8ca;font-size:14px;font-weight:700">高岭山</div></div></section>
+      <section class="site mountain"><h2>高岭山</h2><div class="art" style="background:#607659;display:flex;align-items:center;justify-content:center;font-size:50px">⛰️🏔️🪨</div></section>
       <button class="node minebtn" onclick="gather('clay')">采高岭土 +6 体力-5</button>
 
-      <section class="site forest"><h2>松柴林</h2><div class="art"></div></section>
+      <section class="site forest"><h2>松柴林</h2><div class="art" style="background:#86a584;display:flex;align-items:center;justify-content:center;font-size:48px">🌲🌳🪵🌲</div></section>
       <button class="node woodbtn" onclick="gather('wood')">伐松柴 +5 体力-5</button>
       <button class="node glazebtn" onclick="gather('glaze')" title="釉料：制作素坯的必需原料">♥ 采釉料 +3 体力-5</button>
       <button class="node pigmentbtn" onclick="gather('pigment')" title="颜料：绘画装饰瓷坯用的色料">◆ 采颜料 +3 体力-5</button>
 
-      <section class="site works"><h2>瓷作坊</h2><div class="art"><div class="shop"><span>练泥坊</span></div><div class="shop"><span>拉坯坊</span></div><div class="shop"><span>画坯坊</span></div><div class="shop"><span>晒坯场</span></div></div></section>
+      <section class="site works"><h2>瓷作坊</h2><div class="art"><div class="shop"><span>练泥坊</span></div><div class="shop"><span>拉坯坊</span></div><div class="shop"><span>🎨画坯</span></div><div class="shop"><span>☀️晒坯</span></div></div></section>
       <button class="node produce" onclick="produce()">制作坯体 体力-8</button>
       <button class="node decoratebtn" onclick="decorate()">绘画装饰 体力-6</button>
 
-      <section class="site kiln"><h2>镇窑</h2><div class="art"></div></section>
+      <section class="site kiln"><h2>镇窑</h2><div class="art" style="background:#3a2a1a;display:flex;align-items:center;justify-content:center;font-size:48px">🔥🏺🔥</div></section>
       <button class="node fire" onclick="fireKiln()">入窑烧制 体力-12</button>
 
-      <section class="site dock"><h2>昌江码头</h2><div class="art"></div></section>
+      <section class="site dock"><h2>昌江码头</h2><div class="art" style="background:#5f9e9e;display:flex;align-items:center;justify-content:center;font-size:42px">⛵🚢⚓</div></section>
       <button class="node ship" onclick="deliver()">交付订单</button>
     </div>
   </div>
@@ -115,9 +115,9 @@ h1{font-family:"ZCOOL XiaoWei";letter-spacing:.11em;margin:0;font-size:22px;font
     <div class="float-card" id="invCard">
       <h3 onclick="toggleCard('invCard')">库 房 <span class="toggle">▼</span></h3>
       <div class="card-body"><div class="rows">
-        <span>高岭土<b id="clay">12</b></span>
-        <span>松柴<b id="wood">10</b></span>
-        <span>♥釉料<b id="glaze">5</b></span>
+        <span>高岭土<b id="clay">0</b></span>
+        <span>松柴<b id="wood">0</b></span>
+        <span>♥釉料<b id="glaze">0</b></span>
         <span>◆颜料<b id="pigment">0</b></span>
         <span>素坯<b id="blank">0</b></span>
         <span>彩绘坯<b id="paintedBlank">0</b></span>
@@ -133,8 +133,8 @@ h1{font-family:"ZCOOL XiaoWei";letter-spacing:.11em;margin:0;font-size:22px;font
     </div>
 
     <!-- 订单面板 -->
-    <div class="float-card" id="orderCard">
-      <h3 onclick="toggleCard('orderCard')">订单簿 <span class="toggle">▼</span></h3>
+    <div class="float-card" id="orderCard" style="border-color:var(--gold);border-width:3px;min-width:280px">
+      <h3 onclick="toggleCard('orderCard')" style="color:var(--red);font-size:15px">📋 订单簿 <span class="toggle">▼</span></h3>
       <div class="card-body">
         <div class="orders" id="orders">
           <div>市集订单：成瓷 2 件 · 报酬 45 银</div>
