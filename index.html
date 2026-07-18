@@ -1,1104 +1,2227 @@
 <!doctype html>
+
 <html lang="zh-CN">
+
 <head>
+
   <meta charset="utf-8" />
+
   <meta name="viewport" content="width=device-width, initial-scale=1" />
+
   <title>器成天下走 · 瓷业长卷</title>
+
   <style>
+
 @import url('https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;700;900&family=ZCOOL+XiaoWei&display=swap');
+
 :root{--ink:#202a23;--paper:#e9dfc3;--tea:#716347;--jade:#274a42;--red:#a74632;--gold:#b88835;--line:#a99974}
+
 *{box-sizing:border-box} body{margin:0;background:#17231e;color:var(--ink);font-family:"Noto Serif SC",serif;overflow:hidden;height:100vh}
+
 .game{height:100vh;display:flex;flex-direction:column;background:radial-gradient(circle at 50% -20%,#40594c 0,#17231e 58%)}
 
+
+
 /* Header */
+
 header{display:flex;align-items:center;gap:12px;color:#f5eccf;padding:8px 16px;flex-shrink:0;flex-wrap:wrap}
+
 .seal{width:44px;height:44px;border:2px solid #d2a751;border-radius:3px;display:grid;place-items:center;color:#f3cf78;font-family:"ZCOOL XiaoWei";font-size:18px;transform:rotate(-4deg);flex-shrink:0}
+
 h1{font-family:"ZCOOL XiaoWei";letter-spacing:.11em;margin:0;font-size:22px;font-weight:400}
+
 .stats{display:flex;gap:6px;flex-wrap:wrap;margin-left:auto}.stat{border:1px solid #a99162;background:#23362d;color:#f3e6c4;padding:5px 8px;font-size:12px}.stat b{color:#f3c95b;margin-left:3px}
 
+
+
 /* Map area - scrollable */
+
 .map-container{flex:1;overflow:hidden;position:relative;background:linear-gradient(#c1ddcf 0 30%,#e9dfc3 30%);min-height:300px;cursor:grab}.map-container:active{cursor:grabbing}.map-container.dragging{cursor:grabbing}
-.map{width:2200px;height:100%;position:relative;background:linear-gradient(135deg,transparent 25%,#718d7030 25% 27%,transparent 27% 50%,#718d7030 50% 52%,transparent 52%);background-size:48px 48px;min-height:520px}
-.river{position:absolute;right:-100px;top:160px;width:1400px;height:160px;background:#5f9e9e;border-radius:45% 0 0 48%;transform:rotate(-5deg);border-block:7px double #e4e0bd;opacity:.9}
+
+.map{width:1500px;height:100%;position:relative;background:linear-gradient(135deg,transparent 25%,#718d7030 25% 27%,transparent 27% 50%,#718d7030 50% 52%,transparent 52%);background-size:48px 48px;min-height:650px}
+
+.river{position:absolute;right:-100px;top:315px;width:900px;height:140px;background:#5f9e9e;border-radius:45% 0 0 48%;transform:rotate(-5deg);border-block:7px double #e4e0bd;opacity:.9}
+
 .site{position:absolute;width:200px;text-align:center;z-index:1}.site h2{font-family:"ZCOOL XiaoWei";margin:0;color:#3b3927;font-size:20px}.site p{margin:2px;color:#665a43;font-size:11px}.site .art{height:110px;position:relative;margin:2px auto;border:1px dashed #917e56}
 
+
+
 /* Nodes & buttons on map */
+
 .node{position:absolute;border:0;background:#f8efd1;color:#2f3b30;font-family:inherit;cursor:pointer;padding:6px 10px;font-size:12px;border:1px solid #7a6746;box-shadow:2px 2px 0 #a28557;transition:.15s;z-index:2}.node:hover{transform:translateY(-2px);background:#f3cf78;z-index:3}
-.minebtn{left:50px;top:230px}.woodbtn{left:280px;top:230px}.glazebtn{left:500px;top:230px}.pigmentbtn{left:1100px;top:230px}.produce{left:800px;top:230px}.decoratebtn{left:940px;top:230px}.fire{left:1320px;top:230px}.ship{left:1620px;top:350px}
+
+.minebtn{left:40px;top:180px}.woodbtn{left:260px;top:180px}.glazebtn{left:480px;top:180px}.pigmentbtn{left:660px;top:180px}.produce{left:100px;top:420px}.decoratebtn{left:250px;top:420px}.fire{left:540px;top:420px}.ship{left:760px;top:420px}
+
+
 
 /* Mountain/forest/kiln/dock art */
-.mountain{left:30px;top:40px}.forest{left:260px;top:50px}.works{left:680px;top:25px;width:380px}.kiln{left:1280px;top:40px}.dock{left:1550px;top:160px}
+
+.mountain{left:20px;top:20px}.forest{left:240px;top:20px}.works{left:20px;top:280px;width:450px}.kiln{left:520px;top:280px}.dock{left:740px;top:280px}
+
 .mountain .art{background:#607659;border-radius:60px 60px 0 0;height:90px}.mountain .art:after{content:"高岭山";position:absolute;bottom:8px;left:72px;color:#efe8ca;font-size:13px}
+
 .forest .art{background:linear-gradient(#86a584 70%,#9b7950 70%);height:90px}
+
 .works .art{height:140px;background:#caa777;border:2px solid #7d5c3d;display:flex;align-items:end;justify-content:space-around;padding:10px}
+
 .kiln .art{background:#3a2a1a;border-radius:50px 50px 0 0;height:90px}
+
 .dock .art{background:#5f9e9e;border-color:#466f70;height:90px}
 
+
+
 /* Floating panels */
+
 .float-panels{position:fixed;bottom:0;left:0;right:0;display:flex;flex-direction:row;gap:6px;z-index:50;padding:4px 8px;background:rgba(23,35,30,.85);justify-content:center;flex-wrap:wrap}
+
 .float-card{background:rgba(238,228,203,.95);border:2px solid #b8aa84;border-radius:8px 8px 0 0;padding:4px 8px;box-shadow:0 4px 16px rgba(0,0,0,.3);max-height:40vh;overflow:auto;min-width:150px;flex:0 1 auto}
+
 .float-card h3{font-size:13px;color:#5b4527;margin:0 0 4px;cursor:pointer;display:flex;justify-content:space-between;align-items:center}
+
 .float-card h3 .toggle{font-size:12px;color:#887a60}
+
 .float-card.collapsed .card-body{display:none}
+
 .card-body{font-size:12px}
+
 .rows{display:grid;grid-template-columns:1fr 1fr;gap:2px 8px;font-size:12px}
+
 .rows span{display:flex;justify-content:space-between;border-bottom:1px dotted #b7a47b;padding:2px 0}
+
 .orders{font-size:12px;line-height:1.6}.order-active{color:var(--red);font-weight:700}
+
 .actions{display:flex;gap:5px;flex-wrap:wrap;margin-top:4px}
+
 .action{background:#334d42;color:#f9efd2;border:0;padding:5px 8px;font-family:inherit;font-size:12px;cursor:pointer}.action:hover{background:#a74632}
+
 .log{font-size:11px;color:#604f34;line-height:1.5;max-height:120px;overflow:auto}
+
 .toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%);background:#253d32;color:#f7e8c4;padding:11px 16px;opacity:0;transition:.2s;pointer-events:none;z-index:100}.toast.show{opacity:1}
 
+
+
 /* Modals */
+
 .modal-overlay{position:fixed;inset:0;background:#0008;z-index:99;display:none}
+
 .modal-box{position:fixed;left:50%;top:50%;transform:translate(-50%,-50%);background:var(--paper);border:3px solid #8b7a5a;padding:20px 24px;z-index:100;max-width:480px;width:90%;max-height:70vh;overflow:auto;box-shadow:0 8px 40px #000c}
+
 .modal-box h2{margin:0 0 10px;font-size:16px;border-bottom:1px solid var(--line);padding-bottom:6px}.modal-close{float:right;background:0;border:0;font-size:22px;cursor:pointer;color:#7a6746}
 
+
+
 /* Help/Feedback/Achievement buttons */
+
 .help-btn{background:#4a5a3a;color:#f9efd2;border:0;padding:5px 8px;font-family:inherit;font-size:11px;cursor:pointer}.help-btn:hover{background:#a74632}
+
 .save-indicator{font-size:10px;color:#7a9a6a;margin-left:6px;opacity:.8}
+
 .achieve-btn{background:#5d4a2b;color:#f9efd2;border:0;padding:3px 6px;font-family:inherit;font-size:10px;cursor:pointer}
+
 .achieve-list{font-size:11px;line-height:1.5;max-height:120px;overflow:auto;padding:4px 0}
+
 .achieve-item{display:flex;justify-content:space-between;border-bottom:1px dotted #b7a47b;padding:3px 0}
+
 .achieve-done{color:var(--gold)}.achieve-locked{color:#887a60}
+
 .guild-card{transition:transform .15s,box-shadow .15s;cursor:pointer}
+
 .guild-card:hover{transform:translateY(-2px);box-shadow:0 4px 12px rgba(0,0,0,.12)}
+
 .day-badge{font-size:16px;font-weight:900;color:var(--red);background:#f5eccf;padding:3px 10px;border-radius:4px;border:1px solid var(--gold);white-space:nowrap}
+
 .success-rate{font-size:10px;color:#6a5a3a}
+
 .map .node{cursor:pointer}.map .node:active{cursor:pointer}
+
 </style>
+
 </head>
+
 <body>
+
 <main class="game">
+
   <header>
+
     <div class="seal">器成</div>
+
     <div><h1>器成天下走</h1></div>
+
     <div class="day-badge">第 <b id="day">1</b> 日 &nbsp; <span id="generation" style="font-size:11px;color:#d4b35f">王家第1代</span></div>
+
     <div class="stats">
+
       <div class="stat">银两<b id="silver">80</b></div>
+
       <div class="stat">声望<b id="fame">0</b></div>
+
       <div class="stat">品质<b id="quality">0</b></div>
+
     </div>
+
     <button class="help-btn" onclick="showHelp()">说明</button>
+
     <button class="help-btn" onclick="showFeedback()">反馈</button>
+
     <span class="save-indicator" id="saveIndicator">已存档</span>
+
   </header>
 
+
+
   <!-- MAP AREA -->
+
   <div class="map-container" id="mapContainer">
+
     <div class="map" id="mapArea">
+
       <div class="river"></div>
 
+
+
       <section class="site mountain"><h2>高岭山</h2><div class="art" style="background:#607659;display:flex;align-items:center;justify-content:center;font-size:50px">⛰️🏔️🪨</div></section>
+
       <button class="node minebtn" onclick="gather('clay')">采高岭土 +6 体力-5</button>
 
+
+
       <section class="site forest"><h2>松柴林</h2><div class="art" style="background:#86a584;display:flex;align-items:center;justify-content:center;font-size:48px">🌲🌳🪵🌲</div></section>
+
       <button class="node woodbtn" onclick="gather('wood')">伐松柴 +5 体力-5</button>
-      <section class="site" style="left:480px;top:40px;width:160px"><h2>釉石坡</h2><div class="art" style="background:#7a6a4a;display:flex;align-items:center;justify-content:center;font-size:32px;height:70px">♥💎✨</div></section><button class="node glazebtn" onclick="gather('glaze')" title="釉料：制作素坯的必需原料">♥ 采釉料 +3 体力-5</button>
-      <section class="site" style="left:1080px;top:40px;width:160px"><h2>颜料矿</h2><div class="art" style="background:#5a5a2a;display:flex;align-items:center;justify-content:center;font-size:32px;height:70px">🎨💎🖌️</div></section><button class="node pigmentbtn" onclick="gather('pigment')">◆ 采颜料 +3 体力-5</button>
+
+      <section class="site" style="left:460px;top:20px;width:160px"><h2>釉石坡</h2><div class="art" style="background:#7a6a4a;display:flex;align-items:center;justify-content:center;font-size:32px;height:70px">♥💎✨</div></section><button class="node glazebtn" onclick="gather('glaze')" title="釉料：制作素坯的必需原料">♥ 采釉料 +3 体力-5</button>
+
+      <section class="site" style="left:640px;top:20px;width:160px"><h2>颜料矿</h2><div class="art" style="background:#5a5a2a;display:flex;align-items:center;justify-content:center;font-size:32px;height:70px">🎨💎🖌️</div></section><button class="node pigmentbtn" onclick="gather('pigment')">◆ 采颜料 +3 体力-5</button>
+
+
 
       <section class="site works"><h2>瓷作坊</h2><div class="art"><div class="shop"><span>练泥坊</span></div><div class="shop"><span>拉坯坊</span></div><div class="shop"><span>🎨画坯</span></div><div class="shop"><span>☀️晒坯</span></div></div></section>
+
       <button class="node produce" onclick="produce()">制作坯体 体力-8</button>
+
       <button class="node decoratebtn" onclick="decorate()">绘画装饰 体力-6</button>
 
+
+
       <section class="site kiln"><h2>镇窑</h2><div class="art" style="background:#3a2a1a;display:flex;align-items:center;justify-content:center;font-size:48px">🔥🏺🔥</div></section>
+
       <button class="node fire" onclick="fireKiln()">入窑烧制 体力-12</button>
 
+
+
       <section class="site dock"><h2>昌江码头</h2><div class="art" style="background:#5f9e9e;display:flex;align-items:center;justify-content:center;font-size:42px">⛵🚢⚓</div></section>
+
       <button class="node ship" onclick="deliver()">交付订单</button>
+
     </div>
+
   </div>
+
+
 
   <!-- FLOATING PANELS -->
+
   <div class="float-panels" id="floatPanels">
+
     <!-- 库存面板 -->
+
     <div class="float-card" id="invCard">
+
       <h3 onclick="toggleCard('invCard')">库 房 <span class="toggle">▼</span></h3>
+
       <div class="card-body"><div class="rows">
+
         <span>高岭土<b id="clay">0</b></span>
+
         <span>松柴<b id="wood">0</b></span>
+
         <span>♥釉料<b id="glaze">0</b></span>
+
         <span>◆颜料<b id="pigment">0</b></span>
+
         <span>素坯<b id="blank">0</b></span>
+
         <span>彩绘坯<b id="paintedBlank">0</b></span>
+
         <span>成瓷<b id="ware">0</b></span>
+
         <span>彩绘瓷<b id="paintedWare">0</b></span>
+
         <span>素瓷<b id="plainWare">0</b></span>
+
         <span>体力<b id="staminaDisplay">100</b></span>
+
         <span>匠人<b id="workers">2</b></span>
+
         <span>商誉<b id="merchantFavor">0</b></span>
+
         <span>皇恩<b id="imperialFavor">0</b></span>
+
       </div></div>
+
     </div>
+
+
 
     <!-- 订单面板 -->
+
     <div class="float-card" id="orderCard" style="border-color:var(--gold);border-width:3px;min-width:280px">
+
       <h3 onclick="toggleCard('orderCard')" style="color:var(--red);font-size:15px">📋 订单簿 <span class="toggle">▼</span></h3>
+
       <div class="card-body">
+
         <div class="orders" id="orders">
+
           <div>市集订单：成瓷 2 件 · 报酬 45 银</div>
+
           <div class="order-active">御命（未解锁）</div>
+
         </div>
+
         <div style="font-size:10px;color:#58492e;margin:4px 0">
+
           时令：<b id="season">春</b> · <span id="weather">风和日暖</span>
+
           <span id="diffDisplay">普通</span>
+
         </div>
+
         <div class="actions">
+
           <button class="action" onclick="hire()">招募匠人</button>
+
           <button class="action" onclick="upgrade()">升级镇窑</button>
+
           <button class="action" onclick="nextDay()">度过一日</button>
+
           <button class="action" onclick="hireTaoist()">请道士</button>
+
           <button class="action" onclick="cycleDifficulty()">难度</button>
+
           <button class="action" onclick="showMerchant()">商人</button>
+
           <button class="action" onclick="showGuildSelect()">行帮</button>
+
           <button class="action" onclick="doConscript()" id="conscriptBtn" style="display:none">强征</button>
+
           <button class="action" onclick="resetGame()">重开</button>
+
         </div>
+
         <button class="achieve-btn" onclick="toggleAchievements()">成就</button>
+
         <div id="achieveList" class="achieve-list" style="display:none"></div>
+
       </div>
+
     </div>
+
+
 
     <!-- 工艺看板 -->
+
     <div class="float-card" id="craftCard">
+
       <h3 onclick="toggleCard('craftCard')">工艺 <span id="craftBadge" style="font-size:12px;color:var(--muted)">新手</span> <span class="toggle">▶</span></h3>
+
       <div class="card-body" style="display:none">
+
         <div style="font-size:11px;color:var(--muted);margin-bottom:6px">市面主流工艺：<b id="marketLevel">新手(白色)</b></div>
+
         <div style="font-size:12px;line-height:1.8">
+
           <div id="craftCompare"></div>
+
           <div style="margin-top:4px;font-size:11px;color:var(--muted);line-height:1.6">
+
             ⬜白色 → 🟩绿色 → 🟦蓝色 → 🟪紫色 → 🟨黄色 → 🟥红色 → 🌈彩色<br>
+
             高于市面：升值+3%/级 · 低于：贬值-2%/级
+
           </div>
+
         </div>
+
       </div>
+
     </div>
+
     <script>
+
     // Make craft card visible initially
+
     (function(){ var c=document.getElementById("craftCard"); if(c)c.classList.remove("collapsed"); })();
+
     </script>
 
+
+
     <!-- 商人看板 -->
+
     <div class="float-card collapsed" id="merchantCard">
+
       <h3 onclick="toggleCard('merchantCard')">商人 <span class="toggle">▶</span></h3>
+
       <div class="card-body" id="merchantBody">
+
         <div style="font-size:11px;color:var(--muted);margin-bottom:4px">商誉：<b id="mFavor">0</b> · 折扣：<span id="mDisc">0%</span></div>
+
         <div id="merchantList" style="font-size:12px;line-height:1.8"></div>
+
       </div>
+
     </div>
+
+
 
     <!-- 日志面板 -->
+
     <div class="float-card" id="logCard">
+
       <h3 onclick="toggleCard('logCard')">手记 <span class="toggle">▼</span></h3>
+
       <div class="card-body"><div class="log" id="log">春日开窑。山土、松柴俱备，正宜起作。</div></div>
+
     </div>
+
   </div>
+
 </main>
+
 <div class="toast" id="toast"></div>
+
 <div class="egg-popup" id="eggPopup" onclick="dismissEgg()" style="display:none">
+
   <div style="font-size:40px;margin-bottom:6px">🐣</div>
+
   <div id="eggText" style="font-size:15px;color:#3b2f1e;line-height:1.6"></div>
+
   <div style="font-size:10px;color:#887a60;margin-top:8px">点击任意处关闭</div>
+
 </div>
+
+
 
 <!-- 说明弹窗 -->
+
 <div class="modal-overlay" id="helpOverlay" onclick="closeHelp()"></div>
+
 <div class="modal-box" id="helpBox" style="display:none">
+
   <button class="modal-close" onclick="closeHelp()">x</button>
+
   <h2>新手指南</h2>
+
   <h3 style="font-size:14px;color:var(--celadon2);margin:8px 0">核心流程</h3>
+
   <p>❶ <b>采集</b>：点击地图上的按钮采集高岭土、松柴、釉料、颜料</p>
+
   <p>❷ <b>制坯</b>：消耗瓷土+釉料制作素坯（匠人≥3产出翻倍）</p>
+
   <p>❸ <b>绘画</b>：消耗素坯+颜料制作彩绘坯（非必须，但彩绘瓷更值钱）</p>
+
   <p>❹ <b>烧制</b>：消耗素坯+柴火烧制成瓷（有成功率，冬天更难）</p>
+
   <p>❺ <b>交付</b>：成瓷交付订单赚取银两和声望</p>
+
   <h3 style="font-size:14px;color:var(--celadon2);margin:8px 0">操作提示</h3>
+
   <p>🔹 点击「度过一日」推进时间，恢复体力</p>
+
   <p>🔹 地图区域可以按住鼠标拖动查看</p>
+
   <p>🔹 底部面板可以点击标题折叠/展开</p>
+
   <p>🔹 每 4 天换一个季节，影响生产效率</p>
+
   <p>🔹 御命订单有时限，超时扣声望</p>
+
   <p style="margin-top:8px;font-size:12px;color:var(--muted)">以后再查看：点击顶部的「说明」按钮</p>
+
 </div>
+
+
 
 <!-- 反馈弹窗 -->
+
 <div class="modal-overlay" id="feedbackOverlay" onclick="closeFeedback()"></div>
+
 <div class="modal-box" id="feedbackBox" style="display:none">
+
   <button class="modal-close" onclick="closeFeedback()">x</button>
+
   <h2>反馈建议</h2>
+
   <textarea id="fbContent" placeholder="写下你的建议..." style="width:100%;height:60px"></textarea>
+
   <div id="fbStatus"></div>
+
   <button class="modal-btn" onclick="submitFeedback()">提交</button>
+
 </div>
+
+
 
 <!-- 行帮选择弹窗 -->
+
 <div class="modal-overlay" id="guildOverlay" onclick="closeGuildSelect()"></div>
+
 <div class="modal-box" id="guildBox" style="display:none">
+
   <button class="modal-close" onclick="closeGuildSelect()">x</button>
+
   <h2>选择行帮</h2>
+
   <div class="guild-card" onclick="selectGuild('hui')" style="border:2px solid #b8963c;border-radius:8px;padding:10px;margin:6px 0;cursor:pointer">
+
     <div style="font-size:15px;font-weight:700;color:#8b6914">徽帮 · 白土行</div>
+
     <div style="font-size:12px;color:#5a4a2a">原料商 · 采集效率+20%</div>
+
   </div>
+
   <div class="guild-card" onclick="selectGuild('du')" style="border:2px solid #2c5f7c;border-radius:8px;padding:10px;margin:6px 0;cursor:pointer">
+
     <div style="font-size:15px;font-weight:700;color:#1a3f56">都帮 · 窑柴行</div>
+
     <div style="font-size:12px;color:#3d5a6a">窑工 · 烧窑成功率+10%</div>
+
   </div>
+
   <div class="guild-card" onclick="selectGuild('za')" style="border:2px solid #5a7a3a;border-radius:8px;padding:10px;margin:6px 0;cursor:pointer">
+
     <div style="font-size:15px;font-weight:700;color:#3a5a2a">杂帮 · 琢器行</div>
+
     <div style="font-size:12px;color:#4a6a3a">创新者 · 绘画品质+3</div>
+
   </div>
+
 </div>
+
+
 
 <!-- 新手引导 -->
+
 <div class="modal-overlay" id="tutorialOverlay" onclick="closeTutorial()"></div>
+
 <div class="modal-box" id="tutorialBox" style="display:none">
+
   <button class="modal-close" onclick="closeTutorial()">x</button>
+
   <h2>欢迎来到景德镇</h2>
+
   <p>你是窑工，经营瓷窑。点击地图上的按钮采集原料，制坯烧制成瓷后交付订单。</p>
+
   <button class="modal-btn" onclick="closeTutorial()">开始经营</button>
+
 </div>
 
+
+
 <script>
+
 /* ============================================================
+
  * 器成天下走 · 瓷业长卷 — 游戏脚本（扩展版）
+
  * 新增：体力值、成就系统、难度通关、税收、成功率、绘画、事件
+
  * ============================================================ */
 
+
+
 // ======================== 常量 ========================
+
 const CONFIG = {
+
   GATHER:    { clay:6, wood:5, glaze:3, pigment:3 },
+
   PRODUCE:   { clayCost:3, glazeCost:1, workersBonus:3, bonusOutput:2, staminaCost:8 },
+
   DECORATE:  { staminaCost:6, pigmentCost:1, qualityBonus:3 },
+
   FIRE:      { woodBase:2, qualityBase:3, autumnBonus:2, winterWoodExtra:1, staminaCost:12, baseRate:0.70, kilnRateBonus:0.05, workerRateBonus:0.03, autumnRateBonus:0.10, winterRatePenalty:0.10, maxRate:0.95 },
+
   ORDER:     { baseNeed:2, baseSilver:45, silverPerOrder:12, famePer:3, unlockCount:3 },
+
   IMPERIAL:  { wares:4, qualityMin:16, silver:160, fame:12, timeLimit:5, timeoutPenalty:5 },
+
   HIRE:      { cost:35 },
+
   UPGRADE:   { cost:90 },
+
   STAMINA:   { max:200, gatherCost:5, dayRestore:30, lowThreshold:20 },
+
   TAX:       { interval:5 },
+
   DIFFICULTY:[
+
     { name:"简单", taxRate:0.10, winOrders:5, staminaRestore:80, maxStamina:200, hireCost:25, upgradeMul:1.0, desc:"轻松起步" },
+
     { name:"普通", taxRate:0.20, winOrders:8, staminaRestore:30, maxStamina:150, hireCost:35, upgradeMul:1.5, desc:"中等挑战" },
+
     { name:"困难", taxRate:0.30, winOrders:12,staminaRestore:20, maxStamina:100, hireCost:50, upgradeMul:2.5, desc:"残酷生存" }
+
   ],
+
   EVENTS: [
+
     { id:"tax_relief",  name:"官府减税",     desc:"知府新政，今日免课。",        good:true,  effect: g=>{g.tax豁免=true} },
+
     { id:"artisan_sick",name:"工匠染恙",     desc:"一名匠人染了风寒，告假三日。",good:false, effect: g=>{g.workers=Math.max(0,g.workers-1)} },
+
     { id:"merchant",    name:"商贾云集",     desc:"外地瓷商争相订货，订单价涨。",good:true,  effect: g=>{g.silver+=25} },
+
     { id:"kiln_leak",   name:"窑顶漏雨",     desc:"连夜大雨，窑顶渗水，修理破费。",good:false,effect: g=>{g.silver=Math.max(0,g.silver-20)} },
+
     { id:"bonus_fire",  name:"窑神庇佑",     desc:"祭窑神后火候极佳，下窑品质+5。",good:true, effect: g=>{g._nextFireBonus=5} },
+
     { id:"flood",       name:"昌江汛情",     desc:"江水暴涨，码头冲毁部分存货。",good:false, effect: g=>{g.ware=Math.max(0,g.ware-1)} },
+
     { id:"tongbin",     name:"童宾祭窑",     desc:"祭拜窑神童宾，窑火格外旺盛。下次烧窑成功率+15%。",good:true,  effect: g=>{g._fireRateBonus=0.15} },
+
     { id:"revolt",      name:"民变",           desc:"窑工聚众抗议，生产停滞一日。损失银两。",            good:false, effect: g=>{g.silver=Math.max(0,g.silver-40)} },
+
     { id:"price_boom",  name:"原料暴涨",       desc:"高岭土矿塌方，原材料价格飙升！损失银两。",         good:false, effect: g=>{g.silver=Math.max(0,g.silver-30)} },
+
     { id:"labor_short", name:"劳力短缺",       desc:"附近村庄瘟疫，匠人纷纷告假。体力消耗大增。",      good:false, effect: g=>{g.stamina=Math.max(0,g.stamina-20)} },
+
     { id:"order_boom",  name:"订单热潮",       desc:"藩王进京路过，大量求购瓷器。下次订单单价+50%。",   good:true,  effect: g=>{g._orderBonus=0.5} },
+
     { id:"typhoon",     name:"飓风过境",       desc:"台风摧毁码头，部分存货被毁。",                     good:false, effect: g=>{g.ware=Math.max(0,g.ware-2)} }
+
   ],
+
   ACHIEVEMENTS: [
+
     { id:"first_fire",   name:"第一把火",     desc:"首次烧窑",        check:g=>g.totalFires>=1,     reward:15 },
+
     { id:"first_deliver",name:"初涉商道",     desc:"首次交付订单",    check:g=>g.orders>=1,         reward:10 },
+
     { id:"five_orders",  name:"五单掌柜",     desc:"交付 5 笔订单",   check:g=>g.orders>=5,         reward:30 },
+
     { id:"ten_orders",   name:"商界翘楚",     desc:"交付 10 笔订单",  check:g=>g.orders>=10,        reward:50 },
+
     { id:"master_kiln",  name:"窑火大师",     desc:"镇窑升至 3 级",   check:g=>g.kiln>=3,           reward:40 },
+
     { id:"five_workers", name:"人丁兴旺",     desc:"招募 5 名匠人",   check:g=>g.workers>=5,        reward:35 },
+
     { id:"quality50",    name:"精益求精",     desc:"单件品质累计达50",check:g=>g.quality>=50,       reward:45 },
+
     { id:"win_game",     name:"器成天下走",   desc:"通关任意难度",    check:g=>g.hasWon,            reward:80 }
+
   ],
+
   INIT: {
+
     silver:80, fame:0, quality:0, day:1, season:0,
+
     clay:12, wood:10, glaze:5, pigment:0, blank:0, paintedBlank:0, ware:0, paintedWare:0, plainWare:0,
+
     workers:2, orders:0, kiln:1,
+
     imperial:false, imperialDay:null,
+
     stamina:100, difficulty:1,
+
     totalFires:0, achievements:[], hasWon:false, wonAtDay:0,
+
     tax豁免:false, _nextFireBonus:0, _fireRateBonus:0,
+
     merchantFavor:0, imperialFavor:0, conscriptCount:0,_orderBonus:0,gameOver:false,_haremTriggered:false,_belowWageDays:0,
+
     craftLevel:0,
+
     orderDeadline:0, orderAccepted:false,
+
     generation:1, familyName:"王", executionPending:false,
+
     craftsmanship:1.0, deathCause:""
+
   },
+
   SAVE_KEY:"qicheng_save_v2"
+
 };
 
+
+
 const SEASONS = [
+
   { name:"春", desc:"风和日暖，晒坯顺遂",     woodExtra:0, qualityBonus:0, produceSlow:false },
+
   { name:"夏", desc:"梅雨渐起，坯体晾晒变慢", woodExtra:0, qualityBonus:0, produceSlow:true  },
+
   { name:"秋", desc:"柴火干爽，窑温更稳",     woodExtra:0, qualityBonus:2, produceSlow:false },
+
   { name:"冬", desc:"寒风入窑，柴火消耗增加", woodExtra:1, qualityBonus:0, produceSlow:false }
+
 ];
 
+
+
 // ======================== 游戏状态 ========================
+
 class GameState {
+
   constructor() { this.reset(); }
+
   reset() {
+
     for (const k of Object.keys(CONFIG.INIT)) this[k] = CONFIG.INIT[k];
+
   }
+
   load() {
+
     try {
+
       const raw = localStorage.getItem(CONFIG.SAVE_KEY);
+
       if (!raw) return false;
+
       Object.assign(this, JSON.parse(raw));
+
       return true;
+
     } catch { return false; }
+
   }
+
   save() {
+
     try { localStorage.setItem(CONFIG.SAVE_KEY, JSON.stringify(this)); return true; }
+
     catch { return false; }
+
   }
+
   get seasonInfo() { return SEASONS[this.season]; }
+
   get orderNeed() { return CONFIG.ORDER.baseNeed + this.orders; }
+
   get orderSilver() { return CONFIG.ORDER.baseSilver + this.orders * CONFIG.ORDER.silverPerOrder; }
+
   get imperialRemaining() {
+
     if (!this.imperial || this.imperialDay === null) return 0;
+
     return CONFIG.IMPERIAL.timeLimit - (this.day - this.imperialDay);
+
   }
+
   get imperialExpired() { return this.imperial && this.imperialRemaining <= 0; }
+
   get fireWoodCost() { return CONFIG.FIRE.woodBase + this.seasonInfo.woodExtra; }
+
   get diffConfig() { return CONFIG.DIFFICULTY[this.difficulty]; }
+
   get fireSuccessRate() {
+
     let r = CONFIG.FIRE.baseRate + this.kiln * CONFIG.FIRE.kilnRateBonus + this.workers * CONFIG.FIRE.workerRateBonus;
+
     // Seasonal effects
+
     if (this.seasonInfo.qualityBonus > 0) r += CONFIG.FIRE.autumnRateBonus;
+
     if (this.seasonInfo.woodExtra > 0) r -= CONFIG.FIRE.winterRatePenalty;
+
     // Weather: summer dry air +5%, winter damp air -5%
+
     if (this.season === 1) r += 0.05;  // summer
+
     if (this.season === 3) r -= 0.05;  // winter
+
     // Temporary bonus (events, taoist)
+
     if (this._fireRateBonus > 0) { r += this._fireRateBonus; this._fireRateBonus = 0; }
+
     return Math.min(r, CONFIG.FIRE.maxRate);
+
   }
+
   get isTaxDay() { return this.day > 1 && this.day % CONFIG.TAX.interval === 0; }
+
   get isWin() { return !this.hasWon && this.orders >= this.diffConfig.winOrders; }
+
   get staminaLow() { return this.stamina < CONFIG.STAMINA.lowThreshold; }
+
 }
+
+
 
 // ======================== DOM & UI ========================
+
 const $$ = {};
+
 document.querySelectorAll("[id]").forEach(el => { $$[el.id] = el; });
+
 let _toastTimer = null;
+
 function showToast(msg, isGood) {
+
   $$.toast.textContent = msg;
+
   $$.toast.style.color = isGood === false ? "#e07060" : "#f7e8c4";
+
   $$.toast.classList.add("show");
+
   clearTimeout(_toastTimer);
+
   _toastTimer = setTimeout(() => $$.toast.classList.remove("show"), 2000);
+
 }
+
 function addLog(msg) {
+
   $$.log.innerHTML = "第" + G.day + "日 · " + msg + "<br>" + $$.log.innerHTML;
+
 }
+
+
 
 // ======================== 实例 ========================
+
 const G = new GameState();
 
+
+
 // ======================== 成就系统 ========================
+
 let _achieveVisible = false;
+
 function toggleAchievements() {
+
   _achieveVisible = !_achieveVisible;
+
   $$.achieveList.style.display = _achieveVisible ? "block" : "none";
+
   renderAchievements();
+
 }
+
 function renderAchievements() {
+
   if (!_achieveVisible) return;
+
   let html = "";
+
   for (const a of CONFIG.ACHIEVEMENTS) {
+
     const done = G.achievements.includes(a.id);
+
     html += "<div class=\"achieve-item " + (done ? "achieve-done" : "achieve-locked") + "\">";
+
     html += "<span>" + (done ? "◆ " : "◇ ") + a.name + " — " + a.desc + "</span>";
+
     html += "<span>" + (done ? "已完成" : (a.check(G) ? "可领取！" : "")) + "</span>";
+
     html += "</div>";
+
   }
+
   $$.achieveList.innerHTML = html;
+
 }
+
 function checkAchievements() {
+
   for (const a of CONFIG.ACHIEVEMENTS) {
+
     if (G.achievements.includes(a.id)) continue;
+
     if (a.check(G)) {
+
       G.achievements.push(a.id);
+
       G.silver += a.reward;
+
       addLog("🏆 成就达成：" + a.name + "，获 " + a.reward + " 银！");
+
       showToast("🏆 " + a.name + "！+" + a.reward + "银", true);
+
       G.save();
+
     }
+
   }
+
 }
+
+
+
 
 
 // ======================== 商人系统 ========================
+
 function showMerchant() {
+
   var c = document.getElementById("merchantCard");
+
   c.classList.remove("collapsed");
+
   renderMerchant();
-}
-function closeMerchant() {}
-function renderMerchant() {
-  if (document.getElementById("merchantCard").classList.contains("collapsed")) return;
-  var f = G.merchantFavor || 0;
-  var disc = Math.max(0.6, 1 - f / 200);
-  var sdisc = Math.min(1.4, 1 + (100 - f) / 200);
-  document.getElementById("mFavor").textContent = f;
-  document.getElementById("mDisc").textContent = Math.floor((1-disc)*100) + "%";
-  var items = [
-    {name:"高岭土", id:"clay", buy:Math.floor(8*disc), sell:Math.floor(3*sdisc)},
-    {name:"松柴", id:"wood", buy:Math.floor(6*disc), sell:Math.floor(2*sdisc)},
-    {name:"釉料", id:"glaze", buy:Math.floor(10*disc), sell:Math.floor(4*sdisc)},
-    {name:"颜料", id:"pigment", buy:Math.floor(12*disc), sell:Math.floor(5*sdisc)},
-    {name:"素坯（即用）", id:"blank", buy:Math.floor(18*disc), sell:Math.floor(8*sdisc)},
-  ];
-  var h = "";
-  for (var i=0;i<items.length;i++) {
-    var it = items[i];
-    h += "<div style=\"padding:4px 0;border-bottom:1px dotted #b7a47b;display:flex;justify-content:space-between;align-items:center\">";
-    h += "<span>" + it.name + " · 库存:" + (G[it.id]||0) + "</span>";
-    h += "<span><button onclick=\"buyResource('"+it.id+"',"+it.buy+")\" style=\"font-size:11px;padding:2px 6px\">买"+it.buy+"银</button> ";
-    h += "<button onclick=\"sellResource('"+it.id+"',"+it.sell+")\" style=\"font-size:11px;padding:2px 6px\">卖"+it.sell+"银</button></span>";
-    h += "</div>";
-  }
-  document.getElementById("merchantList").innerHTML = h;
-}
-function buyResource(id, price) {
-  if (G.silver < price) return showToast("银两不足", false);
-  G.silver -= price;
-  G[id] = (G[id]||0) + 1;
-  G.merchantFavor = Math.max(0, (G.merchantFavor||0) - 1);
-  renderMerchant(); render();
-}
-function sellResource(id, price) {
-  if ((G[id]||0) < 1) return showToast("库存不足", false);
-  G[id]--;
-  G.silver += price;
-  G.merchantFavor = Math.min(100, (G.merchantFavor||0) + 1);
-  renderMerchant(); render();
+
 }
 
-// ======================== 渲染 ========================
-function render() {
-  for (const k of Object.keys(CONFIG.INIT)) {
-    if ($$[k]) $$[k].textContent = G[k];
+function closeMerchant() {}
+
+function renderMerchant() {
+
+  if (document.getElementById("merchantCard").classList.contains("collapsed")) return;
+
+  var f = G.merchantFavor || 0;
+
+  var disc = Math.max(0.6, 1 - f / 200);
+
+  var sdisc = Math.min(1.4, 1 + (100 - f) / 200);
+
+  document.getElementById("mFavor").textContent = f;
+
+  document.getElementById("mDisc").textContent = Math.floor((1-disc)*100) + "%";
+
+  var items = [
+
+    {name:"高岭土", id:"clay", buy:Math.floor(8*disc), sell:Math.floor(3*sdisc)},
+
+    {name:"松柴", id:"wood", buy:Math.floor(6*disc), sell:Math.floor(2*sdisc)},
+
+    {name:"釉料", id:"glaze", buy:Math.floor(10*disc), sell:Math.floor(4*sdisc)},
+
+    {name:"颜料", id:"pigment", buy:Math.floor(12*disc), sell:Math.floor(5*sdisc)},
+
+    {name:"素坯（即用）", id:"blank", buy:Math.floor(18*disc), sell:Math.floor(8*sdisc)},
+
+  ];
+
+  var h = "";
+
+  for (var i=0;i<items.length;i++) {
+
+    var it = items[i];
+
+    h += "<div style=\"padding:4px 0;border-bottom:1px dotted #b7a47b;display:flex;justify-content:space-between;align-items:center\">";
+
+    h += "<span>" + it.name + " · 库存:" + (G[it.id]||0) + "</span>";
+
+    h += "<span><button onclick=\"buyResource('"+it.id+"',"+it.buy+")\" style=\"font-size:11px;padding:2px 6px\">买"+it.buy+"银</button> ";
+
+    h += "<button onclick=\"sellResource('"+it.id+"',"+it.sell+")\" style=\"font-size:11px;padding:2px 6px\">卖"+it.sell+"银</button></span>";
+
+    h += "</div>";
+
   }
-  // 体力显示
-  if ($$.stamina) $$.stamina.textContent = G.stamina;
-  if ($$.staminaDisplay) $$.staminaDisplay.textContent = G.stamina;
-  // 染料显示
-  if ($$.pigment) $$.pigment.textContent = G.pigment;
-  // 季节
-  const si = G.seasonInfo;
-  if ($$.season) { $$.season.textContent = si.name; }
-  if ($$.weather) { $$.weather.textContent = si.desc; }
-  // 难度显示
-  if ($$.diffDisplay) $$.diffDisplay.textContent = G.diffConfig.name;
-  if ($$.diffBtn) $$.diffBtn.textContent = G.diffConfig.name;
-  if ($$.objDisplay) {
-    if (G.hasWon) {
-      $$.objDisplay.textContent = "已通关！耗时 " + G.wonAtDay + " 天";
-    } else {
-      $$.objDisplay.textContent = "通关：完成 " + G.diffConfig.winOrders + " 单（当前 " + G.orders + "）";
-    }
-  }
-  // 税率信息
-  if ($$.objDisplay && !G.hasWon) {
-    // 在 topbar 显示税率
-  }
-  // 订单
-  let imperialHTML;
-  if (!G.imperial) {
-    imperialHTML = "<div class=\"order-active\">御命（未解锁）：完成 " + CONFIG.ORDER.unlockCount + " 笔市集订单</div>";
-  } else if (G.imperialExpired) {
-    imperialHTML = "<div class=\"order-active danger-text\">御命已过期！尽快度过一日</div>";
-  } else {
-    imperialHTML = "<div class=\"order-active\">御命：成瓷 " + CONFIG.IMPERIAL.wares + " 件，品质≥" + CONFIG.IMPERIAL.qualityMin + "，余 " + G.imperialRemaining + " 日</div>";
-  }
-  if ($$.orders) {
-    $$.orders.innerHTML =
-      "<div>市集订单：成瓷 " + G.orderNeed + " 件 · 报酬 " + G.orderSilver + " 银 · 余" + Math.max(0,(G.orderDeadline||G.day+3)-G.day) + "日</div>" +
-      (G.orderAccepted ? "<div style=\"color:var(--gold)\">已接取（单价+10%）</div>" : "<div style=\"font-size:11px\"><a href=\"#\" onclick=\"acceptOrder();return false\" style=\"color:var(--jade)\">[点击接取]</a> 接取后单价+10%</div>") +
-      "<div>已交付：" + G.orders + "/" + CONFIG.ORDER.unlockCount + " 笔 · 声望 " + G.fame + "</div>" +
-      imperialHTML;
-  }
-  // 烧制成功率
-  const shipBtn = document.querySelector(".ship");
-  if (shipBtn) {
-    var needW = 2 + (G.orders_done || 0);
-    var rew = 45 + (G.orders_done || 0) * 12;
-    var haveW = G.ware || 0;
-    shipBtn.textContent = "交付订单(" + (G.ware || 0) + "/" + needW + " 成瓷 · " + rew + "银)";
-    shipBtn.style.opacity = haveW >= needW ? "1" : ".5";
-  }
-  const fireBtn = document.querySelector(".fire");
-  const upgBtn = document.getElementById("upgradeBtn");
-  const cBtn = document.getElementById("conscriptBtn");
-  if (cBtn) {
-    cBtn.style.display = (G.imperialFavor || 0) >= 10 ? "inline-block" : "none";
-    cBtn.textContent = G.conscriptCount >= 3 ? "强征（民怨）" : "强征劳役";
-    if (G.conscriptCount >= 3) cBtn.style.color = "#a00";
-  }
-  if (upgBtn) {
-    let baseCost = CONFIG.UPGRADE.cost;
-    let isMarginal = G.fireSuccessRate >= 0.85;
-    let displayCost = isMarginal ? Math.floor(baseCost * Math.pow(1.8, G.kiln - 3)) : baseCost;
-    upgBtn.textContent = "升级镇窑 · " + displayCost + "银" + (isMarginal ? " (仅+1%)" : " (+5%)");
-  }
-  if (fireBtn) {
-    let rateText = "成功率 " + Math.round(G.fireSuccessRate * 100) + "%";
-    if (G.stamina < CONFIG.FIRE.staminaCost) rateText += " ⚡体力不足";
-    fireBtn.textContent = "入窑烧制(" + rateText + ")";
-  }
-  // 活动成就列表
-  renderAchievements();
+
+  document.getElementById("merchantList").innerHTML = h;
+
 }
+
+function buyResource(id, price) {
+
+  if (G.silver < price) return showToast("银两不足", false);
+
+  G.silver -= price;
+
+  G[id] = (G[id]||0) + 1;
+
+  G.merchantFavor = Math.max(0, (G.merchantFavor||0) - 1);
+
+  renderMerchant(); render();
+
+}
+
+function sellResource(id, price) {
+
+  if ((G[id]||0) < 1) return showToast("库存不足", false);
+
+  G[id]--;
+
+  G.silver += price;
+
+  G.merchantFavor = Math.min(100, (G.merchantFavor||0) + 1);
+
+  renderMerchant(); render();
+
+}
+
+
+
+// ======================== 渲染 ========================
+
+function render() {
+
+  for (const k of Object.keys(CONFIG.INIT)) {
+
+    if ($$[k]) $$[k].textContent = G[k];
+
+  }
+
+  // 体力显示
+
+  if ($$.stamina) $$.stamina.textContent = G.stamina;
+
+  if ($$.staminaDisplay) $$.staminaDisplay.textContent = G.stamina;
+
+  // 染料显示
+
+  if ($$.pigment) $$.pigment.textContent = G.pigment;
+
+  // 季节
+
+  const si = G.seasonInfo;
+
+  if ($$.season) { $$.season.textContent = si.name; }
+
+  if ($$.weather) { $$.weather.textContent = si.desc; }
+
+  // 难度显示
+
+  if ($$.diffDisplay) $$.diffDisplay.textContent = G.diffConfig.name;
+
+  if ($$.diffBtn) $$.diffBtn.textContent = G.diffConfig.name;
+
+  if ($$.objDisplay) {
+
+    if (G.hasWon) {
+
+      $$.objDisplay.textContent = "已通关！耗时 " + G.wonAtDay + " 天";
+
+    } else {
+
+      $$.objDisplay.textContent = "通关：完成 " + G.diffConfig.winOrders + " 单（当前 " + G.orders + "）";
+
+    }
+
+  }
+
+  // 税率信息
+
+  if ($$.objDisplay && !G.hasWon) {
+
+    // 在 topbar 显示税率
+
+  }
+
+  // 订单
+
+  let imperialHTML;
+
+  if (!G.imperial) {
+
+    imperialHTML = "<div class=\"order-active\">御命（未解锁）：完成 " + CONFIG.ORDER.unlockCount + " 笔市集订单</div>";
+
+  } else if (G.imperialExpired) {
+
+    imperialHTML = "<div class=\"order-active danger-text\">御命已过期！尽快度过一日</div>";
+
+  } else {
+
+    imperialHTML = "<div class=\"order-active\">御命：成瓷 " + CONFIG.IMPERIAL.wares + " 件，品质≥" + CONFIG.IMPERIAL.qualityMin + "，余 " + G.imperialRemaining + " 日</div>";
+
+  }
+
+  if ($$.orders) {
+
+    $$.orders.innerHTML =
+
+      "<div>市集订单：成瓷 " + G.orderNeed + " 件 · 报酬 " + G.orderSilver + " 银 · 余" + Math.max(0,(G.orderDeadline||G.day+3)-G.day) + "日</div>" +
+
+      (G.orderAccepted ? "<div style=\"color:var(--gold)\">已接取（单价+10%）</div>" : "<div style=\"font-size:11px\"><a href=\"#\" onclick=\"acceptOrder();return false\" style=\"color:var(--jade)\">[点击接取]</a> 接取后单价+10%</div>") +
+
+      "<div>已交付：" + G.orders + "/" + CONFIG.ORDER.unlockCount + " 笔 · 声望 " + G.fame + "</div>" +
+
+      imperialHTML;
+
+  }
+
+  // 烧制成功率
+
+  const shipBtn = document.querySelector(".ship");
+
+  if (shipBtn) {
+
+    var needW = 2 + (G.orders_done || 0);
+
+    var rew = 45 + (G.orders_done || 0) * 12;
+
+    var haveW = G.ware || 0;
+
+    shipBtn.textContent = "交付订单(" + (G.ware || 0) + "/" + needW + " 成瓷 · " + rew + "银)";
+
+    shipBtn.style.opacity = haveW >= needW ? "1" : ".5";
+
+  }
+
+  const fireBtn = document.querySelector(".fire");
+
+  const upgBtn = document.getElementById("upgradeBtn");
+
+  const cBtn = document.getElementById("conscriptBtn");
+
+  if (cBtn) {
+
+    cBtn.style.display = (G.imperialFavor || 0) >= 10 ? "inline-block" : "none";
+
+    cBtn.textContent = G.conscriptCount >= 3 ? "强征（民怨）" : "强征劳役";
+
+    if (G.conscriptCount >= 3) cBtn.style.color = "#a00";
+
+  }
+
+  if (upgBtn) {
+
+    let baseCost = CONFIG.UPGRADE.cost;
+
+    let isMarginal = G.fireSuccessRate >= 0.85;
+
+    let displayCost = isMarginal ? Math.floor(baseCost * Math.pow(1.8, G.kiln - 3)) : baseCost;
+
+    upgBtn.textContent = "升级镇窑 · " + displayCost + "银" + (isMarginal ? " (仅+1%)" : " (+5%)");
+
+  }
+
+  if (fireBtn) {
+
+    let rateText = "成功率 " + Math.round(G.fireSuccessRate * 100) + "%";
+
+    if (G.stamina < CONFIG.FIRE.staminaCost) rateText += " ⚡体力不足";
+
+    fireBtn.textContent = "入窑烧制(" + rateText + ")";
+
+  }
+
+  // 活动成就列表
+
+  renderAchievements();
+
+}
+
+
 
 // ======================== 操作函数 ========================
 
+
+
 function gather(type) {
+
   const n = CONFIG.GATHER[type];
+
   if (n === undefined) return;
+
   
+
   if (G.stamina < CONFIG.STAMINA.gatherCost) return showToast("体力不足，无法劳作。", false);
+
   G[type] += n;
+
   // 冬天伐松柴：大雪封山，体力消耗+3
+
   let staminaCost = CONFIG.STAMINA.gatherCost;
+
   if (type === "wood" && G.season === 3) {
+
     staminaCost += 3;
+
     if (G.stamina < staminaCost) return showToast("冬日大雪封山，体力不足无法伐柴。", false);
+
     addLog("冬日大雪封山，伐柴格外艰难。（体力-" + staminaCost + "）");
+
   }
+
   G.stamina -= staminaCost;
+
   const msgs = {
+
     clay:"从高岭山取回 " + n + " 份瓷土。",
+
     wood:"林场送来 " + n + " 捆松柴。",
+
     glaze:"从釉石坡采得 " + n + " 份釉料。",
+
     pigment:"从矿坑采得 " + n + " 份颜料。"
+
   };
+
   addLog(msgs[type]);
+
   showToast(msgs[type]);
+
   G.save(); render();
+
 }
+
+
 
 function produce() {
+
   const p = CONFIG.PRODUCE;
+
   if (G.stamina < p.staminaCost) return showToast("体力不足，拉不动坯。", false);
+
   if (G.clay < p.clayCost || G.glaze < p.glazeCost)
+
     return showToast("原料不足：需 " + p.clayCost + " 瓷土 + " + p.glazeCost + " 釉料。", false);
+
   G.clay -= p.clayCost;
+
   G.glaze -= p.glazeCost;
+
   G.stamina -= p.staminaCost;
+
   const output = (G.workers >= p.workersBonus && !G.seasonInfo.produceSlow) ? p.bonusOutput : 1;
+
   G.blank += output;
+
   const extra = G.seasonInfo.produceSlow ? "（梅雨所困，效率减半）" : "";
+
   addLog("匠人练泥拉坯，制成 " + output + " 件素坯。" + extra);
+
   showToast("制成 " + output + " 件素坯" + (output > 1 ? "！" : "。"));
+
   G.save(); render();
+
 }
+
+
 
 function decorate() {
+
   const d = CONFIG.DECORATE;
+
   if (G.stamina < d.staminaCost) return showToast("体力不足，无法运笔。", false);
+
   if (G.blank < 1 || G.pigment < d.pigmentCost)
+
     return showToast("需要 1 素坯 + 1 颜料才能绘画。", false);
+
   G.blank--;
+
   G.pigment -= d.pigmentCost;
+
   G.stamina -= d.staminaCost;
+
   G.paintedBlank++;
+
   addLog("匠人在素坯上精心绘制，制成彩绘坯 1 件。");
+
   showToast("彩绘坯完成！");
+
   G.save(); render();
+
 }
+
+
 
 function fireKiln() {
+
   const woodNeed = G.fireWoodCost;
+
   if (G.stamina < CONFIG.FIRE.staminaCost) return showToast("体力不足，无法烧窑。", false);
+
   if (G.blank + G.paintedBlank < 1 || G.wood < woodNeed)
+
     return showToast("烧窑需素坯/彩绘坯与 " + woodNeed + " 捆松柴。", false);
 
+
+
   // 消耗
+
   const usePainted = G.paintedBlank > 0;
+
   if (usePainted) { G.paintedBlank--; } else { G.blank--; }
+
   G.wood -= woodNeed;
+
   G.stamina -= CONFIG.FIRE.staminaCost;
 
+
+
   // 成功率判定
+
   const rate = G.fireSuccessRate;
+
   const roll = Math.random();
+
   if (roll > rate) {
+
     addLog("窑火失控，坯体尽毁……损失惨重。");
+
     showToast("烧制失败！", false);
+
     G.save(); render();
+
     return;
+
   }
+
+
 
   G.totalFires++;
+
   G.ware++;
+
   // 分别计数
+
   if (usePainted) { G.paintedWare = (G.paintedWare || 0) + 1; }
+
   else { G.plainWare = (G.plainWare || 0) + 1; }
+
   let q = CONFIG.FIRE.qualityBase + G.kiln + G.seasonInfo.qualityBonus;
+
   if (usePainted) q += CONFIG.DECORATE.qualityBonus;
+
   if (G._nextFireBonus > 0) { q += G._nextFireBonus; G._nextFireBonus = 0; }
+
   G.quality += q;
 
+
+
   let extra = "";
+
   if (G.seasonInfo.qualityBonus > 0) extra = "秋日柴燥，窑温更稳。";
+
   else if (G.seasonInfo.woodExtra > 0) extra = "冬日增柴，方保窑温。";
+
   addLog("窑火三日不熄，出窑成瓷 1 件，品质 +" + q + "。" + extra);
+
   showToast("成瓷出窑，品质 +" + q + "！");
+
   checkAchievements();
+
   G.save(); render();
+
 }
+
+
 
 function deliver() {
+
   if (G.imperialExpired) return showToast("御命已过期，请先度过一日。", false);
 
+
+
   if (G.imperial) {
+
     if (G.ware < CONFIG.IMPERIAL.wares || G.quality < CONFIG.IMPERIAL.qualityMin)
+
       return showToast("御命未达：需 " + CONFIG.IMPERIAL.wares + " 件成瓷且总品质至少 " + CONFIG.IMPERIAL.qualityMin + "。", false);
+
     const n = CONFIG.IMPERIAL.wares;
+
     const deduction = Math.round((G.quality / G.ware) * n);
+
     G.ware -= n;
+
     G.quality -= Math.min(G.quality, deduction);
+
     G.silver += CONFIG.IMPERIAL.silver;
+
     G.fame += CONFIG.IMPERIAL.fame;
+
     G.imperial = false;
+
     G.imperialDay = null;
+
     addLog("御命圆满！官窑题款，声望大振。");
+
     showToast("御命圆满！声望大振！", true);
+
     checkAchievements();
+
     G.save(); render();
+
     return;
+
   }
+
+
 
   const need = G.orderNeed;
+
   if (G.ware < need) return showToast("市集订单还需 " + need + " 件成瓷。", false);
+
   const deduction = Math.round((G.quality / G.ware) * need);
+
   G.ware -= need;
+
   G.quality -= Math.min(G.quality, deduction);
+
   // 皇帝好感加成
+
   let imperialBonus = (G.imperialFavor || 0) >= 10 ? Math.floor(G.orderSilver * 0.10) : 0;
+
   if ((G.imperialFavor || 0) >= 50) imperialBonus = Math.floor(G.orderSilver * 0.20);
+
   // 工艺等级影响单价（高于市面则升值）
+
   var marketLvl = Math.floor((G.day + 6) / 12);
+
   var craftLvlBonus = Math.max(0, G.craftLevel - marketLvl) * 0.03;
+
   if (G.craftLevel < marketLvl) craftLvlBonus = (G.craftLevel - marketLvl) * 0.02;
+
   G.silver += Math.floor(G.orderSilver * (1 + craftLvlBonus));
+
   if (craftLvlBonus > 0) { addLog("工艺领先市面，升值+" + Math.floor(craftLvlBonus*100) + "%"); }
+
   else if (craftLvlBonus < 0) { addLog("工艺落后市面，贬值" + Math.floor(craftLvlBonus*100) + "%"); }
+
   G.silver += imperialBonus;
+
   if (G.orderAccepted) {
+
     let acceptBonus = Math.floor(G.orderSilver * 0.10);
+
     G.silver += acceptBonus;
+
     addLog("接取订单额外溢价+" + acceptBonus + "银");
+
     G.orderAccepted = false;
+
     G.orderDeadline = G.day + 3;
+
   }
+
   // 突发事件：订单热潮加成
+
   // 家族工艺传承加成
+
   if (G.craftsmanship > 1.0) {
+
     let craftBonus = Math.floor(G.orderSilver * (G.craftsmanship - 1.0));
+
     G.silver += craftBonus;
+
     addLog("家族工艺传承+" + craftBonus + "银（工匠世家积累）");
+
   }
+
   if (G._orderBonus > 0) {
+
     let eventBonus = Math.floor(G.orderSilver * G._orderBonus);
+
     G.silver += eventBonus;
+
     addLog("订单热潮额外溢价+" + eventBonus + "银");
+
     G._orderBonus = 0;
+
   }
+
     G.silver += acceptBonus;
+
     addLog("接取订单额外溢价+" + acceptBonus + "银");
+
     G.orderAccepted = false;
+
     G.orderDeadline = G.day + 3;
+
   }
+
   if (imperialBonus > 0) { addLog("皇帝加持，订单溢价+" + imperialBonus + "银"); }
+
   // 皇帝好感上升
+
   if ((G.imperialFavor || 0) >= 1) {
+
     G.imperialFavor = Math.min(100, (G.imperialFavor || 0) + 1);
+
   if (G.imperialFavor >= 100 && !G._haremTriggered) {
+
     G._haremTriggered = true;
+
     addLog("皇帝龙颜大悦，将当代窑主纳入后宫。家族获赐「御窑世家」金匾。");
+
     showToast("皇帝纳入后宫！特殊结局", true);
+
     G.silver += 500;
+
     G.craftsmanship = 2.0;
+
   }
+
   }
+
   G.fame += CONFIG.ORDER.famePer;
+
   // 彩绘比例影响商人好感
+
   let totalW = (G.paintedWare || 0) + (G.plainWare || 0);
+
   let paintRatio = totalW > 0 ? (G.paintedWare || 0) / totalW : 0;
+
   let favorBonus = paintRatio >= 0.8 ? 3 : (paintRatio >= 0.5 ? 2 : (paintRatio >= 0.2 ? 1 : 0));
+
   // 如果全部是彩绘瓷，商人额外好感
+
   if (paintRatio >= 1.0) { favorBonus = 4; G.silver += Math.floor(G.orderSilver * 0.15); }
+
   // 消费对应数量的成瓷（按比例扣减）
+
   let paintedDeliver = Math.min(G.paintedWare || 0, Math.ceil(need * paintRatio));
+
   let plainDeliver = need - paintedDeliver;
+
   G.paintedWare = Math.max(0, (G.paintedWare || 0) - paintedDeliver);
+
   G.plainWare = Math.max(0, (G.plainWare || 0) - plainDeliver);
+
   if (favorBonus > 0) { addLog("彩绘瓷器获得商人青睐。（好感+" + favorBonus + (paintRatio >= 1.0 ? "，额外赏银" : "") + "）"); }
+
   let oldFavor = G.merchantFavor || 0;
+
   G.merchantFavor = Math.min(100, oldFavor + favorBonus);
+
   // 商人好感满 → 解锁皇帝好感
+
   if (oldFavor < 100 && G.merchantFavor >= 100 && (G.imperialFavor || 0) === 0) {
+
     G.imperialFavor = 1;
+
     addLog("商贾云集，名声传入宫中。皇帝开始关注你的瓷窑。");
+
     showToast("皇帝开始关注你！");
+
   }
+
   // 商人好感影响订单单价
+
   let merchantBonus = Math.floor((G.merchantFavor || 0) * 0.01 * G.orderSilver);
+
   G.silver += merchantBonus;
+
   if (merchantBonus > 0) { addLog("商人好感带来的溢价：" + merchantBonus + "银"); }
+
   G.orders++;
 
+
+
   if (G.orders >= CONFIG.ORDER.unlockCount && !G.imperial) {
+
     G.imperial = true;
+
     G.imperialDay = G.day;
+
     addLog("三笔市集订单告成，御命已至！限时五日。");
+
     showToast("御命已至！");
+
   } else {
+
     addLog("订单交付，得银两 " + G.orderSilver + "。");
+
     showToast("订单完成！");
+
   }
+
   checkAchievements();
 
+
+
   // 通关检查
+
   if (G.isWin) {
+
     G.hasWon = true;
+
     G.wonAtDay = G.day;
+
     addLog("🎉 通关！耗时 " + G.day + " 天，掌柜名扬天下！");
+
     showToast("🎉 器成天下走！通关达成！", true);
+
     checkAchievements();
+
   }
 
+
+
   G.save(); render();
+
+
 
 function hire() {
+
   if (G.silver < G.diffConfig.hireCost) return showToast("招募匠人需 " + G.diffConfig.hireCost + " 银。", false);
+
   G.workers++;
+
   addLog("新匠人入坊，生产更快。");
+
   showToast("新匠人入坊！");
+
   G.save(); render();
+
 }
+
+
 
 function upgrade() {
+
   let cost = Math.floor(CONFIG.UPGRADE.cost * G.diffConfig.upgradeMul);
+
   let isMarginal = G.fireSuccessRate >= 0.85;
+
   if (isMarginal) {
+
     // 边际效应：85%后费用指数上升，每次仅+1%
+
     cost = Math.floor(cost * Math.pow(1.8, G.kiln - 3));
+
     if (G.silver < cost) return showToast("窑炉已达高水准，升级需 " + cost + " 银。", false);
+
     G.silver -= cost;
+
     G.kiln += 0.01;  // 边际效应：每次仅提升1%
+
     addLog("镇窑精修微调，火候略有精进。（花费" + cost + "银，成功率+1%）");
+
     showToast("镇窑精修！成功率+1%");
+
   } else {
+
     G.silver -= cost;
+
     G.kiln++;
+
     addLog("镇窑加高一尺，火候与品质皆有提升。");
+
     showToast("镇窑升级！");
+
   }
+
   G.kiln = Math.round(G.kiln * 100) / 100;  // 防止浮点数精度问题
+
   G.save(); render();
+
 }
 
+
+
 function nextDay() {
+
   G.day++;
 
+
+
   // ---- 税收 ----
+
   if (G.isTaxDay && !G.tax豁免) {
+
     const tax = Math.floor(G.silver * G.diffConfig.taxRate);
+
     if (tax > 0) {
+
       G.silver -= tax;
+
       addLog("🏛️ 官府课税 " + tax + " 银。（税率 " + Math.round(G.diffConfig.taxRate * 100) + "%）");
+
       showToast("缴税 " + tax + " 银", false);
+
     }
+
   }
+
   G.tax豁免 = false;
 
+
+
   // ---- 御命超时 ----
+
   if (G.imperialExpired) {
+
     G.fame = Math.max(0, G.fame - CONFIG.IMPERIAL.timeoutPenalty);
+
     G.imperial = false;
+
     G.imperialDay = null;
+
     addLog("御命逾期！声望下降 " + CONFIG.IMPERIAL.timeoutPenalty + "。");
+
     showToast("御命逾期，声望受损！", false);
+
   }
+
+
 
   // ---- 季节 ----
+
   if (G.day % 4 === 1) {
+
     G.season = (G.season + 1) % 4;
+
     addLog("节令转换，已入" + G.seasonInfo.name + "。" + G.seasonInfo.desc);
+
     showToast("入" + G.seasonInfo.name + "。");
+
   } else {
+
     addLog("一日经营结束，账册已记。");
+
     showToast("一日已过。");
+
   }
+
+
 
   // ---- 商人来访（好感越高越频繁）----
+
   let visitChance = 0.10 + ((G.merchantFavor || 0) / 100) * 0.25;
+
   if (Math.random() < visitChance) {
+
     let bonus = Math.floor(15 * (1 + (G.merchantFavor || 0) / 100));
+
     G.silver += bonus;
+
     addLog("商人慕名而来，高价求购瓷器。（+" + bonus + "银）");
+
     showToast("商人来访！+" + bonus + "银");
+
   }
+
   
+
   // ---- 体力恢复 ----
+
   // 订单时效检查（每3天刷新）
+
   if (G.day % 3 === 0) {
+
     if (G.orderAccepted) {
+
       G.merchantFavor = Math.max(0, (G.merchantFavor || 0) - 3);
+
       addLog("接取订单未按时交付，商人好感下降。");
+
     }
+
     G.orderDeadline = G.day + 3;
+
     G.orderAccepted = false;
+
   }
+
   
+
   // 每日小彩蛋
+
   var eggs = [
+
     "听说皇帝的儿子也通倭…",
+
     "景德镇的猫也会烧瓷，昨晚又打碎了一件青花。",
+
     "今天的窑火格外红灿，师傅说这是窑神在笑。",
+
     "高岭山上有一只白鹤，据说它已经看了三百年。",
+
     "昌江的鱼今天也在听瓷声——叮——那是青花的声音。",
+
     "隔壁窑口的老师傅说，他年轻时见过窑变，那件瓷现在还供在御窑博物馆。",
+
     "一个波斯商人出价三百两买你昨天烧的那件瓷，你没卖，因为那件是次品。",
+
     "镇上的小孩说你的窑烟最好看，像一条青龙。",
+
     "有个道士路过你的窑口，说此地风水极佳，适合烧天青。",
+
     "篁岭的晒秋开始了，你父亲在世时总说那是景德镇最美的季节。"
+
   ];
+
   if (Math.random() < 0.70) {
+
     document.getElementById("eggText").textContent = eggs[Math.floor(Math.random()*eggs.length)];
+
     document.getElementById("eggOverlay").style.display = "block";
+
     document.getElementById("eggPopup").style.display = "block";
+
   }
+
   
+
   // 皇帝好感-100 → 满门抄斩
+
   if ((G.imperialFavor || 0) <= -100) {
+
     addLog("皇帝震怒，满门抄斩！游戏结束。");
+
     showToast("满门抄斩！GAME OVER", false);
+
     G.gameOver = true;
+
     setTimeout(function(){ resetGame(); }, 3000);
+
     G.save(); render();
+
     return;
+
   }
+
   // 窑工工资
+
   var wageMin = Math.floor((G.maxStamina||100) * 0.3);
+
   var wage = (G.workers||2) * 3;
+
   if (G.silver >= wage) {
+
     G.silver -= wage;
+
     G._belowWageDays = 0;
+
   } else {
+
     G._belowWageDays = (G._belowWageDays||0) + 1;
+
     addLog("银两告急，发不出工钱。（连续" + G._belowWageDays + "天）");
+
     if (G._belowWageDays >= 3) {
+
       G.maxStamina = Math.max(30, (G.maxStamina||100) - 10);
+
       G._belowWageDays = 0;
+
       addLog("银两长期不足，窑工出走。体力上限-10");
+
     }
+
   }
+
   G.stamina = Math.min(G.maxStamina || CONFIG.STAMINA.max, G.stamina + G.diffConfig.staminaRestore);
 
+
+
   // ---- 随机事件 (25% 概率) ----
+
   if (Math.random() < 0.25) {
+
     const evt = CONFIG.EVENTS[Math.floor(Math.random() * CONFIG.EVENTS.length)];
+
     evt.effect(G);
+
     addLog("⚡ " + evt.name + "：" + evt.desc);
+
     showToast("⚡ " + evt.name, evt.good);
+
   }
+
+
 
   checkAchievements();
 
+
+
   // 通关检查
+
   if (G.isWin) {
+
     G.hasWon = true;
+
     G.wonAtDay = G.day;
+
     addLog("🎉 通关！耗时 " + G.day + " 天，掌柜名扬天下！");
+
     showToast("🎉 器成天下走！通关达成！", true);
+
     checkAchievements();
+
   }
 
+
+
   G.save(); render();
+
 }
+
+
 
 function cycleDifficulty() {
+
   G.difficulty = (G.difficulty + 1) % CONFIG.DIFFICULTY.length;
+
   const d = G.diffConfig;
+
   showToast("难度：" + d.name + " — " + d.desc);
+
   render();
+
 }
+
+
 
 function acceptOrder() {
+
   if (G.orderAccepted) return;
+
   G.orderAccepted = true;
+
   showToast("订单已接取，单价+10%");
+
   render();
+
 }
+
 function hireTaoist() {
+
   if (G.silver < 30) return showToast("银两不足，请道士需 30 银。", false);
+
   G.silver -= 30;
+
   G._fireRateBonus = 0.10;
+
   addLog("请来老道士开窑作法，后几日窑火格外稳定。");
+
   showToast("道士开窑！烧窑成功率+10%");
+
   render();
+
 }
+
 function doConscript() {
+
   if ((G.imperialFavor || 0) < 10) return;
+
   G.conscriptCount = (G.conscriptCount || 0) + 1;
+
   if (G.conscriptCount >= 5) {
+
     addLog("民变！窑工捣毁窑炉。游戏结束。");
+
     showToast("民变毁窑！GAME OVER", false);
+
     G.gameOver = true;
+
     setTimeout(function(){ resetGame(); }, 3000);
+
     G.save(); render();
+
     return;
+
   }
+
   if (G.conscriptCount >= 3) {
+
     G.imperialFavor = Math.max(-50, (G.imperialFavor || 0) - 30);
+
     addLog("多次强征劳役，民怨沸腾。皇帝好感大降。");
+
     showToast("民怨沸腾！", false);
+
   } else {
+
     G.max_stamina = (G.max_stamina || G.stamina) + 20;
+
     G.stamina = G.max_stamina;
+
     addLog("奉旨强征劳役，体力上限永久+20。");
+
     showToast("强征！体力上限+20");
+
   }
+
   render();
+
 }
+
+
 
 function resetGame() {
+
   G.reset();
+
   G._fireRateBonus = 0; // 保留难度设置
+
   // 恢复难度（因为 reset 覆盖了）
+
   const savedDiff = G.difficulty;
+
   G.reset();
+
   G.difficulty = savedDiff;
+
   $$.log.textContent = "新卷展开。掌柜，请起作。";
+
   showToast("新卷展开。");
+
   G.save(); render();
+
 }
+
+
 
 // ======================== 反馈列表 ========================
+
 function loadFeedbackList() {
+
   var el = document.getElementById("fbList");
+
   if (!el) return;
+
   var localList = JSON.parse(localStorage.getItem("fb_local") || "[]");
+
   var html = "";
+
   for (var i = 0; i < localList.length; i++) {
+
     var d = new Date(localList[i].time).toLocaleDateString();
+
     html += '<div style="font-size:12px;padding:3px 0;border-bottom:1px dotted #b7a47b;color:#887a60">△ <em>本地</em> ' + localList[i].content.slice(0, 50) + ' <span style="float:right;font-size:11px">' + d + '</span></div>';
+
   }
+
   el.innerHTML = html || "加载中...";
 
+
+
   fetch("https://api.github.com/repos/GeniusWang23/qicheng-tianxia/issues?labels=feedback&state=all&sort=created&direction=desc&per_page=20")
+
     .then(function(r) { return r.json(); })
+
     .then(function(issues) {
+
       if (!issues || !issues.length) { if (!html) el.innerHTML = "暂无反馈"; return; }
+
       for (var i = 0; i < issues.length; i++) {
+
         var iss = issues[i];
+
         var icon = iss.state === "open" ? "△" : "✓";
+
         var d = new Date(iss.created_at).toLocaleDateString();
+
         var t = (iss.title || "").slice(0, 50);
+
         html += '<div style="font-size:12px;padding:3px 0;border-bottom:1px dotted #b7a47b"><span style="color:' + (iss.state==="open"?"var(--red)":"var(--jade)") + '">' + icon + '</span> <a href="' + iss.html_url + '" target="_blank" style="color:#4a3d28;text-decoration:none">' + t + '</a> <span style="float:right;font-size:11px;color:#887a60">' + d + '</span></div>';
+
       }
+
       el.innerHTML = html;
+
     })
+
     .catch(function() { if (!html) el.innerHTML = "暂无反馈"; });
+
 }
+
+
 
 // ======================== 初始化 ========================
+
 if (G.load()) {
+
   addLog("续写旧卷，掌柜请继续经营。");
+
   showToast("存档已恢复。");
+
 } else {
+
   $$.log.textContent = "新卷展开。掌柜，请起作。";
+
 }
+
+
 
 // ======================== 说明 & 反馈 ========================
+
 function toggleCard(id) {
+
   var el = document.getElementById(id);
+
   if (!el) return;
+
   el.classList.toggle("collapsed");
+
   // Auto-render merchant when expanded
+
   if (id === "merchantCard" && !el.classList.contains("collapsed")) {
+
     if (typeof renderMerchant === "function") renderMerchant();
+
   }
+
 }
+
+
 
 function showHelp() {
+
   document.getElementById("helpOverlay").style.display = "block";
+
   document.getElementById("helpBox").style.display = "block";
+
 }
+
 function closeHelp() {
+
   document.getElementById("helpOverlay").style.display = "none";
+
   document.getElementById("helpBox").style.display = "none";
+
 }
+
 function showFeedback() {
+
   document.getElementById("feedbackOverlay").style.display = "block";
+
   document.getElementById("feedbackBox").style.display = "block";
+
   document.getElementById("fbStatus").innerHTML = "";
+
   loadFeedbackList();
+
 }
+
 function closeFeedback() {
+
   document.getElementById("feedbackOverlay").style.display = "none";
+
   document.getElementById("feedbackBox").style.display = "none";
+
 }
+
 function submitFeedback() {
+
   var content = document.getElementById("fbContent").value.trim();
+
   if (!content) {
+
     document.getElementById("fbStatus").innerHTML = '<span style="color:var(--red)">请填写建议内容</span>';
+
     return;
+
   }
+
   document.getElementById("fbSubmitBtn").disabled = true;
+
   document.getElementById("fbStatus").innerHTML = "提交中...";
+
   var fb = { content: content, time: new Date().toISOString() };
 
+
+
   function done(msg) {
+
     document.getElementById("fbStatus").innerHTML = '<div class="feedback-success">' + msg + '</div>';
+
     document.getElementById("fbContent").value = "";
+
     document.getElementById("fbSubmitBtn").disabled = false;
+
   }
+
+
 
   // 1) Try local API
+
   fetch("/api/feedback", { method:"POST", headers:{"Content-Type":"application/json"}, body: JSON.stringify(fb) })
+
     .then(function(r) {
+
       if (r.ok) { done("反馈已保存到 feedback/ 目录"); return; }
+
       tryIssue(fb, done);
+
     })
+
     .catch(function() { tryIssue(fb, done); });
+
 }
+
 function tryIssue(fb, done) {
+
   var token = (typeof GITHUB_TOKEN !== 'undefined' && GITHUB_TOKEN) ? GITHUB_TOKEN : null;
+
   if (!token) { saveLocal(fb, done); return; }
+
   fetch("https://api.github.com/repos/GeniusWang23/qicheng-tianxia/issues", {
+
     method: "POST", headers: { "Authorization": "Bearer " + token, "Content-Type": "application/json" },
+
     body: JSON.stringify({ title: "游戏反馈: " + fb.content.slice(0, 40), body: "时间: " + new Date().toLocaleString() + "\n\n" + fb.content, labels: ["feedback"] })
+
   })
+
   .then(function(r) { if (r.ok) { done("反馈已提交到 GitHub Issues"); } else { saveLocal(fb, done); } })
+
   .catch(function() { saveLocal(fb, done); });
+
 }
+
 function saveLocal(fb, done) {
+
   var list = JSON.parse(localStorage.getItem("fb_local") || "[]");
+
   list.unshift(fb);
+
   localStorage.setItem("fb_local", JSON.stringify(list));
+
   done("反馈已保存到本地");
+
 }
+
+
 
 // Save indicator update
+
 function updateSaveIndicator() {
+
   var el = document.getElementById("saveIndicator");
+
   if (el) {
+
     el.textContent = "\u2713 \u5df2\u81ea\u52a8\u5b58\u6863";
+
     el.style.opacity = "1";
+
     setTimeout(function() { el.style.opacity = ".6"; }, 2000);
+
   }
+
 }
+
 // Override G.save to show indicator
+
 var _origSave = G.save.bind(G);
+
 G.save = function() {
+
   _origSave();
+
   updateSaveIndicator();
+
 };
 
+
+
 render();
+// ======================== 地图拖拽 ========================
+(function() {
+  var c, d=false, sx, sy, sl, st;
+  function init() {
+    c = document.getElementById("mapContainer");
+    if (!c) return setTimeout(init, 500);
+    c.addEventListener("mousedown", function(e) {
+      if (e.target.closest("button")) return;
+      d=true; sx=e.pageX-c.offsetLeft; sy=e.pageY-c.offsetTop; sl=c.scrollLeft; st=c.scrollTop;
+    });
+    document.addEventListener("mousemove", function(e) {
+      if (!d) return;
+      e.preventDefault();
+      c.scrollLeft=sl-(e.pageX-c.offsetLeft-sx);
+      c.scrollTop=st-(e.pageY-c.offsetTop-sy);
+    });
+    document.addEventListener("mouseup", function() { d=false; });
+  }
+  document.addEventListener("DOMContentLoaded", init);
+})();
+
 </script>
+
+
 
 </body></html>
