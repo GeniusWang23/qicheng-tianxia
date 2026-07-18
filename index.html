@@ -255,7 +255,12 @@ const CONFIG = {
     { id:"kiln_leak",   name:"窑顶漏雨",     desc:"连夜大雨，窑顶渗水，修理破费。",good:false,effect: g=>{g.silver=Math.max(0,g.silver-20)} },
     { id:"bonus_fire",  name:"窑神庇佑",     desc:"祭窑神后火候极佳，下窑品质+5。",good:true, effect: g=>{g._nextFireBonus=5} },
     { id:"flood",       name:"昌江汛情",     desc:"江水暴涨，码头冲毁部分存货。",good:false, effect: g=>{g.ware=Math.max(0,g.ware-1)} },
-    { id:"tongbin",     name:"童宾祭窑",     desc:"祭拜窑神童宾，窑火格外旺盛。下次烧窑成功率+15%。",good:true,  effect: g=>{g._fireRateBonus=0.15} }
+    { id:"tongbin",     name:"童宾祭窑",     desc:"祭拜窑神童宾，窑火格外旺盛。下次烧窑成功率+15%。",good:true,  effect: g=>{g._fireRateBonus=0.15} },
+    { id:"revolt",      name:"民变",           desc:"窑工聚众抗议，生产停滞一日。损失银两。",            good:false, effect: g=>{g.silver=Math.max(0,g.silver-40)} },
+    { id:"price_boom",  name:"原料暴涨",       desc:"高岭土矿塌方，原材料价格飙升！损失银两。",         good:false, effect: g=>{g.silver=Math.max(0,g.silver-30)} },
+    { id:"labor_short", name:"劳力短缺",       desc:"附近村庄瘟疫，匠人纷纷告假。体力消耗大增。",      good:false, effect: g=>{g.stamina=Math.max(0,g.stamina-20)} },
+    { id:"order_boom",  name:"订单热潮",       desc:"藩王进京路过，大量求购瓷器。下次订单单价+50%。",   good:true,  effect: g=>{g._orderBonus=0.5} },
+    { id:"typhoon",     name:"飓风过境",       desc:"台风摧毁码头，部分存货被毁。",                     good:false, effect: g=>{g.ware=Math.max(0,g.ware-2)} }
   ],
   ACHIEVEMENTS: [
     { id:"first_fire",   name:"第一把火",     desc:"首次烧窑",        check:g=>g.totalFires>=1,     reward:15 },
@@ -275,9 +280,10 @@ const CONFIG = {
     stamina:100, difficulty:1,
     totalFires:0, achievements:[], hasWon:false, wonAtDay:0,
     tax豁免:false, _nextFireBonus:0, _fireRateBonus:0,
-    merchantFavor:0, imperialFavor:0, conscriptCount:0,
+    merchantFavor:0, imperialFavor:0, conscriptCount:0,_orderBonus:0,
     orderDeadline:0, orderAccepted:false,
-    generation:1, familyName:"王", executionPending:false
+    generation:1, familyName:"王", executionPending:false,
+    craftsmanship:1.0, deathCause:""
   },
   SAVE_KEY:"qicheng_save_v2"
 };
@@ -595,6 +601,24 @@ function deliver() {
     G.orderAccepted = false;
     G.orderDeadline = G.day + 3;
   }
+  // 突发事件：订单热潮加成
+  // 家族工艺传承加成
+  if (G.craftsmanship > 1.0) {
+    let craftBonus = Math.floor(G.orderSilver * (G.craftsmanship - 1.0));
+    G.silver += craftBonus;
+    addLog("家族工艺传承+" + craftBonus + "银（工匠世家积累）");
+  }
+  if (G._orderBonus > 0) {
+    let eventBonus = Math.floor(G.orderSilver * G._orderBonus);
+    G.silver += eventBonus;
+    addLog("订单热潮额外溢价+" + eventBonus + "银");
+    G._orderBonus = 0;
+  }
+    G.silver += acceptBonus;
+    addLog("接取订单额外溢价+" + acceptBonus + "银");
+    G.orderAccepted = false;
+    G.orderDeadline = G.day + 3;
+  }
   if (imperialBonus > 0) { addLog("皇帝加持，订单溢价+" + imperialBonus + "银"); }
   // 皇帝好感上升
   if ((G.imperialFavor || 0) >= 1) {
@@ -732,6 +756,10 @@ function nextDay() {
     G.orderDeadline = G.day + 3;
     G.orderAccepted = false;
   }
+  
+  // 每日小彩蛋
+  var eggs = ["听说皇帝的儿子也通倭","景德镇的猫也会烧瓷","今天的窑火格外红灿","高岭山上有一只白鹤在看你","昌江的鱼今天也在听瓷声"];
+  if (Math.random() < 0.3) { addLog("🐣 " + eggs[Math.floor(Math.random()*eggs.length)]); }
   
   G.stamina = Math.min(CONFIG.STAMINA.max, G.stamina + CONFIG.STAMINA.dayRestore);
 
