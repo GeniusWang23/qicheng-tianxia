@@ -90,19 +90,19 @@ h1{font-family:"ZCOOL XiaoWei";letter-spacing:.11em;margin:0;font-size:22px;font
       <div class="river"></div>
 
       <section class="site mountain"><h2>高岭山</h2><div class="art"><div style="position:absolute;bottom:6px;left:40px;color:#efe8ca;font-size:14px;font-weight:700">高岭山</div></div></section>
-      <button class="node minebtn" onclick="gather('clay')">采高岭土 +6</button>
+      <button class="node minebtn" onclick="gather('clay')">采高岭土 +6 体力-5</button>
 
       <section class="site forest"><h2>松柴林</h2><div class="art"></div></section>
-      <button class="node woodbtn" onclick="gather('wood')">伐松柴 +5</button>
-      <button class="node glazebtn" onclick="gather('glaze')" title="釉料：制作素坯的必需原料">♥ 采釉料 +3</button>
-      <button class="node pigmentbtn" onclick="gather('pigment')" title="颜料：绘画装饰瓷坯用的色料">◆ 采颜料 +3</button>
+      <button class="node woodbtn" onclick="gather('wood')">伐松柴 +5 体力-5</button>
+      <button class="node glazebtn" onclick="gather('glaze')" title="釉料：制作素坯的必需原料">♥ 采釉料 +3 体力-5</button>
+      <button class="node pigmentbtn" onclick="gather('pigment')" title="颜料：绘画装饰瓷坯用的色料">◆ 采颜料 +3 体力-5</button>
 
       <section class="site works"><h2>瓷作坊</h2><div class="art"><div class="shop"><span>练泥坊</span></div><div class="shop"><span>拉坯坊</span></div><div class="shop"><span>画坯坊</span></div><div class="shop"><span>晒坯场</span></div></div></section>
-      <button class="node produce" onclick="produce()">制作坯体</button>
-      <button class="node decoratebtn" onclick="decorate()">绘画装饰</button>
+      <button class="node produce" onclick="produce()">制作坯体 体力-8</button>
+      <button class="node decoratebtn" onclick="decorate()">绘画装饰 体力-6</button>
 
       <section class="site kiln"><h2>镇窑</h2><div class="art"></div></section>
-      <button class="node fire" onclick="fireKiln()">入窑烧制</button>
+      <button class="node fire" onclick="fireKiln()">入窑烧制 体力-12</button>
 
       <section class="site dock"><h2>昌江码头</h2><div class="art"></div></section>
       <button class="node ship" onclick="deliver()">交付订单</button>
@@ -276,6 +276,7 @@ const CONFIG = {
     totalFires:0, achievements:[], hasWon:false, wonAtDay:0,
     tax豁免:false, _nextFireBonus:0, _fireRateBonus:0,
     merchantFavor:0, imperialFavor:0, conscriptCount:0,
+    orderDeadline:0, orderAccepted:false,
     generation:1, familyName:"王", executionPending:false
   },
   SAVE_KEY:"qicheng_save_v2"
@@ -422,7 +423,8 @@ function render() {
   }
   if ($$.orders) {
     $$.orders.innerHTML =
-      "<div>市集订单：成瓷 " + G.orderNeed + " 件 · 报酬 " + G.orderSilver + " 银</div>" +
+      "<div>市集订单：成瓷 " + G.orderNeed + " 件 · 报酬 " + G.orderSilver + " 银 · 余" + Math.max(0,(G.orderDeadline||G.day+3)-G.day) + "日</div>" +
+      (G.orderAccepted ? "<div style=\"color:var(--gold)\">已接取（单价+10%）</div>" : "<div style=\"font-size:11px\"><a href=\"#\" onclick=\"acceptOrder();return false\" style=\"color:var(--jade)\">[点击接取]</a> 接取后单价+10%</div>") +
       "<div>已交付：" + G.orders + "/" + CONFIG.ORDER.unlockCount + " 笔 · 声望 " + G.fame + "</div>" +
       imperialHTML;
   }
@@ -586,6 +588,13 @@ function deliver() {
   let imperialBonus = (G.imperialFavor || 0) >= 10 ? Math.floor(G.orderSilver * 0.10) : 0;
   if ((G.imperialFavor || 0) >= 50) imperialBonus = Math.floor(G.orderSilver * 0.20);
   G.silver += G.orderSilver + imperialBonus;
+  if (G.orderAccepted) {
+    let acceptBonus = Math.floor(G.orderSilver * 0.10);
+    G.silver += acceptBonus;
+    addLog("接取订单额外溢价+" + acceptBonus + "银");
+    G.orderAccepted = false;
+    G.orderDeadline = G.day + 3;
+  }
   if (imperialBonus > 0) { addLog("皇帝加持，订单溢价+" + imperialBonus + "银"); }
   // 皇帝好感上升
   if ((G.imperialFavor || 0) >= 1) {
@@ -714,6 +723,16 @@ function nextDay() {
   }
   
   // ---- 体力恢复 ----
+  // 订单时效检查（每3天刷新）
+  if (G.day % 3 === 0) {
+    if (G.orderAccepted) {
+      G.merchantFavor = Math.max(0, (G.merchantFavor || 0) - 3);
+      addLog("接取订单未按时交付，商人好感下降。");
+    }
+    G.orderDeadline = G.day + 3;
+    G.orderAccepted = false;
+  }
+  
   G.stamina = Math.min(CONFIG.STAMINA.max, G.stamina + CONFIG.STAMINA.dayRestore);
 
   // ---- 随机事件 (25% 概率) ----
@@ -745,6 +764,12 @@ function cycleDifficulty() {
   render();
 }
 
+function acceptOrder() {
+  if (G.orderAccepted) return;
+  G.orderAccepted = true;
+  showToast("订单已接取，单价+10%");
+  render();
+}
 function hireTaoist() {
   if (G.silver < 30) return showToast("银两不足，请道士需 30 银。", false);
   G.silver -= 30;
