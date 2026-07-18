@@ -18,16 +18,16 @@ h1{font-family:"ZCOOL XiaoWei";letter-spacing:.11em;margin:0;font-size:22px;font
 
 /* Map area - scrollable */
 .map-container{flex:1;overflow:hidden;position:relative;background:linear-gradient(#c1ddcf 0 30%,#e9dfc3 30%);min-height:300px;cursor:grab}.map-container:active{cursor:grabbing}.map-container.dragging{cursor:grabbing}
-.map{width:1800px;height:100%;position:relative;background:linear-gradient(135deg,transparent 25%,#718d7030 25% 27%,transparent 27% 50%,#718d7030 50% 52%,transparent 52%);background-size:48px 48px;min-height:520px}
-.river{position:absolute;right:-100px;top:180px;width:1200px;height:160px;background:#5f9e9e;border-radius:45% 0 0 48%;transform:rotate(-5deg);border-block:7px double #e4e0bd;opacity:.9}
+.map{width:2200px;height:100%;position:relative;background:linear-gradient(135deg,transparent 25%,#718d7030 25% 27%,transparent 27% 50%,#718d7030 50% 52%,transparent 52%);background-size:48px 48px;min-height:520px}
+.river{position:absolute;right:-100px;top:160px;width:1400px;height:160px;background:#5f9e9e;border-radius:45% 0 0 48%;transform:rotate(-5deg);border-block:7px double #e4e0bd;opacity:.9}
 .site{position:absolute;width:200px;text-align:center;z-index:1}.site h2{font-family:"ZCOOL XiaoWei";margin:0;color:#3b3927;font-size:20px}.site p{margin:2px;color:#665a43;font-size:11px}.site .art{height:110px;position:relative;margin:2px auto;border:1px dashed #917e56}
 
 /* Nodes & buttons on map */
 .node{position:absolute;border:0;background:#f8efd1;color:#2f3b30;font-family:inherit;cursor:pointer;padding:6px 10px;font-size:12px;border:1px solid #7a6746;box-shadow:2px 2px 0 #a28557;transition:.15s;z-index:2}.node:hover{transform:translateY(-2px);background:#f3cf78;z-index:3}
-.minebtn{left:60px;top:240px}.woodbtn{left:300px;top:252px}.glazebtn{left:450px;top:250px}.pigmentbtn{left:620px;top:370px}.produce{left:660px;top:252px}.decoratebtn{left:800px;top:252px}.fire{left:1050px;top:240px}.ship{left:1360px;top:370px}
+.minebtn{left:50px;top:230px}.woodbtn{left:280px;top:230px}.glazebtn{left:500px;top:230px}.pigmentbtn{left:1100px;top:230px}.produce{left:800px;top:230px}.decoratebtn{left:940px;top:230px}.fire{left:1320px;top:230px}.ship{left:1620px;top:350px}
 
 /* Mountain/forest/kiln/dock art */
-.mountain{left:40px;top:50px}.forest{left:280px;top:64px}.works{left:540px;top:30px;width:380px}.kiln{left:1020px;top:48px}.dock{left:1320px;top:180px}
+.mountain{left:30px;top:40px}.forest{left:260px;top:50px}.works{left:680px;top:25px;width:380px}.kiln{left:1280px;top:40px}.dock{left:1550px;top:160px}
 .mountain .art{background:#607659;border-radius:60px 60px 0 0;height:90px}.mountain .art:after{content:"高岭山";position:absolute;bottom:8px;left:72px;color:#efe8ca;font-size:13px}
 .forest .art{background:linear-gradient(#86a584 70%,#9b7950 70%);height:90px}
 .works .art{height:140px;background:#caa777;border:2px solid #7d5c3d;display:flex;align-items:end;justify-content:space-around;padding:10px}
@@ -94,8 +94,8 @@ h1{font-family:"ZCOOL XiaoWei";letter-spacing:.11em;margin:0;font-size:22px;font
 
       <section class="site forest"><h2>松柴林</h2><div class="art" style="background:#86a584;display:flex;align-items:center;justify-content:center;font-size:48px">🌲🌳🪵🌲</div></section>
       <button class="node woodbtn" onclick="gather('wood')">伐松柴 +5 体力-5</button>
-      <section class="site" style="left:440px;top:50px;width:160px"><h2>釉石坡</h2><div class="art" style="background:#7a6a4a;display:flex;align-items:center;justify-content:center;font-size:36px;height:70px">♥💎✨</div></section><button class="node glazebtn" onclick="gather('glaze')" title="釉料：制作素坯的必需原料">♥ 采釉料 +3 体力-5</button>
-      <section class="site" style="left:610px;top:180px;width:160px"><h2>颜料矿</h2><div class="art" style="background:#5a5a2a;display:flex;align-items:center;justify-content:center;font-size:36px;height:70px">🎨💎🖌️</div></section><button class="node pigmentbtn" onclick="gather('pigment')" title="颜料：绘画装饰瓷坯用的色料">◆ 采颜料 +3 体力-5</button>
+      <section class="site" style="left:480px;top:40px;width:160px"><h2>釉石坡</h2><div class="art" style="background:#7a6a4a;display:flex;align-items:center;justify-content:center;font-size:32px;height:70px">♥💎✨</div></section><button class="node glazebtn" onclick="gather('glaze')" title="釉料：制作素坯的必需原料">♥ 采釉料 +3 体力-5</button>
+      <section class="site" style="left:1080px;top:40px;width:160px"><h2>颜料矿</h2><div class="art" style="background:#5a5a2a;display:flex;align-items:center;justify-content:center;font-size:32px;height:70px">🎨💎🖌️</div></section><button class="node pigmentbtn" onclick="gather('pigment')">◆ 采颜料 +3 体力-5</button>
 
       <section class="site works"><h2>瓷作坊</h2><div class="art"><div class="shop"><span>练泥坊</span></div><div class="shop"><span>拉坯坊</span></div><div class="shop"><span>🎨画坯</span></div><div class="shop"><span>☀️晒坯</span></div></div></section>
       <button class="node produce" onclick="produce()">制作坯体 体力-8</button>
