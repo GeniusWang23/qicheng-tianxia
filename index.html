@@ -150,6 +150,7 @@ h1{font-family:"ZCOOL XiaoWei";letter-spacing:.11em;margin:0;font-size:22px;font
           <button class="action" onclick="nextDay()">度过一日</button>
           <button class="action" onclick="hireTaoist()">请道士</button>
           <button class="action" onclick="cycleDifficulty()">难度</button>
+          <button class="action" onclick="showMerchant()">商人</button>
           <button class="action" onclick="showGuildSelect()">行帮</button>
           <button class="action" onclick="doConscript()" id="conscriptBtn" style="display:none">强征</button>
           <button class="action" onclick="resetGame()">重开</button>
@@ -217,6 +218,15 @@ h1{font-family:"ZCOOL XiaoWei";letter-spacing:.11em;margin:0;font-size:22px;font
   </div>
 </div>
 
+<!-- 商人面板 -->
+<div class="modal-overlay" id="merchantOverlay" onclick="closeMerchant()"></div>
+<div class="modal-box" id="merchantBox" style="display:none">
+  <button class="modal-close" onclick="closeMerchant()">x</button>
+  <h2>商人交易</h2>
+  <p style="font-size:12px;color:var(--muted)">银两-体力置换 · 商誉折扣：<span id="mFavor">0</span></p>
+  <div id="merchantList" style="font-size:12px;line-height:1.8"></div>
+</div>
+
 <!-- 新手引导 -->
 <div class="modal-overlay" id="tutorialOverlay" onclick="closeTutorial()"></div>
 <div class="modal-box" id="tutorialBox" style="display:none">
@@ -281,7 +291,7 @@ const CONFIG = {
     stamina:100, difficulty:1,
     totalFires:0, achievements:[], hasWon:false, wonAtDay:0,
     tax豁免:false, _nextFireBonus:0, _fireRateBonus:0,
-    merchantFavor:0, imperialFavor:0, conscriptCount:0,_orderBonus:0,
+    merchantFavor:0, imperialFavor:0, conscriptCount:0,_orderBonus:0,gameOver:false,_haremTriggered:false,
     craftLevel:0,
     orderDeadline:0, orderAccepted:false,
     generation:1, familyName:"王", executionPending:false,
@@ -390,6 +400,55 @@ function checkAchievements() {
       G.save();
     }
   }
+}
+
+
+// ======================== 商人系统 ========================
+function showMerchant() {
+  document.getElementById("merchantOverlay").style.display = "block";
+  document.getElementById("merchantBox").style.display = "block";
+  renderMerchant();
+}
+function closeMerchant() {
+  document.getElementById("merchantOverlay").style.display = "none";
+  document.getElementById("merchantBox").style.display = "none";
+}
+function renderMerchant() {
+  var f = G.merchantFavor || 0;
+  var disc = Math.max(0.6, 1 - f / 200);
+  var sdisc = Math.min(1.4, 1 + (100 - f) / 200);
+  document.getElementById("mFavor").textContent = f;
+  var items = [
+    {name:"高岭土", id:"clay", buy:Math.floor(8*disc), sell:Math.floor(3*sdisc)},
+    {name:"松柴", id:"wood", buy:Math.floor(6*disc), sell:Math.floor(2*sdisc)},
+    {name:"釉料", id:"glaze", buy:Math.floor(10*disc), sell:Math.floor(4*sdisc)},
+    {name:"颜料", id:"pigment", buy:Math.floor(12*disc), sell:Math.floor(5*sdisc)},
+    {name:"素坯（即用）", id:"blank", buy:Math.floor(18*disc), sell:Math.floor(8*sdisc)},
+  ];
+  var h = "";
+  for (var i=0;i<items.length;i++) {
+    var it = items[i];
+    h += "<div style=\"padding:4px 0;border-bottom:1px dotted #b7a47b;display:flex;justify-content:space-between;align-items:center\">";
+    h += "<span>" + it.name + " · 库存:" + (G[it.id]||0) + "</span>";
+    h += "<span><button onclick=\"buyResource('"+it.id+"',"+it.buy+")\" style=\"font-size:11px;padding:2px 6px\">买"+it.buy+"银</button> ";
+    h += "<button onclick=\"sellResource('"+it.id+"',"+it.sell+")\" style=\"font-size:11px;padding:2px 6px\">卖"+it.sell+"银</button></span>";
+    h += "</div>";
+  }
+  document.getElementById("merchantList").innerHTML = h;
+}
+function buyResource(id, price) {
+  if (G.silver < price) return showToast("银两不足", false);
+  G.silver -= price;
+  G[id] = (G[id]||0) + 1;
+  G.merchantFavor = Math.max(0, (G.merchantFavor||0) - 1);
+  renderMerchant(); render();
+}
+function sellResource(id, price) {
+  if ((G[id]||0) < 1) return showToast("库存不足", false);
+  G[id]--;
+  G.silver += price;
+  G.merchantFavor = Math.min(100, (G.merchantFavor||0) + 1);
+  renderMerchant(); render();
 }
 
 // ======================== 渲染 ========================
@@ -632,6 +691,13 @@ function deliver() {
   // 皇帝好感上升
   if ((G.imperialFavor || 0) >= 1) {
     G.imperialFavor = Math.min(100, (G.imperialFavor || 0) + 1);
+  if (G.imperialFavor >= 100 && !G._haremTriggered) {
+    G._haremTriggered = true;
+    addLog("皇帝龙颜大悦，将当代窑主纳入后宫。家族获赐「御窑世家」金匾。");
+    showToast("皇帝纳入后宫！特殊结局", true);
+    G.silver += 500;
+    G.craftsmanship = 2.0;
+  }
   }
   G.fame += CONFIG.ORDER.famePer;
   // 彩绘比例影响商人好感
@@ -768,6 +834,15 @@ function nextDay() {
   var eggs = ["听说皇帝的儿子也通倭","景德镇的猫也会烧瓷","今天的窑火格外红灿","高岭山上有一只白鹤在看你","昌江的鱼今天也在听瓷声"];
   if (Math.random() < 0.5) { addLog("🐣 " + eggs[Math.floor(Math.random()*eggs.length)]); }
   
+  // 皇帝好感-100 → 满门抄斩
+  if ((G.imperialFavor || 0) <= -100) {
+    addLog("皇帝震怒，满门抄斩！游戏结束。");
+    showToast("满门抄斩！GAME OVER", false);
+    G.gameOver = true;
+    setTimeout(function(){ resetGame(); }, 3000);
+    G.save(); render();
+    return;
+  }
   G.stamina = Math.min(G.maxStamina || CONFIG.STAMINA.max, G.stamina + G.diffConfig.staminaRestore);
 
   // ---- 随机事件 (25% 概率) ----
