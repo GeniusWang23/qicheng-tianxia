@@ -128,6 +128,7 @@ h1{font-family:"ZCOOL XiaoWei";letter-spacing:.11em;margin:0;font-size:22px;font
         <span>匠人<b id="workers">2</b></span>
         <span>商誉<b id="merchantFavor">0</b></span>
         <span>皇恩<b id="imperialFavor">0</b></span>
+          <span>工艺<b id="craftLevel">新手</b></span>
       </div></div>
     </div>
 
@@ -241,12 +242,12 @@ const CONFIG = {
   IMPERIAL:  { wares:4, qualityMin:16, silver:160, fame:12, timeLimit:5, timeoutPenalty:5 },
   HIRE:      { cost:35 },
   UPGRADE:   { cost:90 },
-  STAMINA:   { max:100, gatherCost:5, dayRestore:30, lowThreshold:20 },
+  STAMINA:   { max:200, gatherCost:5, dayRestore:30, lowThreshold:20 },
   TAX:       { interval:5 },
   DIFFICULTY:[
-    { name:"简单", taxRate:0.10, winOrders:5, desc:"低税率，少收税" },
-    { name:"普通", taxRate:0.20, winOrders:8, desc:"中等税率" },
-    { name:"困难", taxRate:0.30, winOrders:12, desc:"高税率，多订单" }
+    { name:"简单", taxRate:0.10, winOrders:5, staminaRestore:80, maxStamina:200, hireCost:25, upgradeMul:1.0, desc:"轻松起步" },
+    { name:"普通", taxRate:0.20, winOrders:8, staminaRestore:30, maxStamina:150, hireCost:35, upgradeMul:1.5, desc:"中等挑战" },
+    { name:"困难", taxRate:0.30, winOrders:12,staminaRestore:20, maxStamina:100, hireCost:50, upgradeMul:2.5, desc:"残酷生存" }
   ],
   EVENTS: [
     { id:"tax_relief",  name:"官府减税",     desc:"知府新政，今日免课。",        good:true,  effect: g=>{g.tax豁免=true} },
@@ -281,6 +282,7 @@ const CONFIG = {
     totalFires:0, achievements:[], hasWon:false, wonAtDay:0,
     tax豁免:false, _nextFireBonus:0, _fireRateBonus:0,
     merchantFavor:0, imperialFavor:0, conscriptCount:0,_orderBonus:0,
+    craftLevel:0,
     orderDeadline:0, orderAccepted:false,
     generation:1, familyName:"王", executionPending:false,
     craftsmanship:1.0, deathCause:""
@@ -593,7 +595,14 @@ function deliver() {
   // 皇帝好感加成
   let imperialBonus = (G.imperialFavor || 0) >= 10 ? Math.floor(G.orderSilver * 0.10) : 0;
   if ((G.imperialFavor || 0) >= 50) imperialBonus = Math.floor(G.orderSilver * 0.20);
-  G.silver += G.orderSilver + imperialBonus;
+  // 工艺等级影响单价（高于市面则升值）
+  var marketLvl = Math.floor((G.day + 6) / 12);
+  var craftLvlBonus = Math.max(0, G.craftLevel - marketLvl) * 0.03;
+  if (G.craftLevel < marketLvl) craftLvlBonus = (G.craftLevel - marketLvl) * 0.02;
+  G.silver += Math.floor(G.orderSilver * (1 + craftLvlBonus));
+  if (craftLvlBonus > 0) { addLog("工艺领先市面，升值+" + Math.floor(craftLvlBonus*100) + "%"); }
+  else if (craftLvlBonus < 0) { addLog("工艺落后市面，贬值" + Math.floor(craftLvlBonus*100) + "%"); }
+  G.silver += imperialBonus;
   if (G.orderAccepted) {
     let acceptBonus = Math.floor(G.orderSilver * 0.10);
     G.silver += acceptBonus;
@@ -674,8 +683,7 @@ function deliver() {
   G.save(); render();
 
 function hire() {
-  if (G.silver < CONFIG.HIRE.cost) return showToast("招募匠人需 " + CONFIG.HIRE.cost + " 银。", false);
-  G.silver -= CONFIG.HIRE.cost;
+  if (G.silver < G.diffConfig.hireCost) return showToast("招募匠人需 " + G.diffConfig.hireCost + " 银。", false);
   G.workers++;
   addLog("新匠人入坊，生产更快。");
   showToast("新匠人入坊！");
@@ -683,7 +691,7 @@ function hire() {
 }
 
 function upgrade() {
-  let cost = CONFIG.UPGRADE.cost;
+  let cost = Math.floor(CONFIG.UPGRADE.cost * G.diffConfig.upgradeMul);
   let isMarginal = G.fireSuccessRate >= 0.85;
   if (isMarginal) {
     // 边际效应：85%后费用指数上升，每次仅+1%
@@ -758,9 +766,9 @@ function nextDay() {
   
   // 每日小彩蛋
   var eggs = ["听说皇帝的儿子也通倭","景德镇的猫也会烧瓷","今天的窑火格外红灿","高岭山上有一只白鹤在看你","昌江的鱼今天也在听瓷声"];
-  if (Math.random() < 0.3) { addLog("🐣 " + eggs[Math.floor(Math.random()*eggs.length)]); }
+  if (Math.random() < 0.5) { addLog("🐣 " + eggs[Math.floor(Math.random()*eggs.length)]); }
   
-  G.stamina = Math.min(CONFIG.STAMINA.max, G.stamina + CONFIG.STAMINA.dayRestore);
+  G.stamina = Math.min(G.maxStamina || CONFIG.STAMINA.max, G.stamina + G.diffConfig.staminaRestore);
 
   // ---- 随机事件 (25% 概率) ----
   if (Math.random() < 0.25) {
