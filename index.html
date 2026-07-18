@@ -66,6 +66,7 @@ h1{font-family:"ZCOOL XiaoWei";letter-spacing:.11em;margin:0;font-size:22px;font
 .day-badge{font-size:16px;font-weight:900;color:var(--red);background:#f5eccf;padding:3px 10px;border-radius:4px;border:1px solid var(--gold);white-space:nowrap}
 .success-rate{font-size:10px;color:#6a5a3a}
 .map .node{cursor:pointer}.map .node:active{cursor:pointer}
+.egg-popup{position:fixed;left:50%;top:50%;transform:translate(-50%,-50%);background:var(--paper);border:2px solid var(--gold);border-radius:12px;padding:20px 28px;z-index:200;text-align:center;max-width:360px;box-shadow:0 8px 40px rgba(0,0,0,.25);cursor:pointer}
 </style>
 </head>
 <body>
@@ -195,6 +196,11 @@ h1{font-family:"ZCOOL XiaoWei";letter-spacing:.11em;margin:0;font-size:22px;font
   </div>
 </main>
 <div class="toast" id="toast"></div>
+<div class="egg-popup" id="eggPopup" onclick="dismissEgg()" style="display:none">
+  <div style="font-size:40px;margin-bottom:6px">🐣</div>
+  <div id="eggText" style="font-size:15px;color:#3b2f1e;line-height:1.6"></div>
+  <div style="font-size:10px;color:#887a60;margin-top:8px">点击任意处关闭</div>
+</div>
 
 <!-- 说明弹窗 -->
 <div class="modal-overlay" id="helpOverlay" onclick="closeHelp()"></div>
@@ -848,8 +854,22 @@ function nextDay() {
   }
   
   // 每日小彩蛋
-  var eggs = ["听说皇帝的儿子也通倭","景德镇的猫也会烧瓷","今天的窑火格外红灿","高岭山上有一只白鹤在看你","昌江的鱼今天也在听瓷声"];
-  if (Math.random() < 0.5) { addLog("🐣 " + eggs[Math.floor(Math.random()*eggs.length)]); }
+  var eggs = [
+    "听说皇帝的儿子也通倭…",
+    "景德镇的猫也会烧瓷，昨晚又打碎了一件青花。",
+    "今天的窑火格外红灿，师傅说这是窑神在笑。",
+    "高岭山上有一只白鹤，据说它已经看了三百年。",
+    "昌江的鱼今天也在听瓷声——叮——那是青花的声音。",
+    "隔壁窑口的老师傅说，他年轻时见过窑变，那件瓷现在还供在御窑博物馆。",
+    "一个波斯商人出价三百两买你昨天烧的那件瓷，你没卖，因为那件是次品。",
+    "镇上的小孩说你的窑烟最好看，像一条青龙。",
+    "有个道士路过你的窑口，说此地风水极佳，适合烧天青。",
+    "篁岭的晒秋开始了，你父亲在世时总说那是景德镇最美的季节。"
+  ];
+  if (Math.random() < 0.70) {
+    document.getElementById("eggText").textContent = eggs[Math.floor(Math.random()*eggs.length)];
+    document.getElementById("eggPopup").style.display = "block";
+  }
   
   // 皇帝好感-100 → 满门抄斩
   if ((G.imperialFavor || 0) <= -100) {
