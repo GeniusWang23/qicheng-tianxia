@@ -94,8 +94,8 @@ h1{font-family:"ZCOOL XiaoWei";letter-spacing:.11em;margin:0;font-size:22px;font
 
       <section class="site forest"><h2>松柴林</h2><div class="art"></div></section>
       <button class="node woodbtn" onclick="gather('wood')">伐松柴 +5</button>
-      <button class="node glazebtn" onclick="gather('glaze')">采釉料 +3</button>
-      <button class="node pigmentbtn" onclick="gather('pigment')">采颜料 +3</button>
+      <button class="node glazebtn" onclick="gather('glaze')" title="釉料：制作素坯的必需原料">♥ 采釉料 +3</button>
+      <button class="node pigmentbtn" onclick="gather('pigment')" title="颜料：绘画装饰瓷坯用的色料">◆ 采颜料 +3</button>
 
       <section class="site works"><h2>瓷作坊</h2><div class="art"><div class="shop"><span>练泥坊</span></div><div class="shop"><span>拉坯坊</span></div><div class="shop"><span>画坯坊</span></div><div class="shop"><span>晒坯场</span></div></div></section>
       <button class="node produce" onclick="produce()">制作坯体</button>
@@ -117,8 +117,8 @@ h1{font-family:"ZCOOL XiaoWei";letter-spacing:.11em;margin:0;font-size:22px;font
       <div class="card-body"><div class="rows">
         <span>高岭土<b id="clay">12</b></span>
         <span>松柴<b id="wood">10</b></span>
-        <span>釉料<b id="glaze">5</b></span>
-        <span>颜料<b id="pigment">0</b></span>
+        <span>♥釉料<b id="glaze">5</b></span>
+        <span>◆颜料<b id="pigment">0</b></span>
         <span>素坯<b id="blank">0</b></span>
         <span>彩绘坯<b id="paintedBlank">0</b></span>
         <span>成瓷<b id="ware">0</b></span>
@@ -427,6 +427,14 @@ function render() {
       imperialHTML;
   }
   // 烧制成功率
+  const shipBtn = document.querySelector(".ship");
+  if (shipBtn) {
+    var needW = 2 + (G.orders_done || 0);
+    var rew = 45 + (G.orders_done || 0) * 12;
+    var haveW = G.ware || 0;
+    shipBtn.textContent = "交付订单(" + (G.ware || 0) + "/" + needW + " 成瓷 · " + rew + "银)";
+    shipBtn.style.opacity = haveW >= needW ? "1" : ".5";
+  }
   const fireBtn = document.querySelector(".fire");
   const upgBtn = document.getElementById("upgradeBtn");
   const cBtn = document.getElementById("conscriptBtn");
