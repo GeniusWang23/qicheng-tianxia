@@ -672,7 +672,6 @@ function deliver() {
   }
 
   G.save(); render();
-}
 
 function hire() {
   if (G.silver < CONFIG.HIRE.cost) return showToast("招募匠人需 " + CONFIG.HIRE.cost + " 银。", false);
