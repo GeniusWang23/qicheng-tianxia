@@ -291,7 +291,7 @@ const CONFIG = {
     stamina:100, difficulty:1,
     totalFires:0, achievements:[], hasWon:false, wonAtDay:0,
     tax豁免:false, _nextFireBonus:0, _fireRateBonus:0,
-    merchantFavor:0, imperialFavor:0, conscriptCount:0,_orderBonus:0,gameOver:false,_haremTriggered:false,
+    merchantFavor:0, imperialFavor:0, conscriptCount:0,_orderBonus:0,gameOver:false,_haremTriggered:false,_belowWageDays:0,
     craftLevel:0,
     orderDeadline:0, orderAccepted:false,
     generation:1, familyName:"王", executionPending:false,
@@ -843,6 +843,31 @@ function nextDay() {
     G.save(); render();
     return;
   }
+  // 窑工工资
+  var wageMin = Math.floor((G.maxStamina||100) * 0.3);
+  var wage = (G.workers||2) * 3;
+  if (G.silver >= wage) {
+    G.silver -= wage;
+    G._belowWageDays = 0;
+  } else {
+    G._belowWageDays = (G._belowWageDays||0) + 1;
+    addLog("银两告急，发不出工钱。（连续" + G._belowWageDays + "天）");
+    if (G._belowWageDays >= 3) {
+      G.maxStamina = Math.max(30, (G.maxStamina||100) - 10);
+      G._belowWageDays = 0;
+      addLog("银两长期不足，窑工出走。体力上限-10");
+    }
+  }
+  // 体力归零 → GAME OVER
+  if (G.stamina <= 0 || (G.maxStamina||100) <= 30) {
+    addLog("窑工散尽，瓷窑倒闭。");
+    showToast("窑工散尽！GAME OVER", false);
+    G.gameOver = true;
+    setTimeout(function(){ resetGame(); }, 3000);
+    G.save(); render();
+    return;
+  }
+  
   G.stamina = Math.min(G.maxStamina || CONFIG.STAMINA.max, G.stamina + G.diffConfig.staminaRestore);
 
   // ---- 随机事件 (25% 概率) ----
@@ -891,6 +916,14 @@ function hireTaoist() {
 function doConscript() {
   if ((G.imperialFavor || 0) < 10) return;
   G.conscriptCount = (G.conscriptCount || 0) + 1;
+  if (G.conscriptCount >= 5) {
+    addLog("民变！窑工捣毁窑炉。游戏结束。");
+    showToast("民变毁窑！GAME OVER", false);
+    G.gameOver = true;
+    setTimeout(function(){ resetGame(); }, 3000);
+    G.save(); render();
+    return;
+  }
   if (G.conscriptCount >= 3) {
     G.imperialFavor = Math.max(-50, (G.imperialFavor || 0) - 30);
     addLog("多次强征劳役，民怨沸腾。皇帝好感大降。");
