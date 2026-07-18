@@ -17,7 +17,7 @@ h1{font-family:"ZCOOL XiaoWei";letter-spacing:.11em;margin:0;font-size:22px;font
 .stats{display:flex;gap:6px;flex-wrap:wrap;margin-left:auto}.stat{border:1px solid #a99162;background:#23362d;color:#f3e6c4;padding:5px 8px;font-size:12px}.stat b{color:#f3c95b;margin-left:3px}
 
 /* Map area - scrollable */
-.map-container{flex:1;overflow:auto;position:relative;background:linear-gradient(#c1ddcf 0 30%,#e9dfc3 30%);min-height:300px}
+.map-container{flex:1;overflow:hidden;position:relative;background:linear-gradient(#c1ddcf 0 30%,#e9dfc3 30%);min-height:300px;cursor:grab}.map-container:active{cursor:grabbing}.map-container.dragging{cursor:grabbing}
 .map{width:1800px;height:100%;position:relative;background:linear-gradient(135deg,transparent 25%,#718d7030 25% 27%,transparent 27% 50%,#718d7030 50% 52%,transparent 52%);background-size:48px 48px;min-height:520px}
 .river{position:absolute;right:-100px;top:180px;width:1200px;height:160px;background:#5f9e9e;border-radius:45% 0 0 48%;transform:rotate(-5deg);border-block:7px double #e4e0bd;opacity:.9}
 .site{position:absolute;width:200px;text-align:center;z-index:1}.site h2{font-family:"ZCOOL XiaoWei";margin:0;color:#3b3927;font-size:20px}.site p{margin:2px;color:#665a43;font-size:11px}.site .art{height:110px;position:relative;margin:2px auto;border:1px dashed #917e56}
@@ -35,8 +35,8 @@ h1{font-family:"ZCOOL XiaoWei";letter-spacing:.11em;margin:0;font-size:22px;font
 .dock .art{background:#5f9e9e;border-color:#466f70;height:90px}
 
 /* Floating panels */
-.float-panels{position:fixed;bottom:8px;right:8px;display:flex;flex-direction:column;gap:8px;z-index:50;max-width:420px}
-.float-card{background:rgba(238,228,203,.95);border:2px solid #b8aa84;border-radius:8px;padding:6px 10px;box-shadow:0 4px 16px rgba(0,0,0,.3);max-height:50vh;overflow:auto}
+.float-panels{position:fixed;bottom:0;left:0;right:0;display:flex;flex-direction:row;gap:6px;z-index:50;padding:4px 8px;background:rgba(23,35,30,.85);justify-content:center;flex-wrap:wrap}
+.float-card{background:rgba(238,228,203,.95);border:2px solid #b8aa84;border-radius:8px 8px 0 0;padding:4px 8px;box-shadow:0 4px 16px rgba(0,0,0,.3);max-height:40vh;overflow:auto;min-width:150px;flex:0 1 auto}
 .float-card h3{font-size:13px;color:#5b4527;margin:0 0 4px;cursor:pointer;display:flex;justify-content:space-between;align-items:center}
 .float-card h3 .toggle{font-size:12px;color:#887a60}
 .float-card.collapsed .card-body{display:none}
@@ -65,6 +65,7 @@ h1{font-family:"ZCOOL XiaoWei";letter-spacing:.11em;margin:0;font-size:22px;font
 .guild-card:hover{transform:translateY(-2px);box-shadow:0 4px 12px rgba(0,0,0,.12)}
 .day-badge{font-size:16px;font-weight:900;color:var(--red);background:#f5eccf;padding:3px 10px;border-radius:4px;border:1px solid var(--gold);white-space:nowrap}
 .success-rate{font-size:10px;color:#6a5a3a}
+.map .node{cursor:pointer}.map .node:active{cursor:pointer}
 </style>
 </head>
 <body>
