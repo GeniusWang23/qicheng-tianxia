@@ -148,7 +148,7 @@ h1{font-family:"ZCOOL XiaoWei";letter-spacing:.11em;margin:0;font-size:22px;font
 
     <div><h1>器成天下走</h1></div>
 
-    <div class="day-badge">第 <b id="day">1</b> 日 &nbsp; <span id="generation" style="font-size:11px;color:#d4b35f">王家第1代</span></div>
+    <div class="day-badge"><span id="seasonStatus" style="font-size:11px;color:var(--gold)"></span> &nbsp; 第 <b id="day">1</b> 日 &nbsp; <span id="generation" style="font-size:11px;color:#d4b35f">王家第1代</span></div>
 
     <div class="stats">
 
@@ -1238,7 +1238,8 @@ function fireKiln() {
 
   if (roll > rate) {
 
-    addLog("窑火失控，坯体尽毁……损失惨重。");
+    var fr = ["冬季潮湿，素坯未干透","松柴受潮，火力不足","窑温不均，坯体变形","釉料偏差，流釉粘连","装窑过密，火焰不通"];
+  addLog("烧制失败：" + fr[Math.floor(Math.random()*fr.length)]);
 
     showToast("烧制失败！", false);
 
@@ -1657,6 +1658,11 @@ function upgrade() {
 
   
 
+  // 御窑旺季/淡季节奏
+  var cycleDay = G.day % 30;
+  var isPeak = cycleDay >= 5 && cycleDay <= 14;
+  G._isPeakSeason = isPeak;
+  
   // ---- 体力恢复 ----
 
   // 订单时效检查（每3天刷新）
@@ -1765,7 +1771,9 @@ function upgrade() {
 
   }
 
-  G.stamina = Math.min(G.maxStamina || CONFIG.STAMINA.max, G.stamina + G.diffConfig.staminaRestore);
+  var restoreMulti = G._isPeakSeason ? 0.7 : 1.5;
+  G.stamina = Math.min(G.maxStamina || CONFIG.STAMINA.max, G.stamina + Math.floor(G.diffConfig.staminaRestore * restoreMulti));
+  if (G._isPeakSeason) { addLog("御窑旺季，体力恢复减缓。"); }
 
 
 
