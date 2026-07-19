@@ -148,7 +148,7 @@ h1{font-family:"ZCOOL XiaoWei";letter-spacing:.11em;margin:0;font-size:22px;font
 
     <div><h1>器成天下走</h1></div>
 
-    <div class="day-badge">第 <b id="day">1</b> 日 &nbsp; <span id="generation" style="font-size:11px;color:#d4b35f">王家第1代</span></div>
+    <div class="day-badge"><span id="kilnName">竖穴窑</span> &nbsp; 第 <b id="day">1</b> 日 &nbsp; <span id="generation" style="font-size:11px;color:#d4b35f">王家第1代</span></div>
 
     <div class="stats">
 
@@ -257,6 +257,7 @@ h1{font-family:"ZCOOL XiaoWei";letter-spacing:.11em;margin:0;font-size:22px;font
         <span>商誉<b id="merchantFavor">0</b></span>
 
         <span>皇恩<b id="imperialFavor">0</b></span>
+          <span>码头<b id="boatType">小货船</b></span>
 
       </div></div>
 
@@ -573,7 +574,8 @@ const CONFIG = {
 
     { id:"order_boom",  name:"订单热潮",       desc:"藩王进京路过，大量求购瓷器。下次订单单价+50%。",   good:true,  effect: g=>{g._orderBonus=0.5} },
 
-    { id:"typhoon",     name:"飓风过境",       desc:"台风摧毁码头，部分存货被毁。",                     good:false, effect: g=>{g.ware=Math.max(0,g.ware-2)} }
+    { id:"typhoon",     name:"飓风过境",       desc:"台风摧毁码头，部分存货被毁。",                     good:false, effect: g=>{g.ware=Math.max(0,g.ware-2)} },
+    { id:"spy",         name:"间谍渗透",       desc:"对手安插间谍，烧窑效率骤降！下次烧窑成功率-20%。",   good:false, effect: g=>{g._fireRateBonus-=0.20} }
 
   ],
 
@@ -951,6 +953,13 @@ function render() {
 
   if ($$.pigment) $$.pigment.textContent = G.pigment;
 
+  // 仓储成本：一个季节未接单则扣银两
+  var seasonDay = (G.day % 12);
+  if (seasonDay === 0 && !G.orderAccepted && G.ware > 2) {
+    var storageCost = Math.floor(G.ware * 2);
+    G.silver = Math.max(0, G.silver - storageCost);
+    addLog("仓库积压成瓷，仓储成本-" + storageCost + "银。请及时接单交付。");
+  }
   // 季节
 
   const si = G.seasonInfo;
@@ -1267,7 +1276,16 @@ function fireKiln() {
 
   else if (G.seasonInfo.woodExtra > 0) extra = "冬日增柴，方保窑温。";
 
-  addLog("窑火三日不熄，出窑成瓷 1 件，品质 +" + q + "。" + extra);
+  var wareNames = {
+    "竖穴窑":["粗陶罐","灰陶碗","印纹陶瓶"],
+    "龙窑":["青瓷莲花碗","青白瓷执壶","影青刻花盘","青花缠枝纹小碗"],
+    "葫芦窑":["青花云龙纹高足碗","釉里红缠枝纹瓶","宣德青花大罐"],
+    "镇窑":["成化斗彩鸡缸杯","宣德青花云龙纹大罐","永乐甜白釉暗花梅瓶","万历五彩镂空云凤纹瓶","宣德霁红釉高足杯","何朝宗制白瓷观音立像"]
+  };
+  var ki2 = CONFIG.UPGRADE.types[G.kilnType||0];
+  var names = wareNames[ki2 ? ki2.name : "竖穴窑"] || ["陶器"];
+  var wareName = names[Math.floor(Math.random() * names.length)];
+  addLog("出窑：" + wareName + "，品质 +" + q + "。" + extra);
 
   showToast("成瓷出窑，品质 +" + q + "！");
 
