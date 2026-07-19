@@ -533,7 +533,7 @@ const CONFIG = {
 
   HIRE:      { cost:35 },
 
-  UPGRADE:   { cost:90 },
+  UPGRADE:   { cost:90, types:[{name:"竖穴窑",failRate:0.40,nextCost:60},{name:"龙窑",failRate:0.25,nextCost:150},{name:"葫芦窑",failRate:0.15,nextCost:350},{name:"镇窑",failRate:0.08,nextCost:999999}] },
 
   STAMINA:   { max:200, gatherCost:5, dayRestore:30, lowThreshold:20 },
 
@@ -1542,48 +1542,20 @@ function hire() {
 
 
 function upgrade() {
-
-  let cost = Math.floor(CONFIG.UPGRADE.cost * G.diffConfig.upgradeMul);
-
-  let isMarginal = G.fireSuccessRate >= 0.85;
-
-  if (isMarginal) {
-
-    // 边际效应：85%后费用指数上升，每次仅+1%
-
-    cost = Math.floor(cost * Math.pow(1.8, G.kiln - 3));
-
-    if (G.silver < cost) return showToast("窑炉已达高水准，升级需 " + cost + " 银。", false);
-
-    G.silver -= cost;
-
-    G.kiln += 0.01;  // 边际效应：每次仅提升1%
-
-    addLog("镇窑精修微调，火候略有精进。（花费" + cost + "银，成功率+1%）");
-
-    showToast("镇窑精修！成功率+1%");
-
-  } else {
-
-    G.silver -= cost;
-
-    G.kiln++;
-
-    addLog("镇窑加高一尺，火候与品质皆有提升。");
-
-    showToast("镇窑升级！");
-
+  let kilnInfo = CONFIG.UPGRADE.types[G.kilnType||0];
+  let nextInfo = CONFIG.UPGRADE.types[(G.kilnType||0)+1];
+  if (!nextInfo || nextInfo.nextCost > 99999) {
+    return showToast("已是最高级窑炉：镇窑", false);
   }
-
-  G.kiln = Math.round(G.kiln * 100) / 100;  // 防止浮点数精度问题
-
+  let cost = Math.floor(nextInfo.nextCost * G.diffConfig.upgradeMul);
+  if (G.silver < cost) return showToast("升级到" + nextInfo.name + "需 " + cost + " 银。", false);
+  G.silver -= cost;
+  G.kilnType = (G.kilnType||0) + 1;
+  G.kiln = G.kilnType + 1;
+  addLog("窑炉升级：" + nextInfo.name + "！");
+  showToast(nextInfo.name + "！已解锁新品种");
   G.save(); render();
-
-}
-
-
-
-function nextDay() {
+}function nextDay() {
 
   G.day++;
 
