@@ -2216,6 +2216,17 @@ render();
       c.scrollTop=st-(e.pageY-c.offsetTop-sy);
     });
     document.addEventListener("mouseup", function() { d=false; });
+    // Touch support
+    c.addEventListener("touchstart", function(e) {
+      if (e.target.closest("button")) return;
+      d=true; sx=e.touches[0].pageX-c.offsetLeft; sy=e.touches[0].pageY-c.offsetTop; sl=c.scrollLeft; st=c.scrollTop;
+    }, {passive:false});
+    document.addEventListener("touchmove", function(e) {
+      if (!d) return;
+      c.scrollLeft=sl-(e.touches[0].pageX-c.offsetLeft-sx);
+      c.scrollTop=st-(e.touches[0].pageY-c.offsetTop-sy);
+    }, {passive:false});
+    document.addEventListener("touchend", function() { d=false; });
   }
   document.addEventListener("DOMContentLoaded", init);
 })();
