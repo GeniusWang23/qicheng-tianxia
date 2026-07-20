@@ -163,6 +163,7 @@ header .seal{border:3px double var(--red);color:var(--red);background:transparen
 .day-event-overlay{position:fixed;inset:0;z-index:310;background:#15100bc2;display:none;backdrop-filter:blur(2px)}
 .egg-popup{position:fixed;left:50%;top:50%;z-index:311;display:none;width:min(470px,88vw);transform:translate(-50%,-50%);padding:28px 30px;background:#d9c69b;color:#241b12;border:2px solid #3d2d1d;box-shadow:12px 14px 0 #0e0906aa;text-align:left;cursor:pointer}
 .egg-popup:before{content:"";position:absolute;inset:7px;border:1px solid #8b7048;pointer-events:none}.egg-popup .event-mark{font-size:42px;float:left;margin:0 16px 12px 0}.egg-popup h2{font:900 28px/1.1 "STKaiti","KaiTi",serif;margin:1px 0 12px;color:#852b22}.egg-popup.history-event{background:#d5c18f}.egg-popup.history-event h2{color:#284b46}.egg-popup .event-hint{clear:both;margin-top:15px;padding-top:8px;border-top:1px dotted #78603e;color:#756044;text-align:center;font-size:10px;letter-spacing:.12em}
+.result-layer{position:fixed;inset:0;z-index:10000;display:none;place-items:center;padding:20px;background:#120d09e8;backdrop-filter:blur(4px)}.result-layer.show{display:grid}.result-sheet{position:relative;width:min(720px,94vw);padding:48px 54px;background:#d8c59a;color:#211a13;border:3px double #3a291b;box-shadow:18px 20px 0 #050302aa;text-align:center;overflow:hidden}.result-sheet:before{content:"";position:absolute;inset:12px;border:1px solid #806747;pointer-events:none}.result-layer.win .result-sheet{background:radial-gradient(circle at 50% 15%,#eee0b7,#d0ba87)}.result-layer.lose .result-sheet{background:#d1cbb8;filter:grayscale(.2)}.result-kicker{color:#852b22;letter-spacing:.28em;font-weight:900;font-size:12px}.result-sheet h2{font:900 clamp(46px,8vw,88px)/1 "STKaiti","KaiTi",serif;margin:15px 0}.result-layer.lose h2{color:#17120e}.result-copy{max-width:540px;margin:0 auto;line-height:1.9}.result-stats{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin:25px 0}.result-stats span{padding:10px 5px;border:1px solid #705a3b;background:#eadbb288}.result-stats b{display:block;color:#852b22;font-size:20px}.result-actions{display:flex;justify-content:center;gap:10px}.result-actions button{position:relative;border:0;background:#211a13;color:#ead8ab;padding:11px 18px;font:inherit;cursor:pointer}.result-actions .red{background:#852b22}@media(max-width:600px){.result-sheet{padding:38px 22px}.result-stats{grid-template-columns:repeat(2,1fr)}}
 .woodcut-trigger{background:var(--red)!important;color:#f0dfb4!important;border-color:#4b1712!important}
 .woodcut-event{position:fixed;inset:0;z-index:300;background:#d7d1bd;color:#090908;display:none;grid-template-columns:1.12fr .88fr;overflow:auto}.woodcut-event.show{display:grid}.woodcut-visual{position:relative;min-height:100vh;background:#10100e;overflow:hidden;display:grid;place-items:center}.woodcut-visual:before{content:"";position:absolute;inset:-20%;opacity:.27;background:repeating-linear-gradient(118deg,transparent 0 8px,#ded7c2 9px 11px);transform:rotate(-3deg)}.woodcut-sun{width:58vmin;height:58vmin;border-radius:50%;background:#d7d1bd;box-shadow:0 0 0 28px #10100e,0 0 0 36px #d7d1bd}.woodcut-kiln{position:absolute;left:8%;bottom:-3%;width:68%;height:54%;background:#050504;border-radius:55% 55% 0 0;box-shadow:inset -18px 12px 0 #d7d1bd}.woodcut-kiln:after{content:"火";position:absolute;right:9%;top:22%;font:900 18vw/1 "STKaiti","KaiTi",serif;color:#d7d1bd;transform:rotate(-8deg)}.woodcut-people{position:absolute;bottom:3%;right:2%;font:900 clamp(38px,6vw,92px)/.65 "SimSun";letter-spacing:-.25em;color:#d7d1bd;transform:scaleX(1.35)}.woodcut-copy{position:relative;padding:10vh 7vw;align-self:center}.woodcut-copy .kicker{color:var(--red);font-weight:900;letter-spacing:.25em}.woodcut-copy h2{font:900 clamp(52px,8vw,112px)/.92 "STKaiti","KaiTi",serif;margin:18px 0}.woodcut-copy blockquote{font-size:clamp(18px,2vw,28px);font-weight:900;line-height:1.6;border-left:8px solid var(--red);padding-left:20px;margin:28px 0}.woodcut-copy p{line-height:2;max-width:620px}.woodcut-copy button,.woodcut-close{background:#10100e;color:#ded7c2;border:0;padding:12px 18px;cursor:pointer}.woodcut-close{position:absolute;right:20px;top:18px;z-index:3;border:1px solid #ded7c2}
 /* 新版策略布局：保留完整逻辑，将原有面板编排为左账册、中央地图、右策略、底手记 */
@@ -480,6 +481,16 @@ body>.puzzle-layer.show{display:grid!important;visibility:visible!important;opac
   <div class="event-hint">点击小框或按任意键关闭</div>
 </div>
 
+<section class="result-layer" id="resultLayer" aria-hidden="true">
+  <article class="result-sheet">
+    <p class="result-kicker" id="resultKicker">窑户家谱 · 终卷</p>
+    <h2 id="resultTitle">器成天下走</h2>
+    <p class="result-copy" id="resultCopy"></p>
+    <div class="result-stats"><span><b id="resultDay">1</b>日数</span><span><b id="resultOrders">0</b>订单</span><span><b id="resultQuality">0</b>品质</span><span><b id="resultFires">0</b>烧成</span></div>
+    <div class="result-actions"><button id="resultContinue" onclick="closeGameResult()">继续经营</button><button class="red" onclick="restartFromResult()">重开窑坊</button></div>
+  </article>
+</section>
+
 
 
 <!-- 说明弹窗 -->
@@ -499,7 +510,7 @@ body>.puzzle-layer.show{display:grid!important;visibility:visible!important;opac
   <h3 style="font-size:14px;color:#5a7a3a;margin:12px 0 4px">通关条件</h3>
   <p style="font-size:12px;line-height:1.6">完成市集订单即可通关：简单5单 / 普通8单 / 困难12单<br>隐藏结局：皇帝好感+100→纳入后宫 / 随机触发→窑神祭</p>
   <h3 style="font-size:14px;color:#a8362c;margin:12px 0 4px">失败条件</h3>
-  <p style="font-size:12px;line-height:1.6">满门抄斩（皇帝好感-100）| 民变毁窑（强征5次）| 秋后问斩（皇帝好感-20，秋季触发，下一代继任）</p>
+  <p style="font-size:12px;line-height:1.6">民变毁窑（连续强征5次）| 秋后问斩（御命在秋季逾期）| 满门抄斩（皇帝好感降至-100）</p>
   <h3 style="font-size:14px;color:#2c5f7c;margin:12px 0 4px">重要系统</h3>
   <p style="font-size:12px;line-height:1.7">体力-劳作消耗/每日恢复。成功率-基础70%受窑炉匠人季节道士影响。工艺-白绿蓝紫黄红彩7级，高于市面升值。商誉-彩绘瓷提升，满100解锁皇帝好感。商人-买卖原料应急。订单-3天时效可接取+10%。家族-代代相传善终永续。四季-每4天换季影响生产。难度-简单普通困难影响体力上限税率。</p>
   <h3 style="font-size:14px;color:#2c5f7c;margin:12px 0 4px">操作提示</h3>
@@ -621,9 +632,9 @@ const CONFIG = {
 
     { name:"简单", taxRate:0.10, winOrders:5, staminaRestore:80, maxStamina:200, hireCost:25, upgradeMul:1.0, desc:"轻松起步" },
 
-    { name:"普通", taxRate:0.20, winOrders:8, staminaRestore:30, maxStamina:150, hireCost:35, upgradeMul:1.5, desc:"中等挑战" },
+    { name:"普通", taxRate:0.20, winOrders:8, staminaRestore:45, maxStamina:150, hireCost:35, upgradeMul:1.5, desc:"中等挑战" },
 
-    { name:"困难", taxRate:0.30, winOrders:12,staminaRestore:20, maxStamina:100, hireCost:50, upgradeMul:2.5, desc:"残酷生存" }
+    { name:"困难", taxRate:0.30, winOrders:12,staminaRestore:30, maxStamina:110, hireCost:50, upgradeMul:2.5, desc:"残酷生存" }
 
   ],
 
@@ -684,7 +695,7 @@ const CONFIG = {
 
     workers:2, orders:0, kiln:1,
 
-    imperial:false, imperialDay:null,
+    imperial:false, imperialDay:null, imperialCompleted:false,
 
     stamina:100, maxStamina:150, difficulty:1,
 
@@ -767,7 +778,7 @@ class GameState {
 
   get seasonInfo() { return SEASONS[this.season]; }
 
-  get orderNeed() { return CONFIG.ORDER.baseNeed + this.orders; }
+  get orderNeed() { return CONFIG.ORDER.baseNeed + Math.min(this.orders, 3); }
 
   get orderSilver() { return CONFIG.ORDER.baseSilver + this.orders * CONFIG.ORDER.silverPerOrder; }
 
@@ -1177,7 +1188,7 @@ function render() {
 
   if (cBtn) {
 
-    cBtn.style.display = (G.imperialFavor || 0) >= 10 ? "inline-block" : "none";
+    cBtn.style.display = ((G.imperialFavor || 0) >= 10 || (G.conscriptCount || 0) > 0) ? "inline-block" : "none";
 
     cBtn.textContent = G.conscriptCount >= 3 ? "强征（民怨）" : "强征劳役";
 
@@ -1462,6 +1473,8 @@ function deliver() {
 
     G.imperialDay = null;
 
+    G.imperialCompleted = true;
+
     addLog("御命圆满！官窑题款，声望大振。");
 
     showToast("御命圆满！声望大振！", true);
@@ -1626,7 +1639,7 @@ function deliver() {
 
 
 
-  if (G.orders >= CONFIG.ORDER.unlockCount && !G.imperial) {
+  if (G.orders === CONFIG.ORDER.unlockCount && !G.imperial && !G.imperialCompleted) {
 
     G.imperial = true;
 
@@ -1650,19 +1663,7 @@ function deliver() {
 
   // 通关检查
 
-  if (G.isWin) {
-
-    G.hasWon = true;
-
-    G.wonAtDay = G.day;
-
-    addLog("🎉 通关！耗时 " + G.day + " 天，掌柜名扬天下！");
-
-    showToast("🎉 器成天下走！通关达成！", true);
-
-    checkAchievements();
-
-  }
+  if (G.isWin) triggerVictory();
 
 
 
@@ -1753,6 +1754,53 @@ document.addEventListener("keydown", function() {
   if (popup && popup.style.display === "block") dismissEgg();
 });
 
+function showGameResult(kind, title, copy) {
+  var layer = document.getElementById("resultLayer");
+  if (!layer) return;
+  if (layer.parentElement !== document.body) document.body.appendChild(layer);
+  layer.className = "result-layer show " + kind;
+  layer.setAttribute("aria-hidden", "false");
+  document.getElementById("resultKicker").textContent = kind === "win" ? "窑户家谱 · 功成卷" : "窑户家谱 · 劫难卷";
+  document.getElementById("resultTitle").textContent = title;
+  document.getElementById("resultCopy").textContent = copy;
+  document.getElementById("resultDay").textContent = G.day;
+  document.getElementById("resultOrders").textContent = G.orders;
+  document.getElementById("resultQuality").textContent = G.quality;
+  document.getElementById("resultFires").textContent = G.totalFires;
+  document.getElementById("resultContinue").style.display = kind === "win" ? "inline-block" : "none";
+}
+
+function closeGameResult() {
+  var layer = document.getElementById("resultLayer");
+  if (layer) { layer.classList.remove("show"); layer.setAttribute("aria-hidden", "true"); }
+}
+
+function restartFromResult() {
+  closeGameResult();
+  resetGame();
+}
+
+function triggerVictory() {
+  if (G.hasWon) return;
+  G.hasWon = true;
+  G.wonAtDay = G.day;
+  addLog("🎉 通关！耗时 " + G.day + " 天，掌柜名扬天下！");
+  showToast("🎉 器成天下走！通关达成！", true);
+  checkAchievements();
+  G.save(); render();
+  showGameResult("win", "器成天下走", "一窑成器，百工留痕。王家瓷器经昌江走向天下，而匠人的名字终于被记入这卷家谱。");
+}
+
+function triggerDefeat(title, copy, cause) {
+  if (G.gameOver) return;
+  G.gameOver = true;
+  G.deathCause = cause || title;
+  addLog(title + "！游戏结束。");
+  showToast(title + "！GAME OVER", false);
+  G.save(); render();
+  showGameResult("lose", title, copy);
+}
+
 function nextDay() {
 
   G.day++;
@@ -1796,9 +1844,16 @@ function nextDay() {
 
     G.fame = Math.max(0, G.fame - CONFIG.IMPERIAL.timeoutPenalty);
 
+    G.imperialFavor = Math.max(-100, (G.imperialFavor || 0) - 20);
+
     G.imperial = false;
 
     G.imperialDay = null;
+
+    if (G.season === 2) {
+      triggerDefeat("秋后问斩", "御命期限已尽，官差封窑拿人。器物的裂痕最终落在了匠人的性命上。", "御命秋季逾期");
+      return;
+    }
 
     addLog("御命逾期！声望下降 " + CONFIG.IMPERIAL.timeoutPenalty + "。");
 
@@ -1882,17 +1937,7 @@ function nextDay() {
   // 皇帝好感-100 → 满门抄斩
 
   if ((G.imperialFavor || 0) <= -100) {
-
-    addLog("皇帝震怒，满门抄斩！游戏结束。");
-
-    showToast("满门抄斩！GAME OVER", false);
-
-    G.gameOver = true;
-
-    setTimeout(function(){ resetGame(); }, 3000);
-
-    G.save(); render();
-
+    triggerDefeat("满门抄斩", "御窑账册上的朱笔落下，王家数代经营在一道旨意中归零。", "皇帝好感降至-100");
     return;
 
   }
@@ -1959,19 +2004,7 @@ function nextDay() {
 
   // 通关检查
 
-  if (G.isWin) {
-
-    G.hasWon = true;
-
-    G.wonAtDay = G.day;
-
-    addLog("🎉 通关！耗时 " + G.day + " 天，掌柜名扬天下！");
-
-    showToast("🎉 器成天下走！通关达成！", true);
-
-    checkAchievements();
-
-  }
+  if (G.isWin) triggerVictory();
 
 
 
@@ -2030,22 +2063,12 @@ function hireTaoist() {
 
 function doConscript() {
 
-  if ((G.imperialFavor || 0) < 10) return;
+  if ((G.imperialFavor || 0) < 10 && (G.conscriptCount || 0) === 0) return;
 
   G.conscriptCount = (G.conscriptCount || 0) + 1;
 
   if (G.conscriptCount >= 5) {
-
-    addLog("民变！窑工捣毁窑炉。游戏结束。");
-
-    showToast("民变毁窑！GAME OVER", false);
-
-    G.gameOver = true;
-
-    setTimeout(function(){ resetGame(); }, 3000);
-
-    G.save(); render();
-
+    triggerDefeat("民变毁窑", "五次强征耗尽了最后的忍耐。窑工砸开窑门，烧毁账册，官窑的秩序在火中崩塌。", "连续强征5次");
     return;
 
   }
@@ -2077,18 +2100,15 @@ function doConscript() {
 
 
 function resetGame() {
-
-  G.reset();
-
-  G._fireRateBonus = 0; // 保留难度设置
-
-  // 恢复难度（因为 reset 覆盖了）
-
   const savedDiff = G.difficulty;
 
   G.reset();
 
   G.difficulty = savedDiff;
+
+  G.maxStamina = G.diffConfig.maxStamina;
+
+  G.stamina = G.maxStamina;
 
   $$.log.textContent = "新卷展开。掌柜，请起作。";
 
