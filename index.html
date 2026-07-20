@@ -190,7 +190,7 @@ header .manual-btn:hover,header .manual-btn:focus{background:#241a13!important;c
 
 <style id="puzzle-theme">
 .map-nav{position:fixed;left:270px;top:108px;z-index:55;display:flex;gap:5px}.map-nav button{background:#d8c59ae8;color:#211a13;border:1px solid #473621;padding:5px 9px;font:11px inherit;cursor:pointer;box-shadow:2px 2px 0 #2d201455}.map-nav button:hover{background:#211a13;color:#ead8ab}.map-nav b{background:#852b22;color:#ead8ab;padding:6px 9px;font-size:10px;letter-spacing:.12em}
-.puzzle-layer{position:fixed;inset:0;z-index:280;background:#16130feF;display:none;place-items:center;padding:20px}.puzzle-layer.show{display:grid}.puzzle-book{width:min(960px,96vw);max-height:94vh;overflow:auto;display:grid;grid-template-columns:minmax(310px,1fr) minmax(280px,.8fr);background:#d9c79c;color:#211a13;border:2px solid #8c7248;box-shadow:14px 16px 0 #0008;position:relative}.puzzle-board-wrap{padding:28px;background:repeating-linear-gradient(17deg,transparent 0 18px,#3b2b1718 19px 20px)}.puzzle-board{width:min(520px,78vw);aspect-ratio:1;margin:auto;display:grid;grid-template-columns:repeat(3,1fr);gap:5px;background:#322519;padding:8px;border:6px double #b69a63}.puzzle-piece{position:relative;border:0;background:#e3ddc8;cursor:grab;overflow:hidden;box-shadow:inset 0 0 8px #40301d66;transition:transform .12s,outline .12s}.puzzle-piece:active{cursor:grabbing}.puzzle-piece.selected{outline:5px solid #852b22;z-index:2;transform:scale(.96)}.puzzle-piece:before{content:"";position:absolute;inset:-20%;background:radial-gradient(circle at var(--px) var(--py),transparent 0 13%,#275c67 14% 17%,transparent 18% 26%,#275c67 27% 31%,transparent 32%),repeating-radial-gradient(ellipse at 50% 50%,transparent 0 18px,#275c67 20px 23px,transparent 25px 36px);transform:rotate(var(--rot));opacity:.92}.puzzle-piece:after{content:attr(data-mark);position:absolute;right:6px;bottom:3px;color:#852b22;font:900 12px SimSun}.puzzle-copy{padding:42px 36px;border-left:2px solid #5d482d}.puzzle-copy .kicker{color:#852b22;font-size:11px;letter-spacing:.2em;font-weight:900}.puzzle-copy h2{font:900 clamp(32px,5vw,62px)/1.05 "STKaiti","KaiTi",serif;margin:10px 0 18px}.puzzle-copy p{line-height:1.9}.puzzle-status{min-height:52px;padding:9px;border-left:4px solid #275c67;background:#c7b68777;color:#473723;font-weight:700}.puzzle-actions{display:flex;gap:8px;margin-top:18px}.puzzle-actions button,.puzzle-close{border:0;background:#211a13;color:#ead8ab;padding:10px 15px;cursor:pointer;font:inherit}.puzzle-actions .red{background:#852b22}.puzzle-close{position:absolute;right:12px;top:12px;z-index:3}.puzzle-trigger{background:#275c67!important;color:#f0dfb4!important}
+.puzzle-layer{position:fixed;inset:0;z-index:280;background:#16130feF;display:none;place-items:center;padding:20px}.puzzle-layer.show{display:grid}.puzzle-book{width:min(960px,96vw);max-height:94vh;overflow:auto;display:grid;grid-template-columns:minmax(310px,1fr) minmax(280px,.8fr);background:#d9c79c;color:#211a13;border:2px solid #8c7248;box-shadow:14px 16px 0 #0008;position:relative}.puzzle-board-wrap{padding:28px;background:repeating-linear-gradient(17deg,transparent 0 18px,#3b2b1718 19px 20px)}.puzzle-board{width:min(440px,72vw);aspect-ratio:4/5;margin:auto;position:relative;background:#211a13;border:8px double #b69a63;overflow:hidden;box-shadow:inset 0 0 30px #000b}.puzzle-board:after{content:"修复台";position:absolute;right:7px;bottom:5px;color:#d8c59a66;font:12px KaiTi;pointer-events:none}.puzzle-piece{position:absolute;left:0;top:0;width:33.3334%;height:33.3334%;border:2px solid #d8c59a;background-image:url("/porcelain-puzzle.jpg");background-size:300% 300%;background-repeat:no-repeat;cursor:pointer;box-shadow:inset 0 0 9px #20170c88,2px 2px 5px #0008;transition:transform .24s cubic-bezier(.2,.82,.24,1),filter .18s;will-change:transform}.puzzle-piece:hover{filter:brightness(1.08)}.puzzle-piece.movable{outline:2px solid #d8b35a;outline-offset:-5px}.puzzle-piece.correct{box-shadow:inset 0 0 0 2px #2f6c5b88}.puzzle-copy{padding:42px 36px;border-left:2px solid #5d482d}.puzzle-copy .kicker{color:#852b22;font-size:11px;letter-spacing:.2em;font-weight:900}.puzzle-copy h2{font:900 clamp(32px,5vw,62px)/1.05 "STKaiti","KaiTi",serif;margin:10px 0 18px}.puzzle-copy p{line-height:1.9}.puzzle-status{min-height:52px;padding:9px;border-left:4px solid #275c67;background:#c7b68777;color:#473723;font-weight:700}.puzzle-source{font-size:11px;color:#5b4931;border-top:1px dotted #806a45;padding-top:9px}.puzzle-actions{display:flex;gap:8px;margin-top:18px}.puzzle-actions button,.puzzle-close{border:0;background:#211a13;color:#ead8ab;padding:10px 15px;cursor:pointer;font:inherit}.puzzle-actions .red{background:#852b22}.puzzle-close{position:absolute;right:12px;top:12px;z-index:3}.puzzle-trigger{background:#275c67!important;color:#f0dfb4!important}
 body>.puzzle-layer.show{display:grid!important;visibility:visible!important;opacity:1!important;pointer-events:auto!important;z-index:9999!important}
 @media(max-width:760px){.map-nav{left:8px;top:96px;max-width:calc(100vw - 16px);overflow-x:auto}.map-nav b{display:none}.puzzle-book{grid-template-columns:1fr}.puzzle-copy{border-left:0;border-top:2px solid #5d482d;padding:24px}.puzzle-board-wrap{padding:54px 14px 20px}.puzzle-board{width:min(430px,84vw)}}
 </style>
@@ -198,7 +198,7 @@ body>.puzzle-layer.show{display:grid!important;visibility:visible!important;opac
 /* Godot-style layered panorama: art changes only; original mechanics remain intact. */
 .map-container{background:#756447;box-shadow:inset 0 0 45px #17110ccc,5px 6px 0 #271b1155}
 .map-container:before{display:none}
-.map{width:1680px;min-height:690px;background-image:linear-gradient(180deg,rgba(224,206,164,.08),rgba(38,27,17,.18)),url("map-panorama.png");background-size:100% 100%;background-position:center;background-repeat:no-repeat;filter:saturate(.82) contrast(1.06)}
+.map{width:1680px;min-height:690px;background-image:linear-gradient(180deg,rgba(224,206,164,.08),rgba(38,27,17,.18)),url("/map-panorama.png");background-size:100% 100%;background-position:center;background-repeat:no-repeat;filter:saturate(.82) contrast(1.06)}
 .map:before{content:"";position:absolute;inset:0;pointer-events:none;z-index:0;background:radial-gradient(ellipse at 72% 46%,rgba(189,88,26,.18),transparent 10%),linear-gradient(110deg,transparent 54%,rgba(35,28,20,.16) 72%,transparent 86%);mix-blend-mode:multiply}
 .river{display:none}
 .site{z-index:2;filter:drop-shadow(3px 4px 2px #160f0a88);transition:filter .2s,transform .2s}
@@ -221,6 +221,7 @@ body>.puzzle-layer.show{display:grid!important;visibility:visible!important;opac
 @media(max-width:1050px){.map-container:before{inset:72px 278px 150px 220px}}
 @media(max-width:760px){.map-container:before{display:none}.map{width:1480px;min-height:620px}.mountain{left:35px}.forest{left:280px}.map>.site[style*="left:460px"]{left:520px!important}.map>.site[style*="left:640px"]{left:740px!important}.works{left:500px;top:320px}.kiln{left:980px;top:290px}.dock{left:1240px;top:340px}.minebtn{left:55px}.woodbtn{left:300px}.glazebtn{left:535px}.pigmentbtn{left:755px}.produce{left:530px;top:495px}.decoratebtn{left:720px;top:495px}.fire{left:990px;top:455px}.ship{left:1250px;top:505px}}
 </style>
+<style id="pages-path-fix">.map{background-image:linear-gradient(180deg,rgba(224,206,164,.08),rgba(38,27,17,.18)),url("map-panorama.png")!important}.puzzle-piece{background-image:url("porcelain-puzzle.jpg")!important}</style>
 </head>
 
 <body>
@@ -389,6 +390,8 @@ body>.puzzle-layer.show{display:grid!important;visibility:visible!important;opac
 
           <button class="action" onclick="hireTaoist()">请道士</button>
 
+          <button class="action" onclick="fireKilnBatch(3)">批量烧×3</button>
+
           <button class="action" id="diffBtn" onclick="cycleDifficulty()">难度：中</button>
 
           <button class="action" onclick="showMerchant()">商人</button>
@@ -483,7 +486,7 @@ body>.puzzle-layer.show{display:grid!important;visibility:visible!important;opac
     <h3><span>匠作总台 · 工序牌</span><span class="quick-rank" id="quickRank">窑工掌作</span></h3>
     <div class="quick-actions">
       <button onclick="gather('clay')">采土</button><button onclick="gather('wood')">备柴</button><button onclick="gather('glaze')">取釉</button><button onclick="gather('pigment')">取彩</button><button onclick="produce()">练泥制坯</button>
-      <button class="accent" onclick="decorate()">彩绘装饰</button><button class="accent" onclick="fireKiln()">入窑烧制</button><button class="accent" onclick="deliver()">码头交付</button><button onclick="showMerchant()">商人采买</button><button onclick="nextDay()">度过一日</button>
+      <button class="accent" onclick="decorate()">彩绘装饰</button><button class="accent" onclick="fireKiln()">单件烧制</button><button class="accent" onclick="fireKilnBatch(3)">批量烧×3</button><button class="accent" onclick="deliver()">码头交付</button><button onclick="showMerchant()">商人采买</button><button onclick="nextDay()">度过一日</button>
     </div>
   </aside>
 </main>
@@ -533,7 +536,7 @@ body>.puzzle-layer.show{display:grid!important;visibility:visible!important;opac
   <h3 style="font-size:14px;color:#a8362c;margin:12px 0 4px">码头与行帮</h3>
   <p style="font-size:12px;line-height:1.7"><b>货船自动升级：</b>小货船（0单，无加成）→昌江货船（累计3单，订单银+5%）→鄱湖船队（累计6单，+10%）→御瓷贡船（累计10单，+15%）。无需花银，交付达到门槛后立即生效。<br><b>行帮：</b>首次加入免费；改换需40银。徽帮使采集所得+20%，都帮使烧窑成功率+10%，杂帮使彩绘成瓷品质额外+3。</p>
   <h3 style="font-size:14px;color:#2c5f7c;margin:12px 0 4px">按钮作用</h3>
-  <p style="font-size:12px;line-height:1.75"><b>采集四钮：</b>取得瓷土、松柴、釉料、颜料，各耗5体力。<br><b>制作坯体：</b>耗3土、1釉、8体力；窑班≥3人时通常产2坯。<br><b>彩绘装饰：</b>耗1素坯、1颜料、4体力，增加6品质；交付时每件彩绘瓷另加25%装饰溢价。<br><b>入窑烧制：</b>耗坯、松柴与12体力，成功率显示在按钮上。<br><b>交付订单：</b>消耗成瓷换银、声望和订单进度。<br><b>请督造官调人：</b>玩家是窑工，不直接招募；花银请督造官向窑班调入一人，提高烧窑率及制坯效率，并增加每日工钱。<br><b>身份晋阶：</b>随工艺从窑工成长为熟手、作头，达到名匠后成为把桩师傅。<br><b>匠作总台：</b>完成首单后由行会送来工序牌，把采集、制坯、彩绘、烧制、交付集中在一处，地图按钮仍可使用。<br><b>升级窑炉：</b>花银提高基础烧成率。<br><b>度过一日：</b>恢复体力、推进季节/税收/期限，并可能触发彩蛋或史话。<br><b>请道士：</b>花银提高下一窑成功率。<br><b>难度：</b>切换税率、体力、费用和通关订单数。<br><b>商人：</b>买卖原料；买入不再损害商誉，卖出和彩绘订单能积累商誉。<br><b>行帮：</b>选择长期专精，可付费改换。<br><b>强征：</b>以皇恩换劳力，连续使用会引发民怨和失败。<br><b>重开：</b>清空当前存档并重新开始。<br><b>成就：</b>查看目标与一次性银两奖励。<br><b>拼瓷片：</b>随时进入九宫格修复小游戏，完成可得一次小奖励。</p>
+  <p style="font-size:12px;line-height:1.75"><b>采集四钮：</b>取得瓷土、松柴、釉料、颜料，各耗5体力。<br><b>制作坯体：</b>耗3土、1釉、8体力；窑班≥3人时通常产2坯。<br><b>彩绘装饰：</b>耗1素坯、1颜料、4体力，增加6品质；交付时每件彩绘瓷另加25%装饰溢价。<br><b>单件烧制：</b>耗1件坯、松柴与12体力，成功率显示在按钮上。<br><b>批量烧×3：</b>三件分别独立判定成功率，一次共耗20体力，并比单烧三次少耗1捆柴；结果会汇总显示烧成与损毁数量。<br><b>交付订单：</b>消耗成瓷换银、声望和订单进度。<br><b>请督造官调人：</b>玩家是窑工，不直接招募；花银请督造官向窑班调入一人，提高烧窑率及制坯效率，并增加每日工钱。<br><b>身份晋阶：</b>随工艺从窑工成长为熟手、作头，达到名匠后成为把桩师傅。<br><b>匠作总台：</b>完成首单后由行会送来工序牌，把采集、制坯、彩绘、烧制、交付集中在一处，地图按钮仍可使用。<br><b>升级窑炉：</b>花银提高基础烧成率。<br><b>度过一日：</b>恢复体力、推进季节/税收/期限，并可能触发彩蛋或史话。<br><b>请道士：</b>花银提高下一窑成功率。<br><b>难度：</b>切换税率、体力、费用和通关单数。<br><b>商人：</b>买卖原料；买入不再损害商誉，卖出和彩绘订单能积累商誉。<br><b>行帮：</b>选择长期专精，可付费改换。<br><b>强征：</b>以皇恩换劳力，连续使用会引发民怨和失败。<br><b>重开：</b>清空当前存档并重新开始。<br><b>成就：</b>查看一次性挑战与银两奖励。<br><b>拼瓷片：</b>推动空位旁的真实瓷器图像切片，依据器形与青花纹样复原明代藏品。</p>
   <h3 style="font-size:14px;color:#2c5f7c;margin:12px 0 4px">操作提示</h3>
   <p style="font-size:12px;line-height:1.7">地图可按住拖动（手机手指滑动）| 底部面板点击标题折叠展开 | 每4天换季/每5天收税 | 体力不足从商人处买原料 | 强征3次民怨5次毁窑</p>
   <p style="margin-top:8px;font-size:11px;color:var(--muted)">以后再查看：点击顶部的<b>说明</b>按钮</p>
@@ -1584,6 +1587,29 @@ function fireKiln() {
 
 
 
+function fireKilnBatch(count) {
+  count = Math.max(1, Math.min(3, Number(count) || 3));
+  var blankCount = (G.blank || 0) + (G.paintedBlank || 0);
+  var singleWood = G.fireWoodCost;
+  var batchWood = singleWood * count - (count >= 3 ? 1 : 0);
+  var batchStamina = count >= 3 ? 20 : CONFIG.FIRE.staminaCost * count;
+  if (blankCount < count) return showToast("批量烧制需要 " + count + " 件坯体。", false);
+  if (G.wood < batchWood) return showToast("批量烧制需要 " + batchWood + " 捆松柴。", false);
+  if (G.stamina < batchStamina) return showToast("批量烧制需要 " + batchStamina + " 体力。", false);
+
+  // fireKiln 保持单件独立判定；预存批烧节省额，使最终消耗为20体力和少1捆柴。
+  var normalStamina = CONFIG.FIRE.staminaCost * count;
+  var normalWood = singleWood * count;
+  G.stamina += normalStamina - batchStamina;
+  G.wood += normalWood - batchWood;
+  var wareBefore = G.ware || 0;
+  for (var i = 0; i < count; i++) fireKiln();
+  var successCount = (G.ware || 0) - wareBefore;
+  addLog("整窑批烧：装入" + count + "件，烧成" + successCount + "件，损毁" + (count-successCount) + "件；共耗体力" + batchStamina + "、松柴" + batchWood + "。");
+  showToast("批烧完成：" + successCount + "/" + count + " 件烧成", successCount === count);
+  G.save(); render();
+}
+
 function deliver() {
 
   showContextNote(G.imperial ? "imperial" : "deliver");
@@ -2586,7 +2612,7 @@ render();
   <div class="puzzle-book">
     <button class="puzzle-close" onclick="closePuzzle()">收起残卷 ×</button>
     <div class="puzzle-board-wrap"><div class="puzzle-board" id="puzzleBoard"></div></div>
-    <article class="puzzle-copy"><p class="kicker">废瓷坑 · 修复工课</p><h2>拼合青花残片</h2><p>拖动两块瓷片交换位置；也可以依次点击两块。观察青花纹样的走向、胎釉边缘和朱砂编号，把九片残瓷恢复原位。</p><div class="puzzle-status" id="puzzleStatus">残片来自同一件器物，但火裂打乱了纹样。</div><p><b>匠作知识：</b>考古修复不仅看图案，还会比对胎质、釉色、断口、器壁弧度与厚度。拼合不是猜图，而是建立证据链。</p><div class="puzzle-actions"><button onclick="shufflePuzzle()">重新打乱</button><button class="red" onclick="checkPuzzle(true)">校验拼合</button></div></article>
+    <article class="puzzle-copy"><p class="kicker">废瓷坑 · 修复工课</p><h2>复原明代青花瓶</h2><p>点击空位旁边的瓷片，将它沿着修复台推入空位。这里没有数字答案，请观察瓶身轮廓、青花纹样和釉面明暗，把八片图像复原。</p><div class="puzzle-status" id="puzzleStatus">先从瓶口、圈足和器身外轮廓判断上下位置。</div><p><b>匠作知识：</b>真实修复会综合比对断口、胎质、釉色、器壁弧度和纹样连续性。游戏采用滑块形式模拟“相邻证据逐步归位”。</p><p class="puzzle-source">藏品：明代青花瓷瓶，约1500年，Rogers Fund, 1917，编号17.30.3。图像：The Metropolitan Museum of Art，Open Access / Public Domain。</p><div class="puzzle-actions"><button onclick="shufflePuzzle()">重新打乱</button><button class="red" onclick="checkPuzzle(true)">查看修复进度</button></div></article>
   </div>
 </section>
 <section class="woodcut-event" id="woodcutEvent" aria-hidden="true">
@@ -2617,23 +2643,23 @@ render();
 </script>
 <script>
 (function(){
-  var order=[0,1,2,3,4,5,6,7,8], selectedIndex=null, dragIndex=null;
-  var board=document.getElementById("puzzleBoard"), status=document.getElementById("puzzleStatus");
+  var order=[0,1,2,3,4,5,6,7,8], moves=0;
+  var board=document.getElementById("puzzleBoard"), status=document.getElementById("puzzleStatus"), pieces=[];
   window.moveMap=function(x){var map=document.getElementById("mapContainer");if(map)map.scrollTo({left:x,behavior:"smooth"})};
-  function tile(value,index){
-    var b=document.createElement("button");b.className="puzzle-piece"+(selectedIndex===index?" selected":"");b.draggable=true;b.dataset.mark=String(value+1);b.setAttribute("aria-label","瓷片 "+(value+1));b.style.setProperty("--px",String((value%3)*48+12)+"%");b.style.setProperty("--py",String(Math.floor(value/3)*48+12)+"%");b.style.setProperty("--rot",String((value%3-1)*7)+"deg");
-    b.onclick=function(){selectTile(index)};b.ondragstart=function(){dragIndex=index};b.ondragover=function(e){e.preventDefault()};b.ondrop=function(e){e.preventDefault();if(dragIndex!==null)swap(dragIndex,index)};return b;
+  function adjacent(a,b){return Math.abs(Math.floor(a/3)-Math.floor(b/3))+Math.abs(a%3-b%3)===1}
+  function positionPieces(){
+    var empty=order.indexOf(8);
+    pieces.forEach(function(b,value){var index=order.indexOf(value),x=index%3,y=Math.floor(index/3);b.style.transform="translate("+(x*100)+"%,"+(y*100)+"%)";b.classList.toggle("movable",adjacent(index,empty));b.classList.toggle("correct",index===value)});
   }
-  function draw(){if(!board)return;board.innerHTML="";order.forEach(function(v,i){board.appendChild(tile(v,i))})}
-  function swap(a,b){var t=order[a];order[a]=order[b];order[b]=t;selectedIndex=null;dragIndex=null;draw();checkPuzzle(false)}
-  function selectTile(i){if(selectedIndex===null){selectedIndex=i;draw();status.textContent="已拾起第 "+(order[i]+1)+" 号残片，再选择一片交换。"}else if(selectedIndex===i){selectedIndex=null;draw()}else swap(selectedIndex,i)}
-  window.shufflePuzzle=function(){order=[4,1,7,2,8,3,5,0,6];selectedIndex=null;draw();status.textContent="残片已重新摊开。先找纹样能连续相接的边缘。"};
-  window.checkPuzzle=function(manual){var ok=order.every(function(v,i){return v===i});if(ok){status.textContent="拼合完成：纹样、釉色与断口全部吻合。工艺品质 +5，修复赏银 +15。";if(window.G&&G._puzzleSolvedDay!==G.day){G._puzzleSolvedDay=G.day;G.quality+=5;G.silver+=15;if(typeof addLog==="function")addLog("废瓷坑修复完成，从残片中辨认出完整青花纹样。品质+5，赏银+15。");G.save();render()}}else if(manual){var right=order.filter(function(v,i){return v===i}).length;status.textContent="尚未吻合：目前有 "+right+" 片位置正确。继续比对断口和纹样走向。"}return ok};
+  function build(){if(!board)return;board.innerHTML="";pieces=[];for(var value=0;value<8;value++){var b=document.createElement("button");b.className="puzzle-piece";b.setAttribute("aria-label","青花瓷片");b.style.backgroundPosition=(value%3*50)+"% "+(Math.floor(value/3)*50)+"%";(function(v){b.onclick=function(){movePiece(v)}})(value);pieces.push(b);board.appendChild(b)}positionPieces()}
+  function movePiece(value){var from=order.indexOf(value),empty=order.indexOf(8);if(!adjacent(from,empty)){status.textContent="这片与空位不相邻。请先移动空位旁边带金色轮廓的瓷片。";return}order[empty]=value;order[from]=8;moves++;positionPieces();status.textContent="瓷片顺着断口滑入空位 · 已移动"+moves+"步。";checkPuzzle(false)}
+  window.shufflePuzzle=function(){order=[0,1,2,3,4,5,6,7,8];moves=0;var empty=8,last=-1;for(var n=0;n<90;n++){var choices=[];for(var i=0;i<9;i++)if(i!==last&&adjacent(i,empty))choices.push(i);var pick=choices[Math.floor(Math.random()*choices.length)];order[empty]=order[pick];order[pick]=8;last=empty;empty=pick}if(order.every(function(v,i){return v===i}))return shufflePuzzle();positionPieces();status.textContent="瓷片已经散开。金色轮廓表示当前可以推入空位的瓷片。"};
+  window.checkPuzzle=function(manual){var ok=order.every(function(v,i){return v===i});if(ok){status.textContent="复原完成！明代青花瓶的器形与纹样重新连成一体。移动"+moves+"步，品质+5，赏银+15。";if(window.G&&G._puzzleSolvedDay!==G.day){G._puzzleSolvedDay=G.day;G.quality+=5;G.silver+=15;if(typeof addLog==="function")addLog("修复台复原明代青花瓷瓶，依据器形与纹样完成拼合。品质+5，赏银+15。");G.save();render()}}else if(manual){var right=order.filter(function(v,i){return v===i}).length;status.textContent="修复进度：已有"+right+"个位置吻合，已移动"+moves+"步。继续观察瓶身外轮廓。"}return ok};
   window.openPuzzle=function(){var layer=document.getElementById("puzzleLayer");if(!layer)return;if(layer.parentElement!==document.body)document.body.appendChild(layer);shufflePuzzle();layer.classList.add("show");layer.style.display="grid";layer.style.zIndex="9999";layer.setAttribute("aria-hidden","false")};
   window.closePuzzle=function(){var layer=document.getElementById("puzzleLayer");if(!layer)return;layer.classList.remove("show");layer.style.display="none";layer.setAttribute("aria-hidden","true")};
   var trigger=document.getElementById("puzzleTrigger");if(trigger)trigger.addEventListener("click",function(e){e.preventDefault();window.openPuzzle()});
   var map=document.getElementById("mapContainer");if(map){map.style.touchAction="none";map.title="按住空白处拖动长卷地图"}
-  draw();
+  build();
 })();
 </script>
 </body></html>
