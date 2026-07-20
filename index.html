@@ -181,11 +181,11 @@ header .manual-btn:hover,header .manual-btn:focus{background:#241a13!important;c
 #invCard{left:10px;top:0;width:230px;max-height:calc(100vh - 88px)}#invCard h3:before{content:"壹 · ";color:var(--red)}#invCard .rows{grid-template-columns:1fr;gap:0}#invCard .rows span{padding:5px 2px;font-size:12px}#invCard .rows b{font-size:14px;color:var(--red)}#invCard .rows span:nth-child(7),#invCard .rows span:nth-child(8),#invCard .rows span:nth-child(9){color:var(--jade);font-weight:900}
 #orderCard{right:10px;top:0;width:300px;min-width:0!important;max-height:330px;border-width:1px!important;border-top:5px solid var(--red)!important}#orderCard h3:before{content:"贰 · ";color:var(--red)}#orderCard .orders{padding:7px;background:#c8b38166;border-left:3px solid var(--red)}#orderCard .actions{display:grid;grid-template-columns:repeat(3,1fr);gap:5px;margin-top:10px}#orderCard .action{min-height:34px;padding:5px 3px}#orderCard .achieve-btn{width:100%;margin-top:7px;padding:6px}
 #craftCard{right:10px;top:342px;width:300px;max-height:145px}#craftCard h3:before{content:"叁 · ";color:var(--red)}#merchantCard{right:10px;top:499px;width:300px;max-height:190px}#merchantCard h3:before{content:"肆 · ";color:var(--red)}
-.quick-workbench{position:fixed;left:50%;bottom:148px;transform:translateX(-50%);z-index:80;width:min(760px,calc(100vw - 32px));background:#d8c59af2;border:2px solid #4a3825;box-shadow:6px 6px 0 #120c0870;padding:7px 10px;display:none;pointer-events:auto}.quick-workbench.unlocked{display:block}.quick-workbench h3{margin:0 0 6px;font:700 17px "STKaiti","KaiTi",serif;color:#7b231b;display:flex;justify-content:space-between}.quick-actions{display:grid;grid-template-columns:repeat(5,1fr);gap:5px}.quick-actions button{background:#292016;color:#ead9ae;border:1px solid #100b07;padding:7px 3px;font-family:"STSong","SimSun",serif;cursor:pointer}.quick-actions button:hover{background:#7b231b}.quick-actions .accent{background:#724027}.quick-rank{color:#5b4931;font-size:12px;font-weight:normal}
+.quick-workbench{position:fixed;left:270px;top:150px;z-index:80;width:min(650px,calc(100vw - 32px));background:#d8c59af2;border:2px solid #4a3825;box-shadow:6px 6px 0 #120c0870;padding:7px 10px;display:none;pointer-events:auto;touch-action:none}.quick-workbench.unlocked{display:block}.quick-workbench h3{margin:0 0 6px;font:700 17px "STKaiti","KaiTi",serif;color:#7b231b;display:flex;align-items:center;justify-content:space-between;cursor:move;user-select:none}.quick-actions{display:grid;grid-template-columns:repeat(5,1fr);gap:5px}.quick-actions button{background:#292016;color:#ead9ae;border:1px solid #100b07;padding:7px 3px;font-family:"STSong","SimSun",serif;cursor:pointer}.quick-actions button:hover{background:#7b231b}.quick-actions .accent{background:#724027}.quick-rank{color:#5b4931;font-size:12px;font-weight:normal;margin-left:auto;margin-right:10px}.quick-toggle{border:0;background:#7b231b;color:#ead9ae;padding:3px 8px;cursor:pointer;font:12px SimSun}.quick-workbench.folded{width:280px}.quick-workbench.folded .quick-actions,.quick-workbench.folded .quick-rank{display:none}.quick-workbench.folded h3{margin:0}
 #logCard{left:252px;right:322px;bottom:8px;height:130px;min-width:0}#logCard h3:before{content:"伍 · ";color:var(--red)}#logCard .log{max-height:82px;font-size:12px;line-height:1.65}
 .history-slip{right:333px;top:76px;width:250px;z-index:45}.float-card.collapsed{height:auto}.float-card.collapsed .card-body{display:none!important}
 @media(max-width:1050px){.map-container{margin-left:220px;margin-right:278px}.map-container:after{left:232px}.history-slip{display:none}#invCard{width:200px}#orderCard,#craftCard,#merchantCard{width:260px}#logCard{left:220px;right:278px}}
-@media(max-width:760px){header{gap:6px;padding:5px 8px}header h1{font-size:20px}.history-slip{display:none}.map-container{margin:0 0 150px;min-height:360px}.map-container:after{left:8px;top:68px}.float-panels{inset:auto 0 0;display:flex;height:145px;padding:4px 6px;background:#211a15e8;overflow-x:auto;gap:7px}.float-card,#invCard,#orderCard,#craftCard,#merchantCard,#logCard{position:relative;inset:auto;width:260px;min-width:260px;height:136px;max-height:136px;flex:0 0 260px}.float-card .card-body{max-height:96px;overflow:auto}#invCard .rows{grid-template-columns:1fr 1fr}#orderCard .actions{display:flex}.woodcut-event{grid-template-columns:1fr}.woodcut-visual{min-height:42vh}.woodcut-copy{padding:48px 24px}.woodcut-close{position:fixed}.quick-workbench{bottom:152px;width:calc(100vw - 18px);padding:5px}.quick-actions{grid-template-columns:repeat(5,minmax(68px,1fr));overflow-x:auto}.quick-actions button{font-size:11px}.quick-workbench h3{font-size:14px}}
+@media(max-width:760px){header{gap:6px;padding:5px 8px}header h1{font-size:20px}.history-slip{display:none}.map-container{margin:0 0 150px;min-height:360px}.map-container:after{left:8px;top:68px}.float-panels{inset:auto 0 0;display:flex;height:145px;padding:4px 6px;background:#211a15e8;overflow-x:auto;gap:7px}.float-card,#invCard,#orderCard,#craftCard,#merchantCard,#logCard{position:relative;inset:auto;width:260px;min-width:260px;height:136px;max-height:136px;flex:0 0 260px}.float-card .card-body{max-height:96px;overflow:auto}#invCard .rows{grid-template-columns:1fr 1fr}#orderCard .actions{display:flex}.woodcut-event{grid-template-columns:1fr}.woodcut-visual{min-height:42vh}.woodcut-copy{padding:48px 24px}.woodcut-close{position:fixed}.quick-workbench{left:10px;top:145px;width:calc(100vw - 20px);padding:5px}.quick-actions{grid-template-columns:repeat(5,minmax(68px,1fr));overflow-x:auto}.quick-actions button{font-size:11px}.quick-workbench h3{font-size:14px}}
 </style>
 
 <style id="puzzle-theme">
@@ -398,7 +398,7 @@ body>.puzzle-layer.show{display:grid!important;visibility:visible!important;opac
 
           <button class="action" id="guildBtn" onclick="showGuildSelect()">行帮：未加入</button>
 
-          <button class="action" onclick="doConscript()" id="conscriptBtn" style="display:none">强征</button>
+          <button class="action" onclick="doConscript()" id="conscriptBtn">强征（皇恩10解锁）</button>
 
           <button class="action" onclick="resetGame()">重开</button>
 
@@ -483,10 +483,10 @@ body>.puzzle-layer.show{display:grid!important;visibility:visible!important;opac
   </div>
 
   <aside class="quick-workbench" id="quickWorkbench" aria-label="匠作总台">
-    <h3><span>匠作总台 · 工序牌</span><span class="quick-rank" id="quickRank">窑工掌作</span></h3>
+    <h3 id="quickDragHandle"><span>匠作总台 · 工序牌</span><span class="quick-rank" id="quickRank">窑工掌作</span><button class="quick-toggle" type="button" onclick="toggleQuickWorkbench(event)">收起</button></h3>
     <div class="quick-actions">
       <button onclick="gather('clay')">采土</button><button onclick="gather('wood')">备柴</button><button onclick="gather('glaze')">取釉</button><button onclick="gather('pigment')">取彩</button><button onclick="produce()">练泥制坯</button>
-      <button class="accent" onclick="decorate()">彩绘装饰</button><button class="accent" onclick="fireKiln()">单件烧制</button><button class="accent" onclick="fireKilnBatch(3)">批量烧×3</button><button class="accent" onclick="deliver()">码头交付</button><button onclick="showMerchant()">商人采买</button><button onclick="nextDay()">度过一日</button>
+      <button class="accent" onclick="decorate()">彩绘装饰</button><button class="accent" onclick="fireKiln()">单件烧制</button><button class="accent" onclick="fireKilnBatch(3)">批量烧×3</button><button class="accent" onclick="deliver()">码头交付</button>
     </div>
   </aside>
 </main>
@@ -1154,6 +1154,34 @@ function bindContextNotePreviews() {
 
 bindContextNotePreviews();
 
+function initQuickWorkbenchDrag() {
+  var panel = document.getElementById("quickWorkbench"), handle = document.getElementById("quickDragHandle");
+  if (!panel || !handle || panel.dataset.dragReady) return;
+  panel.dataset.dragReady = "1";
+  try {
+    var saved = JSON.parse(localStorage.getItem("qicheng_quick_panel") || "null");
+    if (saved) {
+      if (Number.isFinite(saved.left)) panel.style.left = Math.max(4, Math.min(saved.left, innerWidth - 290)) + "px";
+      if (Number.isFinite(saved.top)) panel.style.top = Math.max(72, Math.min(saved.top, innerHeight - 60)) + "px";
+      if (saved.folded) panel.classList.add("folded");
+      var toggle = panel.querySelector(".quick-toggle"); if (toggle) toggle.textContent = saved.folded ? "展开" : "收起";
+    }
+  } catch (e) {}
+  var startX=0,startY=0,startLeft=0,startTop=0,dragging=false;
+  handle.addEventListener("pointerdown", function(e){
+    if (e.target.closest("button")) return;
+    dragging=true;startX=e.clientX;startY=e.clientY;var rect=panel.getBoundingClientRect();startLeft=rect.left;startTop=rect.top;panel.style.left=startLeft+"px";panel.style.top=startTop+"px";handle.setPointerCapture(e.pointerId);e.preventDefault();
+  });
+  handle.addEventListener("pointermove", function(e){
+    if(!dragging)return;var maxLeft=Math.max(4,innerWidth-panel.offsetWidth-4),maxTop=Math.max(72,innerHeight-panel.offsetHeight-4);panel.style.left=Math.max(4,Math.min(maxLeft,startLeft+e.clientX-startX))+"px";panel.style.top=Math.max(72,Math.min(maxTop,startTop+e.clientY-startY))+"px";
+  });
+  function finishDrag(){if(!dragging)return;dragging=false;saveQuickWorkbenchPosition()}
+  handle.addEventListener("pointerup",finishDrag);handle.addEventListener("pointercancel",finishDrag);
+}
+function saveQuickWorkbenchPosition(){var panel=document.getElementById("quickWorkbench");if(!panel)return;var rect=panel.getBoundingClientRect();localStorage.setItem("qicheng_quick_panel",JSON.stringify({left:Math.round(rect.left),top:Math.round(rect.top),folded:panel.classList.contains("folded")}))}
+function toggleQuickWorkbench(e){if(e){e.preventDefault();e.stopPropagation()}var panel=document.getElementById("quickWorkbench");if(!panel)return;panel.classList.toggle("folded");var btn=panel.querySelector(".quick-toggle");if(btn)btn.textContent=panel.classList.contains("folded")?"展开":"收起";saveQuickWorkbenchPosition()}
+initQuickWorkbenchDrag();
+
 function render() {
 
   for (const k of Object.keys(CONFIG.INIT)) {
@@ -1277,9 +1305,13 @@ function render() {
 
   if (cBtn) {
 
-    cBtn.style.display = ((G.imperialFavor || 0) >= 10 || (G.conscriptCount || 0) > 0) ? "inline-block" : "none";
-
-    cBtn.textContent = G.conscriptCount >= 3 ? "强征（民怨）" : "强征劳役";
+    var conscriptUnlocked = (G.imperialFavor || 0) >= 10 || (G.conscriptCount || 0) > 0;
+    cBtn.style.display = "inline-block";
+    cBtn.disabled = false;
+    cBtn.setAttribute("aria-disabled", conscriptUnlocked ? "false" : "true");
+    cBtn.style.opacity = conscriptUnlocked ? "1" : ".62";
+    cBtn.textContent = !conscriptUnlocked ? "强征（皇恩10解锁）" : (G.conscriptCount >= 3 ? "强征（民怨）" : "强征劳役");
+    cBtn.title = !conscriptUnlocked ? "完成订单、彩绘和御命可积累皇恩；达到10后解锁强征" : "强征提高体力上限，但连续使用会积累民怨";
 
     if (G.conscriptCount >= 3) cBtn.style.color = "#a00";
 
@@ -2239,7 +2271,7 @@ function hireTaoist() {
 
 function doConscript() {
 
-  if ((G.imperialFavor || 0) < 10 && (G.conscriptCount || 0) === 0) return;
+  if ((G.imperialFavor || 0) < 10 && (G.conscriptCount || 0) === 0) return showToast("皇恩达到10后才能调用官府强征劳役。", false);
 
   G.conscriptCount = (G.conscriptCount || 0) + 1;
 
