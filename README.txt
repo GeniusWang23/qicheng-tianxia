@@ -1,5 +1,8 @@
 器成天下走 · 瓷业经营
 
+最新版项目说明、在线试玩和操作指南请查看 README.md。
+在线地址：https://geniuswang23.github.io/qicheng-tianxia/
+
 一款以古代景德镇瓷业为背景的轻经营策略网页游戏。
 
 游玩方式
