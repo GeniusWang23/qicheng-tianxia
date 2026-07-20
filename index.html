@@ -160,6 +160,13 @@ header .seal{border:3px double var(--red);color:var(--red);background:transparen
 .modal-box{background:#dac79c;border:2px solid #302419;border-radius:0;box-shadow:12px 14px 0 #070504aa}.modal-box:after{content:"窑户手记";position:absolute;right:16px;bottom:10px;color:#852b2277;border:2px solid #852b2277;padding:4px;transform:rotate(-6deg)}
 .history-slip{position:fixed;right:12px;top:76px;z-index:42;width:240px;padding:10px 12px;background:#d5c08eee;border:1px solid #3e2f20;box-shadow:4px 5px 0 #291d1266;font-size:11px;line-height:1.7;color:#463624;pointer-events:none}.history-slip b{display:block;color:var(--red);font-size:13px;letter-spacing:.14em}.history-slip em{color:var(--jade);font-style:normal}
 .history-slip small{display:block;margin-top:7px;padding-top:5px;border-top:1px dotted #785f3d;color:#795f3d;text-align:right;font-size:9px;letter-spacing:.1em}.history-slip.note-change{animation:noteTurn .42s ease}@keyframes noteTurn{0%{opacity:.3;transform:translateX(10px) rotate(.5deg)}100%{opacity:1;transform:none}}
+.site[data-note]{cursor:help}.site[data-note]:hover,.site[data-note].note-preview{filter:drop-shadow(0 0 8px #d6b46b) drop-shadow(3px 4px 2px #160f0a88);transform:translateY(-2px)}
+.history-slip.note-preview{box-shadow:0 0 0 2px #a43b2c,7px 8px 0 #291d1266;background:#e0cc9aee}
+header .manual-btn{position:relative;background:#8b2e23!important;color:#f5e7bd!important;border:2px double #f0d99d!important;padding:7px 13px!important;font-size:12px!important;font-weight:900;letter-spacing:.12em;box-shadow:3px 3px 0 #34150f!important;animation:manualPulse 2.6s ease-in-out infinite}
+header .manual-btn:after{content:"必读";position:absolute;right:-9px;top:-9px;background:#e5c77f;color:#6d2018;border:1px solid #6d2018;padding:1px 3px;font-size:8px;line-height:1;letter-spacing:0;transform:rotate(7deg)}
+header .manual-btn:hover,header .manual-btn:focus{background:#241a13!important;color:#f7e4ad!important;transform:translateY(-1px)}
+@keyframes manualPulse{0%,100%{filter:none}50%{filter:drop-shadow(0 0 5px #b94a36)}}
+@media(prefers-reduced-motion:reduce){header .manual-btn{animation:none}}
 .day-event-overlay{position:fixed;inset:0;z-index:310;background:#15100bc2;display:none;backdrop-filter:blur(2px)}
 .egg-popup{position:fixed;left:50%;top:50%;z-index:311;display:none;width:min(470px,88vw);transform:translate(-50%,-50%);padding:28px 30px;background:#d9c69b;color:#241b12;border:2px solid #3d2d1d;box-shadow:12px 14px 0 #0e0906aa;text-align:left;cursor:pointer}
 .egg-popup:before{content:"";position:absolute;inset:7px;border:1px solid #8b7048;pointer-events:none}.egg-popup .event-mark{font-size:42px;float:left;margin:0 16px 12px 0}.egg-popup h2{font:900 28px/1.1 "STKaiti","KaiTi",serif;margin:1px 0 12px;color:#852b22}.egg-popup.history-event{background:#d5c18f}.egg-popup.history-event h2{color:#284b46}.egg-popup .event-hint{clear:both;margin-top:15px;padding-top:8px;border-top:1px dotted #78603e;color:#756044;text-align:center;font-size:10px;letter-spacing:.12em}
@@ -240,7 +247,7 @@ body>.puzzle-layer.show{display:grid!important;visibility:visible!important;opac
 
     </div>
 
-    <button class="help-btn" onclick="showHelp()">说明</button>
+    <button class="help-btn manual-btn" onclick="showHelp()">玩法说明</button>
 
     <button class="help-btn puzzle-trigger" id="puzzleTrigger" type="button">拼瓷片</button>
 
@@ -260,39 +267,39 @@ body>.puzzle-layer.show{display:grid!important;visibility:visible!important;opac
 
 
 
-      <section class="site mountain"><h2>高岭山</h2><div class="art" style="background:#607659;display:flex;align-items:center;justify-content:center;font-size:50px">⛰️🏔️🪨</div></section>
+      <section class="site mountain" data-note="clay" tabindex="0"><h2>高岭山</h2><div class="art" style="background:#607659;display:flex;align-items:center;justify-content:center;font-size:50px">⛰️🏔️🪨</div></section>
 
-      <button class="node minebtn" onclick="gather('clay')">采高岭土 +6 体力-5</button>
-
-
-
-      <section class="site forest"><h2>松柴林</h2><div class="art" style="background:#86a584;display:flex;align-items:center;justify-content:center;font-size:48px">🌲🌳🪵🌲</div></section>
-
-      <button class="node woodbtn" onclick="gather('wood')">伐松柴 +5 体力-5</button>
-
-      <section class="site" style="left:460px;top:20px;width:160px"><h2>釉石坡</h2><div class="art" style="background:#7a6a4a;display:flex;align-items:center;justify-content:center;font-size:32px;height:70px">♥💎✨</div></section><button class="node glazebtn" onclick="gather('glaze')" title="釉料：制作素坯的必需原料">♥ 采釉料 +3 体力-5</button>
-
-      <section class="site" style="left:640px;top:20px;width:160px"><h2>颜料矿</h2><div class="art" style="background:#5a5a2a;display:flex;align-items:center;justify-content:center;font-size:32px;height:70px">🎨💎🖌️</div></section><button class="node pigmentbtn" onclick="gather('pigment')">◆ 采颜料 +3 体力-5</button>
+      <button class="node minebtn" data-note="clay" onclick="gather('clay')">采高岭土 +6 体力-5</button>
 
 
 
-      <section class="site works"><h2>瓷作坊</h2><div class="art"><div class="shop"><span>练泥坊</span></div><div class="shop"><span>拉坯坊</span></div><div class="shop"><span>🎨画坯</span></div><div class="shop"><span>☀️晒坯</span></div></div></section>
+      <section class="site forest" data-note="wood" tabindex="0"><h2>松柴林</h2><div class="art" style="background:#86a584;display:flex;align-items:center;justify-content:center;font-size:48px">🌲🌳🪵🌲</div></section>
 
-      <button class="node produce" onclick="produce()">制作坯体 体力-8</button>
+      <button class="node woodbtn" data-note="wood" onclick="gather('wood')">伐松柴 +5 体力-5</button>
 
-      <button class="node decoratebtn" onclick="decorate()">绘画装饰 体力-6</button>
+      <section class="site" data-note="glaze" tabindex="0" style="left:460px;top:20px;width:160px"><h2>釉石坡</h2><div class="art" style="background:#7a6a4a;display:flex;align-items:center;justify-content:center;font-size:32px;height:70px">♥💎✨</div></section><button class="node glazebtn" data-note="glaze" onclick="gather('glaze')" title="釉料：制作素坯的必需原料">♥ 采釉料 +3 体力-5</button>
 
-
-
-      <section class="site kiln"><h2 id="kilnTitle">竖穴窑</h2><div class="art" id="kilnArt" style="background:#3a2a1a;display:flex;align-items:center;justify-content:center;font-size:48px">🔥🏺🔥</div></section>
-
-      <button class="node fire" onclick="fireKiln()">竖穴窑·入窑烧制 体力-12</button>
+      <section class="site" data-note="pigment" tabindex="0" style="left:640px;top:20px;width:160px"><h2>颜料矿</h2><div class="art" style="background:#5a5a2a;display:flex;align-items:center;justify-content:center;font-size:32px;height:70px">🎨💎🖌️</div></section><button class="node pigmentbtn" data-note="pigment" onclick="gather('pigment')">◆ 采颜料 +3 体力-5</button>
 
 
 
-      <section class="site dock"><h2 id="dockTitle">昌江码头 · 小货船</h2><div class="art" id="dockArt" style="background:#5f9e9e;display:flex;align-items:center;justify-content:center;font-size:42px">⛵📦⚓</div></section>
+      <section class="site works" data-note="produce" tabindex="0"><h2>瓷作坊</h2><div class="art"><div class="shop"><span>练泥坊</span></div><div class="shop"><span>拉坯坊</span></div><div class="shop"><span>🎨画坯</span></div><div class="shop"><span>☀️晒坯</span></div></div></section>
 
-      <button class="node ship" onclick="deliver()">交付订单</button>
+      <button class="node produce" data-note="produce" onclick="produce()">制作坯体 体力-8</button>
+
+      <button class="node decoratebtn" data-note="decorate" onclick="decorate()">绘画装饰 体力-6</button>
+
+
+
+      <section class="site kiln" data-note="fire" tabindex="0"><h2 id="kilnTitle">竖穴窑</h2><div class="art" id="kilnArt" style="background:#3a2a1a;display:flex;align-items:center;justify-content:center;font-size:48px">🔥🏺🔥</div></section>
+
+      <button class="node fire" data-note="fire" onclick="fireKiln()">竖穴窑·入窑烧制 体力-12</button>
+
+
+
+      <section class="site dock" data-note="deliver" tabindex="0"><h2 id="dockTitle">昌江码头 · 小货船</h2><div class="art" id="dockArt" style="background:#5f9e9e;display:flex;align-items:center;justify-content:center;font-size:42px">⛵📦⚓</div></section>
+
+      <button class="node ship" data-note="deliver" onclick="deliver()">交付订单</button>
 
     </div>
 
@@ -1096,7 +1103,7 @@ function renderDailyHistoryNote() {
   if (title) title.textContent = note.title;
   if (kicker) kicker.textContent = note.kicker;
   if (body) body.textContent = note.body;
-  if (day) day.textContent = "场景旁注 · 随当前劳作更新";
+  if (day) day.textContent = "场景旁注 · 悬停预览，点击劳作";
   if (slip && slip.dataset.noteIndex !== String(historyNoteIndex)) {
     slip.dataset.noteIndex = String(historyNoteIndex);
     slip.classList.remove("note-change");
@@ -1108,6 +1115,27 @@ function showContextNote(context) {
   if (CONTEXT_HISTORY_INDEX[context] !== undefined) historyNoteIndex = CONTEXT_HISTORY_INDEX[context];
   renderDailyHistoryNote();
 }
+
+function bindContextNotePreviews() {
+  document.querySelectorAll("[data-note]").forEach(function(target) {
+    function preview() {
+      showContextNote(target.getAttribute("data-note"));
+      var slip = document.getElementById("historySlip");
+      if (slip) {
+        slip.classList.remove("note-preview");
+        requestAnimationFrame(function(){ slip.classList.add("note-preview"); });
+      }
+      document.querySelectorAll(".site.note-preview").forEach(function(el){ el.classList.remove("note-preview"); });
+      if (target.classList.contains("site")) target.classList.add("note-preview");
+    }
+    target.addEventListener("mouseenter", preview);
+    target.addEventListener("focus", preview);
+    target.addEventListener("mouseleave", function(){ target.classList.remove("note-preview"); });
+    target.addEventListener("blur", function(){ target.classList.remove("note-preview"); });
+  });
+}
+
+bindContextNotePreviews();
 
 function render() {
 
