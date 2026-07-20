@@ -181,10 +181,11 @@ header .manual-btn:hover,header .manual-btn:focus{background:#241a13!important;c
 #invCard{left:10px;top:0;width:230px;max-height:calc(100vh - 88px)}#invCard h3:before{content:"壹 · ";color:var(--red)}#invCard .rows{grid-template-columns:1fr;gap:0}#invCard .rows span{padding:5px 2px;font-size:12px}#invCard .rows b{font-size:14px;color:var(--red)}#invCard .rows span:nth-child(7),#invCard .rows span:nth-child(8),#invCard .rows span:nth-child(9){color:var(--jade);font-weight:900}
 #orderCard{right:10px;top:0;width:300px;min-width:0!important;max-height:330px;border-width:1px!important;border-top:5px solid var(--red)!important}#orderCard h3:before{content:"贰 · ";color:var(--red)}#orderCard .orders{padding:7px;background:#c8b38166;border-left:3px solid var(--red)}#orderCard .actions{display:grid;grid-template-columns:repeat(3,1fr);gap:5px;margin-top:10px}#orderCard .action{min-height:34px;padding:5px 3px}#orderCard .achieve-btn{width:100%;margin-top:7px;padding:6px}
 #craftCard{right:10px;top:342px;width:300px;max-height:145px}#craftCard h3:before{content:"叁 · ";color:var(--red)}#merchantCard{right:10px;top:499px;width:300px;max-height:190px}#merchantCard h3:before{content:"肆 · ";color:var(--red)}
+.quick-workbench{position:fixed;left:50%;bottom:148px;transform:translateX(-50%);z-index:80;width:min(760px,calc(100vw - 32px));background:#d8c59af2;border:2px solid #4a3825;box-shadow:6px 6px 0 #120c0870;padding:7px 10px;display:none;pointer-events:auto}.quick-workbench.unlocked{display:block}.quick-workbench h3{margin:0 0 6px;font:700 17px "STKaiti","KaiTi",serif;color:#7b231b;display:flex;justify-content:space-between}.quick-actions{display:grid;grid-template-columns:repeat(5,1fr);gap:5px}.quick-actions button{background:#292016;color:#ead9ae;border:1px solid #100b07;padding:7px 3px;font-family:"STSong","SimSun",serif;cursor:pointer}.quick-actions button:hover{background:#7b231b}.quick-actions .accent{background:#724027}.quick-rank{color:#5b4931;font-size:12px;font-weight:normal}
 #logCard{left:252px;right:322px;bottom:8px;height:130px;min-width:0}#logCard h3:before{content:"伍 · ";color:var(--red)}#logCard .log{max-height:82px;font-size:12px;line-height:1.65}
 .history-slip{right:333px;top:76px;width:250px;z-index:45}.float-card.collapsed{height:auto}.float-card.collapsed .card-body{display:none!important}
 @media(max-width:1050px){.map-container{margin-left:220px;margin-right:278px}.map-container:after{left:232px}.history-slip{display:none}#invCard{width:200px}#orderCard,#craftCard,#merchantCard{width:260px}#logCard{left:220px;right:278px}}
-@media(max-width:760px){header{gap:6px;padding:5px 8px}header h1{font-size:20px}.history-slip{display:none}.map-container{margin:0 0 150px;min-height:360px}.map-container:after{left:8px;top:68px}.float-panels{inset:auto 0 0;display:flex;height:145px;padding:4px 6px;background:#211a15e8;overflow-x:auto;gap:7px}.float-card,#invCard,#orderCard,#craftCard,#merchantCard,#logCard{position:relative;inset:auto;width:260px;min-width:260px;height:136px;max-height:136px;flex:0 0 260px}.float-card .card-body{max-height:96px;overflow:auto}#invCard .rows{grid-template-columns:1fr 1fr}#orderCard .actions{display:flex}.woodcut-event{grid-template-columns:1fr}.woodcut-visual{min-height:42vh}.woodcut-copy{padding:48px 24px}.woodcut-close{position:fixed}}
+@media(max-width:760px){header{gap:6px;padding:5px 8px}header h1{font-size:20px}.history-slip{display:none}.map-container{margin:0 0 150px;min-height:360px}.map-container:after{left:8px;top:68px}.float-panels{inset:auto 0 0;display:flex;height:145px;padding:4px 6px;background:#211a15e8;overflow-x:auto;gap:7px}.float-card,#invCard,#orderCard,#craftCard,#merchantCard,#logCard{position:relative;inset:auto;width:260px;min-width:260px;height:136px;max-height:136px;flex:0 0 260px}.float-card .card-body{max-height:96px;overflow:auto}#invCard .rows{grid-template-columns:1fr 1fr}#orderCard .actions{display:flex}.woodcut-event{grid-template-columns:1fr}.woodcut-visual{min-height:42vh}.woodcut-copy{padding:48px 24px}.woodcut-close{position:fixed}.quick-workbench{bottom:152px;width:calc(100vw - 18px);padding:5px}.quick-actions{grid-template-columns:repeat(5,minmax(68px,1fr));overflow-x:auto}.quick-actions button{font-size:11px}.quick-workbench h3{font-size:14px}}
 </style>
 
 <style id="puzzle-theme">
@@ -287,7 +288,7 @@ body>.puzzle-layer.show{display:grid!important;visibility:visible!important;opac
 
       <button class="node produce" data-note="produce" onclick="produce()">制作坯体 体力-8</button>
 
-      <button class="node decoratebtn" data-note="decorate" onclick="decorate()">绘画装饰 体力-6</button>
+      <button class="node decoratebtn" data-note="decorate" onclick="decorate()">彩绘装饰 体力-4 · 溢价25%</button>
 
 
 
@@ -339,7 +340,8 @@ body>.puzzle-layer.show{display:grid!important;visibility:visible!important;opac
 
         <span>体力<b id="staminaDisplay">100</b></span>
 
-        <span>匠人<b id="workers">2</b></span>
+        <span>窑班<b id="workers">2</b></span>
+        <span>身份<b id="artisanRank">窑工</b></span>
 
         <span>商誉<b id="merchantFavor">0</b></span>
 
@@ -379,7 +381,7 @@ body>.puzzle-layer.show{display:grid!important;visibility:visible!important;opac
 
         <div class="actions">
 
-          <button class="action" onclick="hire()">招募匠人</button>
+          <button class="action" id="hireBtn" onclick="hire()">请督造官调人</button>
 
           <button class="action" id="upgradeBtn" onclick="upgrade()">升级成：龙窑</button>
 
@@ -455,7 +457,7 @@ body>.puzzle-layer.show{display:grid!important;visibility:visible!important;opac
 
       <div class="card-body" id="merchantBody">
 
-        <div style="font-size:11px;color:var(--muted);margin-bottom:4px">商誉：<b id="mFavor">0</b> · 折扣：<span id="mDisc">0%</span></div>
+        <div style="font-size:11px;color:var(--muted);margin-bottom:4px">商誉：<b id="mFavor">0</b> · 进货折扣：<span id="mDisc">0%</span> · 回售价：<span id="mSell">标准</span></div>
 
         <div id="merchantList" style="font-size:12px;line-height:1.8"></div>
 
@@ -477,6 +479,13 @@ body>.puzzle-layer.show{display:grid!important;visibility:visible!important;opac
 
   </div>
 
+  <aside class="quick-workbench" id="quickWorkbench" aria-label="匠作总台">
+    <h3><span>匠作总台 · 工序牌</span><span class="quick-rank" id="quickRank">窑工掌作</span></h3>
+    <div class="quick-actions">
+      <button onclick="gather('clay')">采土</button><button onclick="gather('wood')">备柴</button><button onclick="gather('glaze')">取釉</button><button onclick="gather('pigment')">取彩</button><button onclick="produce()">练泥制坯</button>
+      <button class="accent" onclick="decorate()">彩绘装饰</button><button class="accent" onclick="fireKiln()">入窑烧制</button><button class="accent" onclick="deliver()">码头交付</button><button onclick="showMerchant()">商人采买</button><button onclick="nextDay()">度过一日</button>
+    </div>
+  </aside>
 </main>
 
 <div class="toast" id="toast"></div>
@@ -520,11 +529,11 @@ body>.puzzle-layer.show{display:grid!important;visibility:visible!important;opac
   <h3 style="font-size:14px;color:#a8362c;margin:12px 0 4px">失败条件</h3>
   <p style="font-size:12px;line-height:1.6">民变毁窑（连续强征5次）| 秋后问斩（御命在秋季逾期）| 满门抄斩（皇帝好感降至-100）</p>
   <h3 style="font-size:14px;color:#2c5f7c;margin:12px 0 4px">重要系统</h3>
-  <p style="font-size:12px;line-height:1.7">体力-劳作消耗/每日恢复。窑炉-竖穴窑→龙窑→葫芦窑→镇窑，逐级提升烧成率。工艺-按成功烧成次数从白到彩晋阶，高于市面可升值。商誉-彩绘瓷与交易提升，影响折扣、商人来访和订单收益；满100后开启皇恩。皇恩-影响御命、订单加成、强征与特殊结局。</p>
+  <p style="font-size:12px;line-height:1.7">体力-劳作消耗/每日恢复。窑炉-竖穴窑→龙窑→葫芦窑→镇窑，逐级提升烧成率。工艺-按成功烧成次数从白到彩晋阶，高于市面可升值。商誉越高，进货越便宜、回售价越高、订单溢价和商人来访越多；满100后开启皇恩。彩绘每件订单另有25%装饰溢价。皇恩影响御命、订单加成、强征与特殊结局。</p>
   <h3 style="font-size:14px;color:#a8362c;margin:12px 0 4px">码头与行帮</h3>
   <p style="font-size:12px;line-height:1.7"><b>货船自动升级：</b>小货船（0单，无加成）→昌江货船（累计3单，订单银+5%）→鄱湖船队（累计6单，+10%）→御瓷贡船（累计10单，+15%）。无需花银，交付达到门槛后立即生效。<br><b>行帮：</b>首次加入免费；改换需40银。徽帮使采集所得+20%，都帮使烧窑成功率+10%，杂帮使彩绘成瓷品质额外+3。</p>
   <h3 style="font-size:14px;color:#2c5f7c;margin:12px 0 4px">按钮作用</h3>
-  <p style="font-size:12px;line-height:1.75"><b>采集四钮：</b>取得瓷土、松柴、釉料、颜料，各耗5体力。<br><b>制作坯体：</b>耗3土、1釉、8体力；匠人≥3时通常产2坯。<br><b>绘画装饰：</b>耗1素坯、1颜料、6体力，制成彩绘坯。<br><b>入窑烧制：</b>耗坯、松柴与12体力，成功率显示在按钮上。<br><b>交付订单：</b>消耗成瓷换银、声望和订单进度。<br><b>招募匠人：</b>花银增加匠人，提高烧窑率及制坯效率。<br><b>升级窑炉：</b>花银提高基础烧成率。<br><b>度过一日：</b>恢复体力、推进季节/税收/期限，并可能触发彩蛋或史话。<br><b>请道士：</b>花银提高下一窑成功率。<br><b>难度：</b>切换税率、体力、费用和通关订单数。<br><b>商人：</b>买卖原料；商誉越高折扣、来访与订单收益越好。<br><b>行帮：</b>选择长期专精，可付费改换。<br><b>强征：</b>以皇恩换劳力，连续使用会引发民怨和失败。<br><b>重开：</b>清空当前存档并重新开始。<br><b>成就：</b>查看目标与一次性银两奖励。<br><b>拼瓷片：</b>随时进入九宫格修复小游戏，完成可得一次小奖励。</p>
+  <p style="font-size:12px;line-height:1.75"><b>采集四钮：</b>取得瓷土、松柴、釉料、颜料，各耗5体力。<br><b>制作坯体：</b>耗3土、1釉、8体力；窑班≥3人时通常产2坯。<br><b>彩绘装饰：</b>耗1素坯、1颜料、4体力，增加6品质；交付时每件彩绘瓷另加25%装饰溢价。<br><b>入窑烧制：</b>耗坯、松柴与12体力，成功率显示在按钮上。<br><b>交付订单：</b>消耗成瓷换银、声望和订单进度。<br><b>请督造官调人：</b>玩家是窑工，不直接招募；花银请督造官向窑班调入一人，提高烧窑率及制坯效率，并增加每日工钱。<br><b>身份晋阶：</b>随工艺从窑工成长为熟手、作头，达到名匠后成为把桩师傅。<br><b>匠作总台：</b>完成首单后由行会送来工序牌，把采集、制坯、彩绘、烧制、交付集中在一处，地图按钮仍可使用。<br><b>升级窑炉：</b>花银提高基础烧成率。<br><b>度过一日：</b>恢复体力、推进季节/税收/期限，并可能触发彩蛋或史话。<br><b>请道士：</b>花银提高下一窑成功率。<br><b>难度：</b>切换税率、体力、费用和通关订单数。<br><b>商人：</b>买卖原料；买入不再损害商誉，卖出和彩绘订单能积累商誉。<br><b>行帮：</b>选择长期专精，可付费改换。<br><b>强征：</b>以皇恩换劳力，连续使用会引发民怨和失败。<br><b>重开：</b>清空当前存档并重新开始。<br><b>成就：</b>查看目标与一次性银两奖励。<br><b>拼瓷片：</b>随时进入九宫格修复小游戏，完成可得一次小奖励。</p>
   <h3 style="font-size:14px;color:#2c5f7c;margin:12px 0 4px">操作提示</h3>
   <p style="font-size:12px;line-height:1.7">地图可按住拖动（手机手指滑动）| 底部面板点击标题折叠展开 | 每4天换季/每5天收税 | 体力不足从商人处买原料 | 强征3次民怨5次毁窑</p>
   <p style="margin-top:8px;font-size:11px;color:var(--muted)">以后再查看：点击顶部的<b>说明</b>按钮</p>
@@ -626,7 +635,7 @@ const CONFIG = {
 
   PRODUCE:   { clayCost:3, glazeCost:1, workersBonus:3, bonusOutput:2, staminaCost:8 },
 
-  DECORATE:  { staminaCost:6, pigmentCost:1, qualityBonus:3 },
+  DECORATE:  { staminaCost:4, pigmentCost:1, qualityBonus:6, salePremium:0.25 },
 
   FIRE:      { woodBase:2, qualityBase:3, autumnBonus:2, winterWoodExtra:1, staminaCost:12, baseRate:0.70, kilnRateBonus:0.05, workerRateBonus:0.03, autumnRateBonus:0.10, winterRatePenalty:0.10, maxRate:0.95 },
 
@@ -745,7 +754,7 @@ const CONFIG = {
 
     generation:1, familyName:"王", executionPending:false,
 
-    craftsmanship:1.0, deathCause:""
+    craftsmanship:1.0, deathCause:"", quickWorkbenchUnlocked:false
 
   },
 
@@ -1001,11 +1010,14 @@ function renderMerchant() {
 
   var disc = Math.max(0.6, 1 - f / 200);
 
-  var sdisc = Math.min(1.4, 1 + (100 - f) / 200);
+  var sdisc = Math.min(1.4, 1 + f / 250);
 
   document.getElementById("mFavor").textContent = f;
 
   document.getElementById("mDisc").textContent = Math.floor((1-disc)*100) + "%";
+
+  var sellText = document.getElementById("mSell");
+  if (sellText) sellText.textContent = "+" + Math.floor((sdisc-1)*100) + "%";
 
   var items = [
 
@@ -1051,9 +1063,9 @@ function buyResource(id, price) {
 
   G[id] = (G[id]||0) + 1;
 
-  G.merchantFavor = Math.max(0, (G.merchantFavor||0) - 1);
+  addLog("从熟识商人处采买原料，商誉不受损。－" + price + "银");
 
-  renderMerchant(); render();
+  G.save(); renderMerchant(); render();
 
 }
 
@@ -1067,7 +1079,9 @@ function sellResource(id, price) {
 
   G.merchantFavor = Math.min(100, (G.merchantFavor||0) + 1);
 
-  renderMerchant(); render();
+  addLog("向商人回售余料，商誉+1。＋" + price + "银");
+
+  G.save(); renderMerchant(); render();
 
 }
 
@@ -1323,6 +1337,17 @@ function render() {
     $$.craftCompare.textContent = gap > 0 ? "领先市面 " + gap + " 级 · 订单升值 " + (gap * 3) + "%" : (gap < 0 ? "落后市面 " + (-gap) + " 级 · 订单贬值 " + ((-gap) * 2) + "%" : "与市面工艺相当 · 标准售价");
   }
 
+  var artisanRanks = ["窑工", "熟手窑工", "作头", "把桩师傅", "把桩师傅", "御窑名师", "一代宗匠"];
+  var artisanRank = artisanRanks[craftLevel] || "窑工";
+  var rankEl = document.getElementById("artisanRank");
+  var quickRank = document.getElementById("quickRank");
+  var hireBtn = document.getElementById("hireBtn");
+  if (rankEl) rankEl.textContent = artisanRank;
+  if (quickRank) quickRank.textContent = artisanRank + " · 窑班" + G.workers + "人";
+  if (hireBtn) hireBtn.textContent = "请督造官调人 · " + G.diffConfig.hireCost + "银";
+  var quickWorkbench = document.getElementById("quickWorkbench");
+  if (quickWorkbench) quickWorkbench.classList.toggle("unlocked", !!G.quickWorkbenchUnlocked || G.orders >= 1);
+
   // 活动成就列表
 
   renderAchievements();
@@ -1442,7 +1467,7 @@ function decorate() {
 
   G.paintedBlank++;
 
-  addLog("匠人在素坯上精心绘制，制成彩绘坯 1 件。");
+  addLog("画匠在素坯上施彩，制成彩绘坯1件；烧成后增加品质并获得订单装饰溢价。");
 
   showToast("彩绘坯完成！");
 
@@ -1609,6 +1634,13 @@ function deliver() {
 
   if (G.ware < need) return showToast("市集订单还需 " + need + " 件成瓷。", false);
 
+  // 优先交付彩绘瓷；彩绘既增加品质，也按实际交付件数获得装饰溢价。
+  let totalW = (G.paintedWare || 0) + (G.plainWare || 0);
+  let paintRatio = totalW > 0 ? (G.paintedWare || 0) / totalW : 0;
+  let paintedDeliver = Math.min(G.paintedWare || 0, need);
+  let plainDeliver = need - paintedDeliver;
+  let paintedPremium = Math.floor(G.orderSilver * CONFIG.DECORATE.salePremium * (paintedDeliver / need));
+
   const deduction = Math.round((G.quality / G.ware) * need);
 
   G.ware -= need;
@@ -1631,7 +1663,9 @@ function deliver() {
 
   var boatBonus = G.boatInfo.bonus || 0;
 
-  G.silver += Math.floor(G.orderSilver * (1 + craftLvlBonus + boatBonus));
+  G.silver += Math.floor(G.orderSilver * (1 + craftLvlBonus + boatBonus)) + paintedPremium;
+
+  if (paintedPremium > 0) addLog("彩绘装饰溢价：交付" + paintedDeliver + "件，+" + paintedPremium + "银");
 
   if (craftLvlBonus > 0) { addLog("工艺领先市面，升值+" + Math.floor(craftLvlBonus*100) + "%"); }
 
@@ -1709,21 +1743,13 @@ function deliver() {
 
   // 彩绘比例影响商人好感
 
-  let totalW = (G.paintedWare || 0) + (G.plainWare || 0);
-
-  let paintRatio = totalW > 0 ? (G.paintedWare || 0) / totalW : 0;
-
   let favorBonus = paintRatio >= 0.8 ? 3 : (paintRatio >= 0.5 ? 2 : (paintRatio >= 0.2 ? 1 : 0));
 
   // 如果全部是彩绘瓷，商人额外好感
 
-  if (paintRatio >= 1.0) { favorBonus = 4; G.silver += Math.floor(G.orderSilver * 0.15); }
+  if (paintRatio >= 1.0) { favorBonus = 4; }
 
   // 消费对应数量的成瓷（按比例扣减）
-
-  let paintedDeliver = Math.min(G.paintedWare || 0, Math.ceil(need * paintRatio));
-
-  let plainDeliver = need - paintedDeliver;
 
   G.paintedWare = Math.max(0, (G.paintedWare || 0) - paintedDeliver);
 
@@ -1756,6 +1782,12 @@ function deliver() {
   if (merchantBonus > 0) { addLog("商人好感带来的溢价：" + merchantBonus + "银"); }
 
   G.orders++;
+
+  if (!G.quickWorkbenchUnlocked && G.orders >= 1) {
+    G.quickWorkbenchUnlocked = true;
+    addLog("首单告成，行会送来一面工序牌。匠作总台已解锁，往后不必来回拖动地图。");
+    showToast("事件：工序牌 · 匠作总台解锁！", true);
+  }
 
 
 
@@ -1795,15 +1827,15 @@ function deliver() {
 
 function hire() {
 
-  if (G.silver < G.diffConfig.hireCost) return showToast("招募匠人需 " + G.diffConfig.hireCost + " 银。", false);
+  if (G.silver < G.diffConfig.hireCost) return showToast("请督造官调人需 " + G.diffConfig.hireCost + " 银。", false);
 
   G.silver -= G.diffConfig.hireCost;
 
   G.workers++;
 
-  addLog("新匠人入坊，生产更快。");
+  addLog("督造官准调一名窑工入班。你负责带班与工钱，生产更快。");
 
-  showToast("新匠人入坊！");
+  showToast("窑班增加一人！");
 
   G.save(); render();
 
