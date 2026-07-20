@@ -218,7 +218,7 @@ body>.puzzle-layer.show{display:grid!important;visibility:visible!important;opac
 <body>
 
 <aside class="history-slip" id="historySlip"><b id="historyTitle">匠作旁注</b><em id="historyKicker">器物留名，匠人无名。</em><br><span id="historyBody">一件成瓷须经过采土、练泥、制坯、绘画、施釉、装匣与烧成。任何一步失手，前功尽弃；御命却从不因此宽限。</span><small id="historyDay">第 1 日札记</small></aside>
-<nav class="map-nav" aria-label="地图定位"><b>拖动长卷</b><button onclick="moveMap(0)">矿山</button><button onclick="moveMap(360)">坯房</button><button onclick="moveMap(700)">镇窑</button><button onclick="moveMap(1050)">码头</button></nav>
+<nav class="map-nav" aria-label="地图定位"><b>拖动长卷</b><button onclick="moveMap(0)">矿山</button><button onclick="moveMap(360)">坯房</button><button id="kilnNav" onclick="moveMap(700)">竖穴窑</button><button onclick="moveMap(1050)">码头</button></nav>
 
 <main class="game">
 
@@ -284,13 +284,13 @@ body>.puzzle-layer.show{display:grid!important;visibility:visible!important;opac
 
 
 
-      <section class="site kiln"><h2 id="kilnTitle">窑炉</h2><div class="art" style="background:#3a2a1a;display:flex;align-items:center;justify-content:center;font-size:48px">🔥🏺🔥</div></section>
+      <section class="site kiln"><h2 id="kilnTitle">竖穴窑</h2><div class="art" id="kilnArt" style="background:#3a2a1a;display:flex;align-items:center;justify-content:center;font-size:48px">🔥🏺🔥</div></section>
 
       <button class="node fire" onclick="fireKiln()">竖穴窑·入窑烧制 体力-12</button>
 
 
 
-      <section class="site dock"><h2>昌江码头</h2><div class="art" style="background:#5f9e9e;display:flex;align-items:center;justify-content:center;font-size:42px">⛵🚢⚓</div></section>
+      <section class="site dock"><h2 id="dockTitle">昌江码头 · 小货船</h2><div class="art" id="dockArt" style="background:#5f9e9e;display:flex;align-items:center;justify-content:center;font-size:42px">⛵📦⚓</div></section>
 
       <button class="node ship" onclick="deliver()">交付订单</button>
 
@@ -373,7 +373,7 @@ body>.puzzle-layer.show{display:grid!important;visibility:visible!important;opac
 
           <button class="action" onclick="hire()">招募匠人</button>
 
-          <button class="action" onclick="upgrade()">升级镇窑</button>
+          <button class="action" id="upgradeBtn" onclick="upgrade()">升级成：龙窑</button>
 
           <button class="action" onclick="nextDay()">度过一日</button>
 
@@ -407,7 +407,7 @@ body>.puzzle-layer.show{display:grid!important;visibility:visible!important;opac
 
       <h3 onclick="toggleCard('craftCard')">工艺 <span id="craftBadge" style="font-size:12px;color:var(--muted)">新手</span> <span class="toggle">▶</span></h3>
 
-      <div class="card-body" style="display:none">
+      <div class="card-body">
 
         <div style="font-size:11px;color:var(--muted);margin-bottom:6px">市面主流工艺：<b id="marketLevel">新手(白色)</b></div>
 
@@ -512,7 +512,7 @@ body>.puzzle-layer.show{display:grid!important;visibility:visible!important;opac
   <h3 style="font-size:14px;color:#a8362c;margin:12px 0 4px">失败条件</h3>
   <p style="font-size:12px;line-height:1.6">民变毁窑（连续强征5次）| 秋后问斩（御命在秋季逾期）| 满门抄斩（皇帝好感降至-100）</p>
   <h3 style="font-size:14px;color:#2c5f7c;margin:12px 0 4px">重要系统</h3>
-  <p style="font-size:12px;line-height:1.7">体力-劳作消耗/每日恢复。成功率-基础70%受窑炉匠人季节道士影响。工艺-白绿蓝紫黄红彩7级，高于市面升值。商誉-彩绘瓷提升，满100解锁皇帝好感。商人-买卖原料应急。订单-3天时效可接取+10%。家族-代代相传善终永续。四季-每4天换季影响生产。难度-简单普通困难影响体力上限税率。</p>
+  <p style="font-size:12px;line-height:1.7">体力-劳作消耗/每日恢复。窑炉-竖穴窑→龙窑→葫芦窑→镇窑，逐级提升烧成率。工艺-按成功烧成次数从白到彩晋阶，高于市面可升值。码头-订单增长会解锁货船与贡船，提供船运溢价。商誉-彩绘瓷与交易提升，影响折扣、商人来访和订单收益；满100后开启皇恩。皇恩-影响御命、订单加成、强征与特殊结局。</p>
   <h3 style="font-size:14px;color:#2c5f7c;margin:12px 0 4px">操作提示</h3>
   <p style="font-size:12px;line-height:1.7">地图可按住拖动（手机手指滑动）| 底部面板点击标题折叠展开 | 每4天换季/每5天收税 | 体力不足从商人处买原料 | 强征3次民怨5次毁窑</p>
   <p style="margin-top:8px;font-size:11px;color:var(--muted)">以后再查看：点击顶部的<b>说明</b>按钮</p>
@@ -624,6 +624,20 @@ const CONFIG = {
 
   UPGRADE:   { cost:90, types:[{name:"竖穴窑",failRate:0.40,nextCost:60},{name:"龙窑",failRate:0.25,nextCost:150},{name:"葫芦窑",failRate:0.15,nextCost:350},{name:"镇窑",failRate:0.08,nextCost:999999}] },
 
+  BOATS: [
+    {name:"小货船", minOrders:0, bonus:0, icon:"⛵📦⚓"},
+    {name:"昌江货船", minOrders:3, bonus:0.05, icon:"⛵⛵📦"},
+    {name:"鄱湖船队", minOrders:6, bonus:0.10, icon:"🚢⛵🚢"},
+    {name:"御瓷贡船", minOrders:10, bonus:0.15, icon:"🚢🏺⚓"}
+  ],
+
+  CRAFT_LEVELS:[
+    {name:"新手", color:"白", fires:0}, {name:"熟手", color:"绿", fires:3},
+    {name:"巧匠", color:"蓝", fires:8}, {name:"名匠", color:"紫", fires:15},
+    {name:"大师", color:"金", fires:25}, {name:"宗师", color:"红", fires:40},
+    {name:"天工", color:"彩", fires:60}
+  ],
+
   STAMINA:   { max:200, gatherCost:5, dayRestore:30, lowThreshold:20 },
 
   TAX:       { interval:5 },
@@ -693,7 +707,7 @@ const CONFIG = {
 
     clay:12, wood:10, glaze:5, pigment:0, blank:0, paintedBlank:0, ware:0, paintedWare:0, plainWare:0,
 
-    workers:2, orders:0, kiln:1,
+    workers:2, orders:0, kiln:1, kilnType:0,
 
     imperial:false, imperialDay:null, imperialCompleted:false,
 
@@ -761,6 +775,10 @@ class GameState {
       }
       if (!Number.isFinite(this.stamina)) this.stamina = 0;
       if (!Number.isFinite(this.maxStamina)) this.maxStamina = this.diffConfig.maxStamina;
+      this.kilnType = Math.max(Number(this.kilnType) || 0, Math.max(0, Math.min(3, (this.kiln || 1) - 1)));
+      var earnedCraft = 0;
+      for (var i = 0; i < CONFIG.CRAFT_LEVELS.length; i++) if ((this.totalFires || 0) >= CONFIG.CRAFT_LEVELS[i].fires) earnedCraft = i;
+      this.craftLevel = Math.max(Number(this.craftLevel) || 0, earnedCraft);
 
       return true;
 
@@ -823,6 +841,12 @@ class GameState {
   get isTaxDay() { return this.day > 1 && this.day % CONFIG.TAX.interval === 0; }
 
   get isWin() { return !this.hasWon && this.orders >= this.diffConfig.winOrders; }
+
+  get boatInfo() {
+    var info = CONFIG.BOATS[0];
+    for (var i = 0; i < CONFIG.BOATS.length; i++) if (this.orders >= CONFIG.BOATS[i].minOrders) info = CONFIG.BOATS[i];
+    return info;
+  }
 
   get staminaLow() { return this.stamina < CONFIG.STAMINA.lowThreshold; }
 
@@ -1134,7 +1158,11 @@ function render() {
 
   let imperialHTML;
 
-  if (!G.imperial) {
+  if (G.imperialCompleted) {
+
+    imperialHTML = "<div style=\"color:var(--jade)\">御命已完成 · 官窑题款入册</div>";
+
+  } else if (!G.imperial) {
 
     imperialHTML = "<div class=\"order-active\">御命（未解锁）：完成 " + CONFIG.ORDER.unlockCount + " 笔市集订单</div>";
 
@@ -1156,7 +1184,7 @@ function render() {
 
       (G.orderAccepted ? "<div style=\"color:var(--gold)\">已接取（单价+10%）</div>" : "<div style=\"font-size:11px\"><a href=\"#\" onclick=\"acceptOrder();return false\" style=\"color:var(--jade)\">[点击接取]</a> 接取后单价+10%</div>") +
 
-      "<div>已交付：" + G.orders + "/" + CONFIG.ORDER.unlockCount + " 笔 · 声望 " + G.fame + "</div>" +
+      "<div>已交付：" + G.orders + "/" + G.diffConfig.winOrders + " 笔 · 声望 " + G.fame + "</div>" +
 
       imperialHTML;
 
@@ -1196,16 +1224,24 @@ function render() {
 
   }
 
+  var kilnIndex = Math.max(0, Math.min(CONFIG.UPGRADE.types.length - 1, Number(G.kilnType) || 0));
+  var kilnInfo = CONFIG.UPGRADE.types[kilnIndex];
+  var nextKiln = CONFIG.UPGRADE.types[kilnIndex + 1];
+  var kilnTitle = document.getElementById("kilnTitle");
+  var kilnNav = document.getElementById("kilnNav");
+  var kilnArt = document.getElementById("kilnArt");
+  if (kilnTitle) kilnTitle.textContent = kilnInfo.name;
+  if (kilnNav) kilnNav.textContent = kilnInfo.name;
+  if (kilnArt) kilnArt.textContent = ["🕳️🔥🏺", "🔥🏺🔥", "🔥🏺♨️", "🏯🔥🏺"][kilnIndex];
   if (upgBtn) {
-
-    let baseCost = CONFIG.UPGRADE.cost;
-
-    let isMarginal = G.fireSuccessRate >= 0.85;
-
-    let displayCost = isMarginal ? Math.floor(baseCost * Math.pow(1.8, G.kiln - 3)) : baseCost;
-
-    upgBtn.textContent = "升级镇窑 · " + displayCost + "银" + (isMarginal ? " (仅+1%)" : " (+5%)");
-
+    if (nextKiln) {
+      var displayCost = Math.floor(kilnInfo.nextCost * G.diffConfig.upgradeMul);
+      upgBtn.disabled = false;
+      upgBtn.textContent = "升级成：" + nextKiln.name + " · " + displayCost + "银";
+    } else {
+      upgBtn.disabled = true;
+      upgBtn.textContent = "已达最高：" + kilnInfo.name;
+    }
   }
 
   if (fireBtn) {
@@ -1214,8 +1250,27 @@ function render() {
 
     if (G.stamina < CONFIG.FIRE.staminaCost) rateText += " ⚡体力不足";
 
-    fireBtn.textContent = "入窑烧制(" + rateText + ")";
+    fireBtn.textContent = kilnInfo.name + "入窑烧制(" + rateText + ")";
 
+  }
+
+  var boat = G.boatInfo;
+  var boatType = document.getElementById("boatType");
+  var dockTitle = document.getElementById("dockTitle");
+  var dockArt = document.getElementById("dockArt");
+  if (boatType) boatType.textContent = boat.name + (boat.bonus ? " +" + Math.round(boat.bonus * 100) + "%" : "");
+  if (dockTitle) dockTitle.textContent = "昌江码头 · " + boat.name;
+  if (dockArt) dockArt.textContent = boat.icon;
+
+  var craftLevel = Math.max(0, Math.min(CONFIG.CRAFT_LEVELS.length - 1, Number(G.craftLevel) || 0));
+  var craftInfo = CONFIG.CRAFT_LEVELS[craftLevel];
+  var marketLevelIndex = Math.min(CONFIG.CRAFT_LEVELS.length - 1, Math.floor((G.day + 6) / 12));
+  var marketInfo = CONFIG.CRAFT_LEVELS[marketLevelIndex];
+  if ($$.craftBadge) $$.craftBadge.textContent = craftInfo.name + "(" + craftInfo.color + ")";
+  if ($$.marketLevel) $$.marketLevel.textContent = marketInfo.name + "(" + marketInfo.color + ")";
+  if ($$.craftCompare) {
+    var gap = craftLevel - marketLevelIndex;
+    $$.craftCompare.textContent = gap > 0 ? "领先市面 " + gap + " 级 · 订单升值 " + (gap * 3) + "%" : (gap < 0 ? "落后市面 " + (-gap) + " 级 · 订单贬值 " + ((-gap) * 2) + "%" : "与市面工艺相当 · 标准售价");
   }
 
   // 活动成就列表
@@ -1398,6 +1453,15 @@ function fireKiln() {
 
   G.totalFires++;
 
+  var oldCraftLevel = Number(G.craftLevel) || 0;
+  for (var ci = 0; ci < CONFIG.CRAFT_LEVELS.length; ci++) {
+    if (G.totalFires >= CONFIG.CRAFT_LEVELS[ci].fires) G.craftLevel = ci;
+  }
+  if (G.craftLevel > oldCraftLevel) {
+    addLog("工艺晋阶：" + CONFIG.CRAFT_LEVELS[G.craftLevel].name + "（" + CONFIG.CRAFT_LEVELS[G.craftLevel].color + "）！订单价值随之提升。");
+    showToast("工艺晋阶：" + CONFIG.CRAFT_LEVELS[G.craftLevel].name, true);
+  }
+
   G.ware++;
 
   // 分别计数
@@ -1507,17 +1571,21 @@ function deliver() {
 
   // 工艺等级影响单价（高于市面则升值）
 
-  var marketLvl = Math.floor((G.day + 6) / 12);
+  var marketLvl = Math.min(CONFIG.CRAFT_LEVELS.length - 1, Math.floor((G.day + 6) / 12));
 
   var craftLvlBonus = Math.max(0, G.craftLevel - marketLvl) * 0.03;
 
   if (G.craftLevel < marketLvl) craftLvlBonus = (G.craftLevel - marketLvl) * 0.02;
 
-  G.silver += Math.floor(G.orderSilver * (1 + craftLvlBonus));
+  var boatBonus = G.boatInfo.bonus || 0;
+
+  G.silver += Math.floor(G.orderSilver * (1 + craftLvlBonus + boatBonus));
 
   if (craftLvlBonus > 0) { addLog("工艺领先市面，升值+" + Math.floor(craftLvlBonus*100) + "%"); }
 
   else if (craftLvlBonus < 0) { addLog("工艺落后市面，贬值" + Math.floor(craftLvlBonus*100) + "%"); }
+
+  if (boatBonus > 0) addLog(G.boatInfo.name + "扩大销路，船运溢价+" + Math.round(boatBonus * 100) + "%");
 
   G.silver += imperialBonus;
 
@@ -1694,10 +1762,10 @@ function hire() {
 function upgrade() {
   let kilnInfo = CONFIG.UPGRADE.types[G.kilnType||0];
   let nextInfo = CONFIG.UPGRADE.types[(G.kilnType||0)+1];
-  if (!nextInfo || nextInfo.nextCost > 99999) {
-    return showToast("已是最高级窑炉：镇窑", false);
+  if (!nextInfo) {
+    return showToast("已是最高级窑炉：" + kilnInfo.name, false);
   }
-  let cost = Math.floor(nextInfo.nextCost * G.diffConfig.upgradeMul);
+  let cost = Math.floor(kilnInfo.nextCost * G.diffConfig.upgradeMul);
   if (G.silver < cost) return showToast("升级到" + nextInfo.name + "需 " + cost + " 银。", false);
   G.silver -= cost;
   G.kilnType = (G.kilnType||0) + 1;
