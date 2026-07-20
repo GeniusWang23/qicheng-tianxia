@@ -523,13 +523,13 @@ body>.puzzle-layer.show{display:grid!important;visibility:visible!important;opac
   <h3 style="font-size:14px;color:#a8362c;margin:12px 0 4px">背景与设定</h3>
   <p style="font-size:12px;line-height:1.7">你姓王，从零开始白手起家。景德镇三大行帮——徽帮(原料商)、都帮(窑工)、杂帮(创新者)，加入其一获得对应特权。皇帝随时下御命，做不出来满门抄斩；商人来来往往，有好感才有好价钱。四季轮转影响生产效率，冬天最难熬。</p>
   <h3 style="font-size:14px;color:#2c5f7c;margin:12px 0 4px">核心流程</h3>
-  <p style="font-size:12px;line-height:1.8">1 采集原料（体力各5）→ 2 制坯（体力8，匠人3产出翻倍）→ 3 绘画（可选，体力6，彩绘瓷更值钱）→ 4 烧窑（体力12，非100%成功）→ 5 交付订单</p>
+  <p style="font-size:12px;line-height:1.8">1 采集原料（体力各5）→ 2 制坯（体力8，窑班3人产出翻倍）→ 3 彩绘（可选，体力4，增加品质与售价）→ 4 烧窑（体力12，非100%成功）→ 5 交付订单并自然积累皇恩</p>
   <h3 style="font-size:14px;color:#5a7a3a;margin:12px 0 4px">通关条件</h3>
-  <p style="font-size:12px;line-height:1.6">完成市集订单即可通关：简单5单 / 普通8单 / 困难12单<br>隐藏结局：皇帝好感+100→纳入后宫 / 随机触发→窑神祭</p>
+  <p style="font-size:12px;line-height:1.6">完成市集订单即可通关：简单5单 / 普通8单 / 困难12单<br>隐藏结局：皇恩达到100→敕授御瓷名匠 / 随机触发→窑神祭</p>
   <h3 style="font-size:14px;color:#a8362c;margin:12px 0 4px">失败条件</h3>
   <p style="font-size:12px;line-height:1.6">民变毁窑（连续强征5次）| 秋后问斩（御命在秋季逾期）| 满门抄斩（皇帝好感降至-100）</p>
   <h3 style="font-size:14px;color:#2c5f7c;margin:12px 0 4px">重要系统</h3>
-  <p style="font-size:12px;line-height:1.7">体力-劳作消耗/每日恢复。窑炉-竖穴窑→龙窑→葫芦窑→镇窑，逐级提升烧成率。工艺-按成功烧成次数从白到彩晋阶，高于市面可升值。商誉越高，进货越便宜、回售价越高、订单溢价和商人来访越多；满100后开启皇恩。彩绘每件订单另有25%装饰溢价。皇恩影响御命、订单加成、强征与特殊结局。</p>
+  <p style="font-size:12px;line-height:1.7">体力-劳作消耗/每日恢复。窑炉-竖穴窑→龙窑→葫芦窑→镇窑，逐级提升烧成率。工艺-按成功烧成次数从白到彩晋阶，高于市面可升值。商誉越高，进货越便宜、回售价越高、订单溢价和商人来访越多。彩绘每件订单另有25%装饰溢价。皇恩会随订单、彩绘、领先工艺和御命自然增长；商誉达到25/50/75/100时也会让名声传入京城。</p>
   <h3 style="font-size:14px;color:#a8362c;margin:12px 0 4px">码头与行帮</h3>
   <p style="font-size:12px;line-height:1.7"><b>货船自动升级：</b>小货船（0单，无加成）→昌江货船（累计3单，订单银+5%）→鄱湖船队（累计6单，+10%）→御瓷贡船（累计10单，+15%）。无需花银，交付达到门槛后立即生效。<br><b>行帮：</b>首次加入免费；改换需40银。徽帮使采集所得+20%，都帮使烧窑成功率+10%，杂帮使彩绘成瓷品质额外+3。</p>
   <h3 style="font-size:14px;color:#2c5f7c;margin:12px 0 4px">按钮作用</h3>
@@ -746,7 +746,7 @@ const CONFIG = {
 
     tax豁免:false, _nextFireBonus:0, _fireRateBonus:0,
 
-    merchantFavor:0, imperialFavor:0, conscriptCount:0,_orderBonus:0,gameOver:false,_haremTriggered:false,_belowWageDays:0,
+    merchantFavor:0, imperialFavor:0, conscriptCount:0,_orderBonus:0,gameOver:false,_haremTriggered:false,_belowWageDays:0,_merchantCourtMilestones:[],
 
     craftLevel:0, guild:"",
 
@@ -1616,7 +1616,9 @@ function deliver() {
 
     G.imperialCompleted = true;
 
-    addLog("御命圆满！官窑题款，声望大振。");
+    G.imperialFavor = Math.min(100, (G.imperialFavor || 0) + 20);
+
+    addLog("御命圆满！官窑题款，声望大振，皇恩+20。");
 
     showToast("御命圆满！声望大振！", true);
 
@@ -1717,25 +1719,22 @@ function deliver() {
 
   if (imperialBonus > 0) { addLog("皇帝加持，订单溢价+" + imperialBonus + "银"); }
 
-  // 皇帝好感上升
-
-  if ((G.imperialFavor || 0) >= 1) {
-
-    G.imperialFavor = Math.min(100, (G.imperialFavor || 0) + 1);
+  // 皇恩随真实经营成果自然增长，不再要求先把商誉刷到100。
+  let imperialGain = 2 + (paintedDeliver > 0 ? 1 : 0) + (craftLvlBonus > 0 ? 1 : 0);
+  G.imperialFavor = Math.min(100, (G.imperialFavor || 0) + imperialGain);
+  addLog("订单入册，皇恩+" + imperialGain + (paintedDeliver > 0 ? "（含彩绘）" : "") + "。");
 
   if (G.imperialFavor >= 100 && !G._haremTriggered) {
 
     G._haremTriggered = true;
 
-    addLog("皇帝龙颜大悦，将当代窑主纳入后宫。家族获赐「御窑世家」金匾。");
+    addLog("御前验瓷后降旨，敕授当代窑工为「御瓷名匠」，王家手艺录入官册。");
 
-    showToast("皇帝纳入后宫！特殊结局", true);
+    showToast("皇恩满百：敕授御瓷名匠！", true);
 
-    G.silver += 500;
+    G.silver += 200;
 
-    G.craftsmanship = 2.0;
-
-  }
+    G.craftsmanship = Math.max(G.craftsmanship, 1.25);
 
   }
 
@@ -1761,17 +1760,16 @@ function deliver() {
 
   G.merchantFavor = Math.min(100, oldFavor + favorBonus);
 
-  // 商人好感满 → 解锁皇帝好感
-
-  if (oldFavor < 100 && G.merchantFavor >= 100 && (G.imperialFavor || 0) === 0) {
-
-    G.imperialFavor = 1;
-
-    addLog("商贾云集，名声传入宫中。皇帝开始关注你的瓷窑。");
-
-    showToast("皇帝开始关注你！");
-
-  }
+  // 商誉里程碑只奖励一次，让交易能助推名声，但不能无限刷皇恩。
+  if (!Array.isArray(G._merchantCourtMilestones)) G._merchantCourtMilestones = [];
+  [25,50,75,100].forEach(function(mark){
+    if (oldFavor < mark && G.merchantFavor >= mark && G._merchantCourtMilestones.indexOf(mark) < 0) {
+      G._merchantCourtMilestones.push(mark);
+      G.imperialFavor = Math.min(100, (G.imperialFavor || 0) + 5);
+      addLog("商誉达到" + mark + "，瓷名经行商传入京城，皇恩+5。");
+      showToast("商誉里程碑：皇恩+5", true);
+    }
+  });
 
   // 商人好感影响订单单价
 
