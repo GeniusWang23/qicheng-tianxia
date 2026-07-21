@@ -1794,6 +1794,9 @@ function deliver() {
 
     G.craftsmanship = Math.max(G.craftsmanship, 1.25);
 
+    G.save(); render();
+    showGameResult("win", "敕授御瓷名匠", "御前验瓷，百器无疵。你的名字不再只是账册上一笔无名工役，而与王家手艺一同录入官册。金匾落下，窑火仍明：器物得以传世，匠人也终于留下姓名。");
+
   }
 
   G.fame += CONFIG.ORDER.famePer;
