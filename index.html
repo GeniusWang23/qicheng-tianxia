@@ -170,6 +170,7 @@ header .manual-btn:hover,header .manual-btn:focus{background:#241a13!important;c
 .day-event-overlay{position:fixed;inset:0;z-index:310;background:#15100bc2;display:none;backdrop-filter:blur(2px)}
 .egg-popup{position:fixed;left:50%;top:50%;z-index:311;display:none;width:min(470px,88vw);transform:translate(-50%,-50%);padding:28px 30px;background:#d9c69b;color:#241b12;border:2px solid #3d2d1d;box-shadow:12px 14px 0 #0e0906aa;text-align:left;cursor:pointer}
 .egg-popup:before{content:"";position:absolute;inset:7px;border:1px solid #8b7048;pointer-events:none}.egg-popup .event-mark{font-size:42px;float:left;margin:0 16px 12px 0}.egg-popup h2{font:900 28px/1.1 "STKaiti","KaiTi",serif;margin:1px 0 12px;color:#852b22}.egg-popup.history-event{background:#d5c18f}.egg-popup.history-event h2{color:#284b46}.egg-popup .event-hint{clear:both;margin-top:15px;padding-top:8px;border-top:1px dotted #78603e;color:#756044;text-align:center;font-size:10px;letter-spacing:.12em}
+.mechanic-event{position:fixed;inset:0;z-index:9800;display:none;place-items:center;padding:20px;background:#120d09d9;backdrop-filter:blur(3px)}.mechanic-event.show{display:grid}.mechanic-sheet{width:min(680px,94vw);background:#d7c28f;color:#21170f;border:3px double #382619;box-shadow:14px 16px 0 #090503aa;padding:34px 38px;position:relative}.mechanic-sheet:before{content:"";position:absolute;inset:10px;border:1px solid #806542;pointer-events:none}.mechanic-kicker{color:#8a2f25;font-weight:900;letter-spacing:.22em;font-size:11px}.mechanic-sheet h2{font:900 clamp(32px,6vw,58px)/1.05 "STKaiti","KaiTi",serif;margin:10px 0 14px}.mechanic-copy{line-height:1.9}.mechanic-impact{margin:14px 0;padding:9px 12px;border-left:5px solid #2b5a52;background:#c2ae7b88;font-size:12px}.mechanic-choices{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:18px}.mechanic-choices button{border:1px solid #21170f;background:#241a12;color:#ead8a9;padding:13px 10px;cursor:pointer;font:700 14px "STSong","SimSun",serif}.mechanic-choices button:last-child{background:#7d2d24}.mechanic-choices button:hover{filter:brightness(1.2)}
 .result-layer{position:fixed;inset:0;z-index:10000;display:none;place-items:center;padding:20px;background:#120d09e8;backdrop-filter:blur(4px)}.result-layer.show{display:grid}.result-sheet{position:relative;width:min(720px,94vw);padding:48px 54px;background:#d8c59a;color:#211a13;border:3px double #3a291b;box-shadow:18px 20px 0 #050302aa;text-align:center;overflow:hidden}.result-sheet:before{content:"";position:absolute;inset:12px;border:1px solid #806747;pointer-events:none}.result-layer.win .result-sheet{background:radial-gradient(circle at 50% 15%,#eee0b7,#d0ba87)}.result-layer.lose .result-sheet{background:#d1cbb8;filter:grayscale(.2)}.result-kicker{color:#852b22;letter-spacing:.28em;font-weight:900;font-size:12px}.result-sheet h2{font:900 clamp(46px,8vw,88px)/1 "STKaiti","KaiTi",serif;margin:15px 0}.result-layer.lose h2{color:#17120e}.result-copy{max-width:540px;margin:0 auto;line-height:1.9}.result-stats{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin:25px 0}.result-stats span{padding:10px 5px;border:1px solid #705a3b;background:#eadbb288}.result-stats b{display:block;color:#852b22;font-size:20px}.result-actions{display:flex;justify-content:center;gap:10px}.result-actions button{position:relative;border:0;background:#211a13;color:#ead8ab;padding:11px 18px;font:inherit;cursor:pointer}.result-actions .red{background:#852b22}@media(max-width:600px){.result-sheet{padding:38px 22px}.result-stats{grid-template-columns:repeat(2,1fr)}}
 .woodcut-trigger{background:var(--red)!important;color:#f0dfb4!important;border-color:#4b1712!important}
 .woodcut-event{position:fixed;inset:0;z-index:300;background:#d7d1bd;color:#090908;display:none;grid-template-columns:1.12fr .88fr;overflow:auto}.woodcut-event.show{display:grid}.woodcut-visual{position:relative;min-height:100vh;background:#10100e;overflow:hidden;display:grid;place-items:center}.woodcut-visual:before{content:"";position:absolute;inset:-20%;opacity:.27;background:repeating-linear-gradient(118deg,transparent 0 8px,#ded7c2 9px 11px);transform:rotate(-3deg)}.woodcut-sun{width:58vmin;height:58vmin;border-radius:50%;background:#d7d1bd;box-shadow:0 0 0 28px #10100e,0 0 0 36px #d7d1bd}.woodcut-kiln{position:absolute;left:8%;bottom:-3%;width:68%;height:54%;background:#050504;border-radius:55% 55% 0 0;box-shadow:inset -18px 12px 0 #d7d1bd}.woodcut-kiln:after{content:"火";position:absolute;right:9%;top:22%;font:900 18vw/1 "STKaiti","KaiTi",serif;color:#d7d1bd;transform:rotate(-8deg)}.woodcut-people{position:absolute;bottom:3%;right:2%;font:900 clamp(38px,6vw,92px)/.65 "SimSun";letter-spacing:-.25em;color:#d7d1bd;transform:scaleX(1.35)}.woodcut-copy{position:relative;padding:10vh 7vw;align-self:center}.woodcut-copy .kicker{color:var(--red);font-weight:900;letter-spacing:.25em}.woodcut-copy h2{font:900 clamp(52px,8vw,112px)/.92 "STKaiti","KaiTi",serif;margin:18px 0}.woodcut-copy blockquote{font-size:clamp(18px,2vw,28px);font-weight:900;line-height:1.6;border-left:8px solid var(--red);padding-left:20px;margin:28px 0}.woodcut-copy p{line-height:2;max-width:620px}.woodcut-copy button,.woodcut-close{background:#10100e;color:#ded7c2;border:0;padding:12px 18px;cursor:pointer}.woodcut-close{position:absolute;right:20px;top:18px;z-index:3;border:1px solid #ded7c2}
@@ -486,7 +487,7 @@ body>.puzzle-layer.show{display:grid!important;visibility:visible!important;opac
     <h3 id="quickDragHandle"><span>匠作总台 · 工序牌</span><span class="quick-rank" id="quickRank">窑工掌作</span><button class="quick-toggle" type="button" onclick="toggleQuickWorkbench(event)">收起</button></h3>
     <div class="quick-actions">
       <button onclick="gather('clay')">采土</button><button onclick="gather('wood')">备柴</button><button onclick="gather('glaze')">取釉</button><button onclick="gather('pigment')">取彩</button><button onclick="produce()">练泥制坯</button>
-      <button class="accent" onclick="decorate()">彩绘装饰</button><button class="accent" onclick="fireKiln()">单件烧制</button><button class="accent" onclick="fireKilnBatch(3)">批量烧×3</button><button class="accent" onclick="deliver()">码头交付</button>
+      <button class="accent" onclick="decorate()">彩绘装饰</button><button class="accent" onclick="fireKiln()">单件烧制</button><button class="accent" onclick="fireKilnBatch(3)">批量烧×3</button><button class="accent" onclick="deliver()">码头交付</button><button class="accent" id="dispatchBtn" onclick="runDailyDispatch()" style="display:none">一日排产</button>
     </div>
   </aside>
 </main>
@@ -500,6 +501,16 @@ body>.puzzle-layer.show{display:grid!important;visibility:visible!important;opac
   <div id="eggText" style="font-size:14px;color:#3b2f1e;line-height:1.9"></div>
   <div class="event-hint">点击小框或按任意键关闭</div>
 </div>
+
+<section class="mechanic-event" id="mechanicEvent" role="dialog" aria-modal="true" aria-hidden="true">
+  <article class="mechanic-sheet">
+    <div class="mechanic-kicker" id="mechanicKicker">窑务事件 · 抉择</div>
+    <h2 id="mechanicTitle">窑火有变</h2>
+    <p class="mechanic-copy" id="mechanicCopy"></p>
+    <div class="mechanic-impact" id="mechanicImpact"></div>
+    <div class="mechanic-choices" id="mechanicChoices"></div>
+  </article>
+</section>
 
 <section class="result-layer" id="resultLayer" aria-hidden="true">
   <article class="result-sheet">
@@ -532,11 +543,11 @@ body>.puzzle-layer.show{display:grid!important;visibility:visible!important;opac
   <h3 style="font-size:14px;color:#a8362c;margin:12px 0 4px">失败条件</h3>
   <p style="font-size:12px;line-height:1.6">民变毁窑（连续强征5次）| 秋后问斩（御命在秋季逾期）| 满门抄斩（皇帝好感降至-100）</p>
   <h3 style="font-size:14px;color:#2c5f7c;margin:12px 0 4px">重要系统</h3>
-  <p style="font-size:12px;line-height:1.7">体力-劳作消耗/每日恢复。窑炉-竖穴窑→龙窑→葫芦窑→镇窑，逐级提升烧成率。工艺-按成功烧成次数从白到彩晋阶，高于市面可升值。商誉越高，进货越便宜、回售价越高、订单溢价和商人来访越多。彩绘每件订单另有25%装饰溢价。皇恩会随订单、彩绘、领先工艺和御命自然增长；商誉达到25/50/75/100时也会让名声传入京城。</p>
+  <p style="font-size:12px;line-height:1.7">体力-劳作消耗/每日恢复。窑炉-竖穴窑→龙窑→葫芦窑→镇窑，逐级提升烧成率。工艺-按成功烧成次数从白到彩晋阶，高于市面可升值。商誉越高，进货越便宜、回售价越高、订单溢价和商人来访越多。彩绘每件订单另有25%装饰溢价。皇恩会随订单、彩绘、领先工艺和御命自然增长；商誉达到25/50/75/100时也会让名声传入京城。完成8笔订单后，机制事件开始进入事件牌库，同一事件有冷却且选择会影响未来数日。</p>
   <h3 style="font-size:14px;color:#a8362c;margin:12px 0 4px">码头与行帮</h3>
   <p style="font-size:12px;line-height:1.7"><b>货船自动升级：</b>小货船（0单，无加成）→昌江货船（累计3单，订单银+5%）→鄱湖船队（累计6单，+10%）→御瓷贡船（累计10单，+15%）。无需花银，交付达到门槛后立即生效。<br><b>行帮：</b>首次加入免费；改换需40银。徽帮使采集所得+20%，都帮使烧窑成功率+10%，杂帮使彩绘成瓷品质额外+3。</p>
   <h3 style="font-size:14px;color:#2c5f7c;margin:12px 0 4px">按钮作用</h3>
-  <p style="font-size:12px;line-height:1.75"><b>采集四钮：</b>取得瓷土、松柴、釉料、颜料，各耗5体力。<br><b>制作坯体：</b>耗3土、1釉、8体力；窑班≥3人时通常产2坯。<br><b>彩绘装饰：</b>耗1素坯、1颜料、4体力，增加6品质；交付时每件彩绘瓷另加25%装饰溢价。<br><b>单件烧制：</b>耗1件坯、松柴与12体力，成功率显示在按钮上。<br><b>批量烧×3：</b>三件分别独立判定成功率，一次共耗20体力，并比单烧三次少耗1捆柴；结果会汇总显示烧成与损毁数量。<br><b>交付订单：</b>消耗成瓷换银、声望和订单进度。<br><b>请督造官调人：</b>玩家是窑工，不直接招募；花银请督造官向窑班调入一人，提高烧窑率及制坯效率，并增加每日工钱。<br><b>身份晋阶：</b>随工艺从窑工成长为熟手、作头，达到名匠后成为把桩师傅。<br><b>匠作总台：</b>完成首单后由行会送来工序牌，把采集、制坯、彩绘、烧制、交付集中在一处，地图按钮仍可使用。<br><b>升级窑炉：</b>花银提高基础烧成率。<br><b>度过一日：</b>恢复体力、推进季节/税收/期限，并可能触发彩蛋或史话。<br><b>请道士：</b>花银提高下一窑成功率。<br><b>难度：</b>切换税率、体力、费用和通关单数。<br><b>商人：</b>买卖原料；买入不再损害商誉，卖出和彩绘订单能积累商誉。<br><b>行帮：</b>选择长期专精，可付费改换。<br><b>强征：</b>以皇恩换劳力，连续使用会引发民怨和失败。<br><b>重开：</b>清空当前存档并重新开始。<br><b>成就：</b>查看一次性挑战与银两奖励。<br><b>拼瓷片：</b>推动空位旁的真实瓷器图像切片，依据器形与青花纹样复原明代藏品。</p>
+  <p style="font-size:12px;line-height:1.75"><b>采集四钮：</b>取得瓷土、松柴、釉料、颜料，各耗5体力。<br><b>制作坯体：</b>耗3土、1釉、8体力；窑班≥3人时通常产2坯。<br><b>彩绘装饰：</b>耗1素坯、1颜料、4体力，增加6品质；交付时每件彩绘瓷另加25%装饰溢价。<br><b>单件烧制：</b>耗1件坯、松柴与12体力，成功率显示在按钮上。<br><b>批量烧×3：</b>三件分别独立判定成功率，一次共耗20体力，并比单烧三次少耗1捆柴；结果会汇总显示烧成与损毁数量。<br><b>交付订单：</b>消耗成瓷换银、声望和订单进度。<br><b>请督造官调人：</b>玩家是窑工，不直接招募；花银请督造官向窑班调入一人，提高烧窑率及制坯效率，并增加每日工钱。<br><b>身份晋阶：</b>随工艺从窑工成长为熟手、作头，达到名匠后成为把桩师傅。<br><b>匠作总台：</b>完成首单后由行会送来工序牌，把采集、制坯、彩绘、烧制、交付集中在一处，地图按钮仍可使用。<br><b>一日排产：</b>完成8单后解锁；按现有成本自动补缺、制坯、彩绘、批烧和交付，遇到体力、资源或封航立即停止，不会凭空增加产物。<br><b>升级窑炉：</b>花银提高基础烧成率。<br><b>度过一日：</b>恢复体力、推进季节/税收/期限；后期可能触发带选择、冷却和连续后果的窑务事件。<br><b>请道士：</b>花银提高下一窑成功率。<br><b>难度：</b>切换税率、体力、费用和通关单数。<br><b>商人：</b>买卖原料；买入不再损害商誉，卖出和彩绘订单能积累商誉。<br><b>行帮：</b>选择长期专精，可付费改换。<br><b>强征：</b>以皇恩换劳力，连续使用会引发民怨和失败。<br><b>重开：</b>清空当前存档并重新开始。<br><b>成就：</b>查看一次性挑战与银两奖励。<br><b>拼瓷片：</b>推动空位旁的真实瓷器图像切片，依据器形与青花纹样复原明代藏品。</p>
   <h3 style="font-size:14px;color:#2c5f7c;margin:12px 0 4px">操作提示</h3>
   <p style="font-size:12px;line-height:1.7">地图可按住拖动（手机手指滑动）| 底部面板点击标题折叠展开 | 每4天换季/每5天收税 | 体力不足从商人处买原料 | 强征3次民怨5次毁窑</p>
   <p style="margin-top:8px;font-size:11px;color:var(--muted)">以后再查看：点击顶部的<b>说明</b>按钮</p>
@@ -757,7 +768,8 @@ const CONFIG = {
 
     generation:1, familyName:"王", executionPending:false,
 
-    craftsmanship:1.0, deathCause:"", quickWorkbenchUnlocked:false
+    craftsmanship:1.0, deathCause:"", quickWorkbenchUnlocked:false,
+    eventHistory:[], eventCooldowns:{}, activeModifiers:{}, eventChain:{}, pendingMechanicEvent:"", dispatchUnlocked:false
 
   },
 
@@ -789,7 +801,10 @@ class GameState {
 
   reset() {
 
-    for (const k of Object.keys(CONFIG.INIT)) this[k] = CONFIG.INIT[k];
+    for (const k of Object.keys(CONFIG.INIT)) {
+      var value = CONFIG.INIT[k];
+      this[k] = value && typeof value === "object" ? JSON.parse(JSON.stringify(value)) : value;
+    }
 
   }
 
@@ -803,10 +818,18 @@ class GameState {
 
       Object.assign(this, JSON.parse(raw));
       for (const k of Object.keys(CONFIG.INIT)) {
-        if (this[k] === undefined) this[k] = CONFIG.INIT[k];
+        if (this[k] === undefined) {
+          var defaultValue = CONFIG.INIT[k];
+          this[k] = defaultValue && typeof defaultValue === "object" ? JSON.parse(JSON.stringify(defaultValue)) : defaultValue;
+        }
       }
       if (!Number.isFinite(this.stamina)) this.stamina = 0;
       if (!Number.isFinite(this.maxStamina)) this.maxStamina = this.diffConfig.maxStamina;
+      if (!Array.isArray(this.eventHistory)) this.eventHistory = [];
+      if (!this.eventCooldowns || typeof this.eventCooldowns !== "object") this.eventCooldowns = {};
+      if (!this.activeModifiers || typeof this.activeModifiers !== "object") this.activeModifiers = {};
+      if (!this.eventChain || typeof this.eventChain !== "object") this.eventChain = {};
+      this.dispatchUnlocked = !!this.dispatchUnlocked || (Number(this.orders) || 0) >= 8;
       this.kilnType = Math.max(Number(this.kilnType) || 0, Math.max(0, Math.min(3, (this.kiln || 1) - 1)));
       var earnedCraft = 0;
       for (var i = 0; i < CONFIG.CRAFT_LEVELS.length; i++) if ((this.totalFires || 0) >= CONFIG.CRAFT_LEVELS[i].fires) earnedCraft = i;
@@ -830,7 +853,7 @@ class GameState {
 
   get orderNeed() { return CONFIG.ORDER.baseNeed + Math.min(this.orders, 3); }
 
-  get orderSilver() { return CONFIG.ORDER.baseSilver + this.orders * CONFIG.ORDER.silverPerOrder; }
+  get orderSilver() { return Math.floor((CONFIG.ORDER.baseSilver + this.orders * CONFIG.ORDER.silverPerOrder) * getModifierValue("orderMul", 1)); }
 
   get imperialRemaining() {
 
@@ -842,7 +865,7 @@ class GameState {
 
   get imperialExpired() { return this.imperial && this.imperialRemaining <= 0; }
 
-  get fireWoodCost() { return CONFIG.FIRE.woodBase + this.seasonInfo.woodExtra; }
+  get fireWoodCost() { return CONFIG.FIRE.woodBase + this.seasonInfo.woodExtra + getModifierValue("woodExtra", 0); }
 
   get diffConfig() { return CONFIG.DIFFICULTY[this.difficulty]; }
 
@@ -865,6 +888,7 @@ class GameState {
     // Temporary bonus (events, taoist)
 
     r += Number(this._fireRateBonus) || 0;
+    r += getModifierValue("fireRate", 0);
     if (this.guild === "du") r += CONFIG.GUILDS.du.fireBonus;
 
     return Math.max(0.05, Math.min(r, CONFIG.FIRE.maxRate));
@@ -1378,10 +1402,21 @@ function render() {
   var quickRank = document.getElementById("quickRank");
   var hireBtn = document.getElementById("hireBtn");
   if (rankEl) rankEl.textContent = artisanRank;
-  if (quickRank) quickRank.textContent = artisanRank + " · 窑班" + G.workers + "人";
+  if (quickRank) {
+    var activeCount = Object.keys(G.activeModifiers || {}).filter(function(k){return (G.activeModifiers[k].until||0)>=G.day}).length;
+    quickRank.textContent = artisanRank + " · 窑班" + G.workers + "人" + (activeCount ? " · 局势" + activeCount : "");
+    quickRank.title = activeCount ? Object.keys(G.activeModifiers).map(function(k){var m=G.activeModifiers[k];return m.label+"（至第"+m.until+"日）"}).join("；") : "当前没有临时局势";
+  }
   if (hireBtn) hireBtn.textContent = "请督造官调人 · " + G.diffConfig.hireCost + "银";
   var quickWorkbench = document.getElementById("quickWorkbench");
   if (quickWorkbench) quickWorkbench.classList.toggle("unlocked", !!G.quickWorkbenchUnlocked || G.orders >= 1);
+  var dispatchBtn = document.getElementById("dispatchBtn");
+  if (dispatchBtn) {
+    var dispatchReady = !!G.dispatchUnlocked || G.orders >= 8;
+    dispatchBtn.style.display = dispatchReady ? "inline-block" : "none";
+    dispatchBtn.textContent = "一日排产" + (dispatchReady ? " · 自动补缺" : "");
+    dispatchBtn.title = "按现有成本自动执行补料、制坯、彩绘与烧制；遇到体力或资源瓶颈即停止";
+  }
 
   // 活动成就列表
 
@@ -1642,9 +1677,50 @@ function fireKilnBatch(count) {
   G.save(); render();
 }
 
+function runDailyDispatch() {
+  if (G.orders < 8 && !G.dispatchUnlocked) return showToast("完成8笔订单后，窑班才能形成排产定例。", false);
+  if (G.pendingMechanicEvent) return showToast("请先处理当前窑务事件。", false);
+  var before={clay:G.clay,wood:G.wood,glaze:G.glaze,pigment:G.pigment,ware:G.ware,stamina:G.stamina};
+  var actions=[],guard=0,stopReason="今日排产已完成";
+  while (guard++ < 24) {
+    if (G.ware >= G.orderNeed) {
+      if (getModifierValue("dockBlocked",0)) {stopReason="码头封航，成瓷暂存窑场";break}
+      deliver();actions.push("交付订单");stopReason="订单已交付";break;
+    }
+    var blanks=(G.blank||0)+(G.paintedBlank||0);
+    if (blanks >= 3) {
+      var batchWood=G.fireWoodCost*3-1;
+      if (G.wood < batchWood) {
+        if (G.stamina < CONFIG.STAMINA.gatherCost) {stopReason="体力不足，无法继续备柴";break}
+        gather("wood");actions.push("备柴");continue;
+      }
+      if (G.stamina < 20) {stopReason="体力不足，整窑留待明日";break}
+      fireKilnBatch(3);actions.push("批量烧制");continue;
+    }
+    if (G.clay < CONFIG.PRODUCE.clayCost) {
+      if (G.stamina < CONFIG.STAMINA.gatherCost) {stopReason="体力不足，无法继续采土";break}
+      gather("clay");actions.push("采土");continue;
+    }
+    if (G.glaze < CONFIG.PRODUCE.glazeCost) {
+      if (G.stamina < CONFIG.STAMINA.gatherCost) {stopReason="体力不足，无法继续取釉";break}
+      gather("glaze");actions.push("取釉");continue;
+    }
+    if (G.stamina < CONFIG.PRODUCE.staminaCost) {stopReason="体力不足，无法继续制坯";break}
+    produce();actions.push("制坯");
+    if (G.blank>0 && G.pigment>0 && G.paintedBlank===0 && G.stamina>=CONFIG.DECORATE.staminaCost) {
+      decorate();actions.push("彩绘");
+    }
+  }
+  var made=(G.ware||0)-before.ware,used=before.stamina-(G.stamina||0);
+  var summary="一日排产："+(actions.length?actions.join("→"):"未能开工")+"；体力"+(used>=0?"-"+used:"变化"+(-used))+"，现有成瓷"+G.ware+"件。"+stopReason+"。";
+  addLog(summary);showToast(stopReason,actions.length>0);G.save();render();
+}
+
 function deliver() {
 
   showContextNote(G.imperial ? "imperial" : "deliver");
+
+  if (getModifierValue("dockBlocked", 0)) return showToast("昌江封航，码头暂不能交付；请等待事件到期。", false);
 
   if (G.imperialExpired) return showToast("御命已过期，请先度过一日。", false);
 
@@ -1842,6 +1918,12 @@ function deliver() {
 
   G.orders++;
 
+  if (!G.dispatchUnlocked && G.orders >= 8) {
+    G.dispatchUnlocked = true;
+    addLog("八笔订单告成，窑班形成定例：匠作总台解锁「一日排产」。");
+    showToast("中后期功能解锁：一日排产", true);
+  }
+
   if (!G.quickWorkbenchUnlocked && G.orders >= 1) {
     G.quickWorkbenchUnlocked = true;
     addLog("首单告成，行会送来一面工序牌。匠作总台已解锁，往后不必来回拖动地图。");
@@ -1940,6 +2022,127 @@ var DAY_HISTORY_STORIES = [
   "御窑遗址出土的大量碎片能被重新拼合。考古工作者会比较纹样、胎釉、断口、厚度和弧度，让被打碎的器物重新讲述生产历史。"
 ];
 
+function getModifierValue(key, fallback) {
+  if (typeof G === "undefined" || !G.activeModifiers) return fallback;
+  var mod = G.activeModifiers[key];
+  if (!mod || Number(mod.until) < Number(G.day)) return fallback;
+  return Number(mod.value);
+}
+
+function setModifier(key, value, days, label) {
+  if (!G.activeModifiers || typeof G.activeModifiers !== "object") G.activeModifiers = {};
+  G.activeModifiers[key] = { value:value, until:G.day + Math.max(1, days), label:label || key };
+}
+
+function expireModifiers() {
+  if (!G.activeModifiers) G.activeModifiers = {};
+  Object.keys(G.activeModifiers).forEach(function(key){
+    var mod = G.activeModifiers[key];
+    if (!mod || Number(mod.until) < Number(G.day)) {
+      if (mod && mod.label) addLog("局势平复：「" + mod.label + "」效果结束。");
+      delete G.activeModifiers[key];
+    }
+  });
+}
+
+var MECHANIC_EVENTS = [
+  {id:"wet_wood",title:"松柴受潮",copy:"连日湿气钻进柴棚，窑口已经闻得到霉味。今夜若照常点火，火路恐怕不稳。",impact:"影响烧成率与未来数日柴耗。",choices:[
+    {label:"雇人翻晒 · 30银",effect:function(){if(G.silver<30)return false;G.silver-=30;setModifier("fireRate",.08,2,"翻晒松柴");return true}},
+    {label:"添柴强烧",effect:function(){setModifier("woodExtra",2,3,"湿柴强烧");setModifier("fireRate",-.10,3,"湿柴强烧");return true}}
+  ]},
+  {id:"guild_price",title:"行帮议价",copy:"几家瓷行愿意合抬市价，但要求王家三日内不得私下削价出货。",impact:"改变未来订单价格或立即获得名声。",choices:[
+    {label:"签下同行约",effect:function(){setModifier("orderMul",1.20,3,"行帮合价");G.merchantFavor=Math.min(100,G.merchantFavor+3);return true}},
+    {label:"坚持独立经营",effect:function(){G.fame+=6;G.imperialFavor=Math.min(100,G.imperialFavor+1);return true}}
+  ]},
+  {id:"cracked_sagger",title:"匣钵开裂",copy:"装窑前发现一批匣钵布满细纹。更换会耽误银钱，继续用则可能连累整窑。",impact:"决定短期烧成稳定性。",choices:[
+    {label:"换新匣钵 · 45银",effect:function(){if(G.silver<45)return false;G.silver-=45;setModifier("fireRate",.10,3,"新匣钵");return true}},
+    {label:"旧物再用",effect:function(){setModifier("fireRate",-.16,3,"开裂匣钵");G.silver+=15;return true}}
+  ]},
+  {id:"tax_register",title:"里甲查册",copy:"官差要求重录窑籍与雇工名册。账目若按实呈报，花钱但安稳；若含混应付，朝廷也许记上一笔。",impact:"影响银两、皇恩或数日工钱。",choices:[
+    {label:"照章补册 · 35银",effect:function(){if(G.silver<35)return false;G.silver-=35;G.imperialFavor=Math.min(100,G.imperialFavor+2);return true}},
+    {label:"托词拖延",effect:function(){G.imperialFavor=Math.max(-100,G.imperialFavor-6);setModifier("wageMul",1.5,3,"查册加役");return true}}
+  ]},
+  {id:"apprentice",title:"学徒请艺",copy:"一个替窑班挑水三年的少年，请求正式学习拉坯。他暂时帮不上忙，却可能成为下一代手艺人。",impact:"选择长期工艺积累或即时劳力。",choices:[
+    {label:"收作门徒 · 25银",effect:function(){if(G.silver<25)return false;G.silver-=25;G.craftsmanship=Math.min(1.5,(G.craftsmanship||1)+.03);G.quality+=3;return true}},
+    {label:"仍让他做杂役",effect:function(){G.stamina=Math.min(G.maxStamina,G.stamina+30);G.fame=Math.max(0,G.fame-2);return true}}
+  ]},
+  {id:"pattern_copy",title:"花样外流",copy:"新绘的缠枝样被邻窑描走。封住样本可保住独门生意，放任流传则会让王家花样更快传开。",impact:"在利润与名声之间选择。",choices:[
+    {label:"收回图样",effect:function(){setModifier("orderMul",1.15,3,"独门花样");G.merchantFavor=Math.max(0,G.merchantFavor-2);return true}},
+    {label:"任其流传",effect:function(){G.fame+=10;G.merchantFavor=Math.min(100,G.merchantFavor+4);return true}}
+  ]},
+  {id:"sample_1",title:"御样忽改",copy:"督陶官送来朱批：龙纹须改五爪，现有彩绘坯全部不合新样。",impact:"这是连续事件；两日后将进行御前抽验。",choices:[
+    {label:"毁样重绘",effect:function(){G.blank+=(G.paintedBlank||0);G.paintedBlank=0;G.eventChain.sample={due:G.day+2,path:"redo"};return true}},
+    {label:"暗改局部",effect:function(){G.eventChain.sample={due:G.day+2,path:"patch"};setModifier("fireRate",-.08,2,"赶改御样");return true}}
+  ]},
+  {id:"sample_2",chain:"sample",title:"御前抽验",copy:"验样官在灯下逐件转看，前日的选择现在要见分晓。",impact:"事件结果由上一阶段决定。",choices:[
+    {label:"呈上所制",effect:function(){var p=G.eventChain.sample&&G.eventChain.sample.path;if(p==="redo"){G.imperialFavor=Math.min(100,G.imperialFavor+6);G.fame+=5}else{if(Math.random()<.55){G.imperialFavor=Math.min(100,G.imperialFavor+4)}else{G.imperialFavor=Math.max(-100,G.imperialFavor-10)}}delete G.eventChain.sample;return true}},
+    {label:"请行帮代验 · 40银",effect:function(){if(G.silver<40)return false;G.silver-=40;G.imperialFavor=Math.min(100,G.imperialFavor+3);delete G.eventChain.sample;return true}}
+  ]},
+  {id:"injury_1",title:"窑工灼伤",copy:"开窑时火舌卷出，一名窑工手臂重伤。窑班都看着掌作如何处置。",impact:"这是连续事件；选择会影响三日后的窑班。",choices:[
+    {label:"停工延医 · 30银",effect:function(){if(G.silver<30)return false;G.silver-=30;G.eventChain.injury={due:G.day+3,path:"care"};setModifier("staminaMul",.85,2,"停工照料");return true}},
+    {label:"给钱继续开窑",effect:function(){G.silver=Math.max(0,G.silver-10);G.eventChain.injury={due:G.day+3,path:"force"};G.stamina=Math.max(0,G.stamina-20);return true}}
+  ]},
+  {id:"injury_2",chain:"injury",title:"伤者归窑",copy:"三日后，受伤窑工再次来到窑门。窑班记得当日发生的一切。",impact:"此前的照料或强迫将转化为长期结果。",choices:[
+    {label:"让他重回窑班",effect:function(){var p=G.eventChain.injury&&G.eventChain.injury.path;if(p==="care"){G.maxStamina+=10;G.fame+=6}else{G.workers=Math.max(1,G.workers-1);G.fame=Math.max(0,G.fame-5)}delete G.eventChain.injury;return true}},
+    {label:"安排轻省差事",effect:function(){G.craftsmanship=Math.min(1.5,(G.craftsmanship||1)+.02);delete G.eventChain.injury;return true}}
+  ]},
+  {id:"river_1",title:"昌江封航",copy:"上游暴雨，木排与沉船堵住水道。码头至少两日不能照常发货。",impact:"这是连续事件；码头会暂时关闭。",choices:[
+    {label:"租仓等水退 · 25银",effect:function(){if(G.silver<25)return false;G.silver-=25;setModifier("dockBlocked",1,2,"昌江封航");G.eventChain.river={due:G.day+2,path:"wait"};return true}},
+    {label:"改走陆路 · 45银",effect:function(){if(G.silver<45)return false;G.silver-=45;setModifier("orderMul",.9,2,"陆路损耗");G.eventChain.river={due:G.day+2,path:"road"};return true}}
+  ]},
+  {id:"river_2",chain:"river",title:"水路重开",copy:"江水渐平，第一批货船重新靠岸。此前积下的货与人情都要在今日结算。",impact:"根据先前路线获得补偿或商誉。",choices:[
+    {label:"抢先发货",effect:function(){var p=G.eventChain.river&&G.eventChain.river.path;if(p==="wait"){setModifier("orderMul",1.25,2,"复航抢市")}else{G.merchantFavor=Math.min(100,G.merchantFavor+6)}delete G.eventChain.river;return true}},
+    {label:"先救济船户",effect:function(){G.fame+=8;G.imperialFavor=Math.min(100,G.imperialFavor+2);delete G.eventChain.river;return true}}
+  ]}
+];
+
+function eligibleMechanicEvents() {
+  var history = (G.eventHistory || []).slice(-5);
+  return MECHANIC_EVENTS.filter(function(evt){
+    if ((G.eventCooldowns[evt.id] || 0) > G.day || history.indexOf(evt.id) >= 0) return false;
+    if (evt.chain) {
+      var step = G.eventChain[evt.chain];
+      return !!step && Number(step.due) <= G.day;
+    }
+    if (evt.id.indexOf("_2") > 0) return false;
+    return true;
+  });
+}
+
+function showMechanicEvent(evt) {
+  if (!evt) return;
+  G.pendingMechanicEvent = evt.id;
+  var layer=document.getElementById("mechanicEvent"), choices=document.getElementById("mechanicChoices");
+  document.getElementById("mechanicTitle").textContent=evt.title;
+  document.getElementById("mechanicCopy").textContent=evt.copy;
+  document.getElementById("mechanicImpact").textContent=evt.impact;
+  choices.innerHTML="";
+  evt.choices.forEach(function(choice,index){var b=document.createElement("button");b.textContent=choice.label;b.onclick=function(){chooseMechanicEvent(index)};choices.appendChild(b)});
+  layer.classList.add("show");layer.setAttribute("aria-hidden","false");G.save();
+}
+
+function chooseMechanicEvent(index) {
+  var evt=MECHANIC_EVENTS.find(function(x){return x.id===G.pendingMechanicEvent});
+  if (!evt || !evt.choices[index]) return;
+  var ok=evt.choices[index].effect();
+  if (ok===false) return showToast("银两不足，无法选择这一项。",false);
+  G.eventHistory=(G.eventHistory||[]).concat(evt.id).slice(-12);
+  G.eventCooldowns[evt.id]=G.day+6;
+  G.pendingMechanicEvent="";
+  document.getElementById("mechanicEvent").classList.remove("show");
+  document.getElementById("mechanicEvent").setAttribute("aria-hidden","true");
+  addLog("窑务抉择·"+evt.title+"："+evt.choices[index].label);
+  showToast("抉择已记入窑务账册",true);G.save();render();
+}
+
+function maybeTriggerMechanicEvent() {
+  if (G.orders < 8 || G.pendingMechanicEvent) return false;
+  var due=MECHANIC_EVENTS.filter(function(evt){if(!evt.chain)return false;var s=G.eventChain[evt.chain];return s&&Number(s.due)<=G.day});
+  var pool=due.length?due:eligibleMechanicEvents();
+  if (!pool.length || (!due.length && Math.random()>=.38)) return false;
+  showMechanicEvent(pool[Math.floor(Math.random()*pool.length)]);return true;
+}
+
 function showDayEvent(kind, text) {
   var popup = document.getElementById("eggPopup");
   var overlay = document.getElementById("eggOverlay");
@@ -2015,6 +2218,7 @@ function triggerDefeat(title, copy, cause) {
 function nextDay() {
 
   G.day++;
+  expireModifiers();
 
   // 每季只结算一次仓储费，避免界面刷新重复扣款。
   var storageSeason = Math.floor((G.day - 1) / 12);
@@ -2135,13 +2339,8 @@ function nextDay() {
 
   
 
-  // 每日见闻：30%趣味彩蛋，30%真实历史故事，40%无事发生。
+  // 每日见闻稍后与机制事件统一调度，避免两个弹窗互相遮挡。
   var dayEventRoll = Math.random();
-  if (dayEventRoll < 0.30) {
-    showDayEvent("fun", DAY_FUN_FACTS[Math.floor(Math.random() * DAY_FUN_FACTS.length)]);
-  } else if (dayEventRoll < 0.60) {
-    showDayEvent("history", DAY_HISTORY_STORIES[Math.floor(Math.random() * DAY_HISTORY_STORIES.length)]);
-  }
 
   
 
@@ -2157,7 +2356,7 @@ function nextDay() {
 
   var wageMin = Math.floor((G.maxStamina||100) * 0.3);
 
-  var wage = (G.workers||2) * 3;
+  var wage = Math.ceil((G.workers||2) * 3 * getModifierValue("wageMul", 1));
 
   if (G.silver >= wage) {
 
@@ -2183,7 +2382,7 @@ function nextDay() {
 
   }
 
-  var restoreMulti = G._isPeakSeason ? 0.7 : 1.5;
+  var restoreMulti = (G._isPeakSeason ? 0.7 : 1.5) * getModifierValue("staminaMul", 1);
   var staminaBefore = Number(G.stamina) || 0;
   var staminaCap = Number(G.maxStamina) || G.diffConfig.maxStamina;
   var staminaGain = Math.max(1, Math.floor(G.diffConfig.staminaRestore * restoreMulti));
@@ -2193,9 +2392,16 @@ function nextDay() {
 
 
 
-  // ---- 随机事件 (25% 概率) ----
+  // ---- 随机事件：前期沿用轻事件；八单后改用带冷却与选择的机制事件 ----
 
-  if (Math.random() < 0.25) {
+  if (G.orders >= 8) {
+    var mechanicTriggered = maybeTriggerMechanicEvent();
+    if (!mechanicTriggered && dayEventRoll < .20) {
+      showDayEvent("fun", DAY_FUN_FACTS[Math.floor(Math.random() * DAY_FUN_FACTS.length)]);
+    } else if (!mechanicTriggered && dayEventRoll < .40) {
+      showDayEvent("history", DAY_HISTORY_STORIES[Math.floor(Math.random() * DAY_HISTORY_STORIES.length)]);
+    }
+  } else if (Math.random() < 0.25) {
 
     const evt = CONFIG.EVENTS[Math.floor(Math.random() * CONFIG.EVENTS.length)];
 
@@ -2205,6 +2411,11 @@ function nextDay() {
 
     showToast("⚡ " + evt.name, evt.good);
 
+  }
+
+  if (G.orders < 8) {
+    if (dayEventRoll < .30) showDayEvent("fun", DAY_FUN_FACTS[Math.floor(Math.random() * DAY_FUN_FACTS.length)]);
+    else if (dayEventRoll < .60) showDayEvent("history", DAY_HISTORY_STORIES[Math.floor(Math.random() * DAY_HISTORY_STORIES.length)]);
   }
 
 
@@ -2607,6 +2818,11 @@ G.save = function() {
 
 
 render();
+if (G.pendingMechanicEvent) {
+  var pendingEvent = MECHANIC_EVENTS.find(function(evt){return evt.id===G.pendingMechanicEvent});
+  if (pendingEvent) setTimeout(function(){showMechanicEvent(pendingEvent)}, 50);
+  else G.pendingMechanicEvent="";
+}
 // ======================== 地图拖拽 ========================
 (function() {
   var c, d=false, sx, sy, sl, st;
