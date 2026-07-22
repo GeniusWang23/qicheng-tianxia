@@ -113,6 +113,7 @@ h1{font-family:"ZCOOL XiaoWei";letter-spacing:.11em;margin:0;font-size:22px;font
 /* Help/Feedback/Achievement buttons */
 
 .help-btn{background:#4a5a3a;color:#f9efd2;border:0;padding:5px 8px;font-family:inherit;font-size:11px;cursor:pointer}.help-btn:hover{background:#a74632}
+.audio-btn[aria-pressed="true"]{background:#2f6255!important;color:#fff5d6!important;border-color:#d2b564!important}.audio-btn .audio-wave{display:inline-block;min-width:1.2em}
 
 .save-indicator{font-size:10px;color:#7a9a6a;margin-left:6px;opacity:.8}
 
@@ -257,6 +258,8 @@ body>.puzzle-layer.show{display:grid!important;visibility:visible!important;opac
     <button class="help-btn manual-btn" onclick="showHelp()">玩法说明</button>
 
     <button class="help-btn puzzle-trigger" id="puzzleTrigger" type="button">拼瓷片</button>
+
+    <button class="help-btn audio-btn" id="audioBtn" type="button" aria-pressed="false" onclick="toggleAudio()"><span class="audio-wave">♩</span> 声音：关</button>
 
     <span class="save-indicator" id="saveIndicator">已存档</span>
 
@@ -565,7 +568,7 @@ body>.puzzle-layer.show{display:grid!important;visibility:visible!important;opac
   <h3 style="font-size:14px;color:#a8362c;margin:12px 0 4px">码头与行帮</h3>
   <p style="font-size:12px;line-height:1.7"><b>货船自动升级：</b>小货船（0单，无加成）→昌江货船（累计3单，订单银+5%）→鄱湖船队（累计6单，+10%）→御瓷贡船（累计10单，+15%）。无需花银，交付达到门槛后立即生效。<br><b>行帮：</b>首次加入免费；改换需40银。徽帮使采集所得+20%，都帮使烧窑成功率+10%，杂帮使彩绘成瓷品质额外+3。</p>
   <h3 style="font-size:14px;color:#2c5f7c;margin:12px 0 4px">按钮作用</h3>
-  <p style="font-size:12px;line-height:1.75"><b>采集四钮：</b>取得瓷土、松柴、釉料、颜料，各耗5体力。<br><b>制作坯体：</b>耗3土、1釉、8体力；窑班≥3人时通常产2坯。<br><b>彩绘装饰：</b>耗1素坯、1颜料、4体力，增加6品质；交付时每件彩绘瓷另加25%装饰溢价。<br><b>单件烧制：</b>耗1件坯、松柴与12体力，成功率显示在按钮上。<br><b>批量烧×3：</b>三件分别独立判定成功率，一次共耗20体力，并比单烧三次少耗1捆柴；结果会汇总显示烧成与损毁数量。<br><b>交付订单：</b>消耗成瓷换银、声望和订单进度。<br><b>请督造官调人：</b>玩家是窑工，不直接招募；花银请督造官向窑班调入一人，提高烧窑率及制坯效率，并增加每日工钱。<br><b>身份晋阶：</b>随工艺从窑工成长为熟手、作头，达到名匠后成为把桩师傅。<br><b>匠作总台：</b>完成首单后由行会送来工序牌，把采集、制坯、彩绘、烧制、交付集中在一处，地图按钮仍可使用。<br><b>一日排产：</b>完成8单后解锁；按现有成本自动补缺、制坯、彩绘、批烧和交付，遇到体力、资源或封航立即停止，不会凭空增加产物。<br><b>升级窑炉：</b>花银提高基础烧成率。<br><b>度过一日：</b>恢复体力、推进季节/税收/期限；后期可能触发带选择、冷却和连续后果的窑务事件。<br><b>请道士：</b>花银提高下一窑成功率。<br><b>难度：</b>切换税率、体力、费用和通关单数。<br><b>商人：</b>买卖原料；买入不再损害商誉，卖出和彩绘订单能积累商誉。<br><b>行帮：</b>选择长期专精，可付费改换。<br><b>强征：</b>以皇恩换劳力，连续使用会引发民怨和失败。<br><b>重开：</b>清空当前存档并重新开始。<br><b>成就：</b>查看一次性挑战与银两奖励。<br><b>拼瓷片：</b>推动空位旁的真实瓷器图像切片，依据器形与青花纹样复原明代藏品。</p>
+  <p style="font-size:12px;line-height:1.75"><b>采集四钮：</b>取得瓷土、松柴、釉料、颜料，各耗5体力。<br><b>制作坯体：</b>耗3土、1釉、8体力；窑班≥3人时通常产2坯。<br><b>彩绘装饰：</b>耗1素坯、1颜料、4体力，增加6品质；交付时每件彩绘瓷另加25%装饰溢价。<br><b>单件烧制：</b>耗1件坯、松柴与12体力，成功率显示在按钮上。<br><b>批量烧×3：</b>三件分别独立判定成功率，一次共耗20体力，并比单烧三次少耗1捆柴；结果会汇总显示烧成与损毁数量。<br><b>交付订单：</b>消耗成瓷换银、声望和订单进度。<br><b>请督造官调人：</b>玩家是窑工，不直接招募；花银请督造官向窑班调入一人，提高烧窑率及制坯效率，并增加每日工钱。<br><b>身份晋阶：</b>随工艺从窑工成长为熟手、作头，达到名匠后成为把桩师傅。<br><b>匠作总台：</b>完成第二笔订单后由行会送来工序牌，把采集、制坯、彩绘、烧制、交付集中在一处，地图按钮仍可使用。<br><b>一日排产：</b>完成8单后解锁；按现有成本自动补缺、制坯、彩绘、烧制和交付，遇到体力、资源或封航立即停止，不会凭空增加产物。<br><b>升级窑炉：</b>花银提高基础烧成率。<br><b>度过一日：</b>恢复体力、推进季节/税收/期限；后期可能触发带选择、冷却和连续后果的窑务事件。<br><b>请道士：</b>花银提高下一窑成功率。<br><b>难度：</b>切换税率、体力、费用和通关单数。<br><b>商人：</b>买卖原料；买入不再损害商誉，卖出和彩绘订单能积累商誉。<br><b>行帮：</b>选择长期专精，可付费改换。<br><b>强征：</b>以皇恩换劳力，连续使用会引发民怨和失败。<br><b>重开：</b>清空当前存档并重新开始。<br><b>成就：</b>查看一次性挑战与银两奖励。<br><b>拼瓷片：</b>推动空位旁的真实瓷器图像切片，依据器形与青花纹样复原明代藏品。</p>
   <h3 style="font-size:14px;color:#2c5f7c;margin:12px 0 4px">操作提示</h3>
   <p style="font-size:12px;line-height:1.7">地图可按住拖动（手机手指滑动）| 底部面板点击标题折叠展开 | 每4天换季/每5天收税 | 体力不足从商人处买原料 | 强征3次民怨5次毁窑</p>
   <p style="margin-top:8px;font-size:11px;color:var(--muted)">以后再查看：点击顶部的<b>说明</b>按钮</p>
@@ -851,6 +854,7 @@ class GameState {
       if (!this.activeModifiers || typeof this.activeModifiers !== "object") this.activeModifiers = {};
       if (!this.eventChain || typeof this.eventChain !== "object") this.eventChain = {};
       this.dispatchUnlocked = !!this.dispatchUnlocked || (Number(this.orders) || 0) >= 8;
+      this.quickWorkbenchUnlocked = (Number(this.orders) || 0) >= 2;
       if (wasLegacySave) { this.tutorialSeen = true; this.tutorialActive = false; }
       this.kilnType = Math.max(Number(this.kilnType) || 0, Math.max(0, Math.min(3, (this.kiln || 1) - 1)));
       var earnedCraft = 0;
@@ -1509,7 +1513,7 @@ function render() {
   }
   if (hireBtn) hireBtn.textContent = "请督造官调人 · " + G.diffConfig.hireCost + "银";
   var quickWorkbench = document.getElementById("quickWorkbench");
-  if (quickWorkbench) quickWorkbench.classList.toggle("unlocked", !!G.quickWorkbenchUnlocked || G.orders >= 1);
+  if (quickWorkbench) quickWorkbench.classList.toggle("unlocked", !!G.quickWorkbenchUnlocked && G.orders >= 2);
   var dispatchBtn = document.getElementById("dispatchBtn");
   if (dispatchBtn) {
     var dispatchReady = !!G.dispatchUnlocked || G.orders >= 8;
@@ -1562,6 +1566,7 @@ function gather(type) {
 
   G[type] += gained;
   G.stamina -= staminaCost;
+  playSfx(type === "wood" ? "wood" : type === "pigment" ? "pigment" : "gather");
 
   const msgs = {
 
@@ -1612,6 +1617,7 @@ function produce() {
   const output = (G.workers >= p.workersBonus && !G.seasonInfo.produceSlow) ? p.bonusOutput : 1;
 
   G.blank += output;
+  playSfx("produce");
 
   const extra = G.seasonInfo.produceSlow ? "（梅雨所困，效率减半）" : "";
 
@@ -1649,6 +1655,7 @@ function decorate() {
   G.stamina -= d.staminaCost;
 
   G.paintedBlank++;
+  playSfx("decorate");
 
   addLog("画匠在素坯上施彩，制成彩绘坯1件；烧成后增加品质并获得订单装饰溢价。");
 
@@ -1688,6 +1695,7 @@ function fireKiln() {
   G.wood -= woodNeed;
 
   G.stamina -= CONFIG.FIRE.staminaCost;
+  playSfx("fire");
 
 
 
@@ -1706,6 +1714,7 @@ function fireKiln() {
   addLog("烧制失败：" + fr[Math.floor(Math.random()*fr.length)]);
 
     showToast("烧制失败！", false);
+    setTimeout(function(){ playSfx("fail"); }, 150);
 
     hapticFeedback("error");
 
@@ -1765,6 +1774,7 @@ function fireKiln() {
   addLog("出窑：" + wareName + "，品质 +" + q + "。" + extra);
 
   showToast("成瓷出窑，品质 +" + q + "！");
+  setTimeout(function(){ playSfx("success"); }, 180);
 
   inventoryFeedback("ware",1,CONFIG.FIRE.staminaCost,"成瓷");
 
@@ -2049,10 +2059,11 @@ function deliver() {
     showToast("中后期功能解锁：一日排产", true);
   }
 
-  if (!G.quickWorkbenchUnlocked && G.orders >= 1) {
+  playSfx("deliver");
+  if (!G.quickWorkbenchUnlocked && G.orders >= 2) {
     G.quickWorkbenchUnlocked = true;
-    addLog("首单告成，行会送来一面工序牌。匠作总台已解锁，往后不必来回拖动地图。");
-    showToast("事件：工序牌 · 匠作总台解锁！", true);
+    addLog("两笔订单告成，行会确认你已熟悉全套工序，送来一面工序牌。匠作总台已解锁，往后不必来回拖动地图。");
+    showToast("第二单告成：工序牌 · 匠作总台解锁！", true);
   }
 
 
@@ -2237,6 +2248,7 @@ function eligibleMechanicEvents() {
 
 function showMechanicEvent(evt) {
   if (!evt) return;
+  playSfx("event");
   G.pendingMechanicEvent = evt.id;
   var layer=document.getElementById("mechanicEvent"), choices=document.getElementById("mechanicChoices");
   document.getElementById("mechanicTitle").textContent=evt.title;
@@ -2344,6 +2356,7 @@ function triggerDefeat(title, copy, cause) {
 function nextDay() {
 
   G.day++;
+  playSfx("day");
   expireModifiers();
 
   // 每季只结算一次仓储费，避免界面刷新重复扣款。
@@ -3006,6 +3019,65 @@ if (G.pendingMechanicEvent) {
     <button onclick="closeWoodcut()">把这一页记入家谱</button>
   </article>
 </section>
+<script>
+(function(){
+  var ctx=null, master=null, bgmGain=null, bgmTimer=0, bgmStep=0, enabled=false;
+  var pentatonic=[146.83,174.61,196.00,220.00,261.63,220.00,196.00,174.61];
+  function ensure(){
+    if(ctx)return true;
+    var AC=window.AudioContext||window.webkitAudioContext;
+    if(!AC)return false;
+    ctx=new AC();master=ctx.createGain();master.gain.value=.55;master.connect(ctx.destination);
+    bgmGain=ctx.createGain();bgmGain.gain.value=.13;bgmGain.connect(master);return true;
+  }
+  function voice(freq,duration,type,volume,delay,destination){
+    if(!enabled||!ensure())return;
+    var now=ctx.currentTime+(delay||0),osc=ctx.createOscillator(),gain=ctx.createGain();
+    osc.type=type||"sine";osc.frequency.setValueAtTime(freq,now);
+    gain.gain.setValueAtTime(.0001,now);gain.gain.exponentialRampToValueAtTime(Math.max(.0002,volume||.035),now+.035);gain.gain.exponentialRampToValueAtTime(.0001,now+duration);
+    osc.connect(gain);gain.connect(destination||master);osc.start(now);osc.stop(now+duration+.04);
+  }
+  function noise(duration,volume,frequency){
+    if(!enabled||!ensure())return;
+    var length=Math.max(1,Math.floor(ctx.sampleRate*duration)),buffer=ctx.createBuffer(1,length,ctx.sampleRate),data=buffer.getChannelData(0);
+    for(var i=0;i<length;i++)data[i]=(Math.random()*2-1)*(1-i/length);
+    var source=ctx.createBufferSource(),filter=ctx.createBiquadFilter(),gain=ctx.createGain();source.buffer=buffer;filter.type="lowpass";filter.frequency.value=frequency||900;gain.gain.value=volume||.025;source.connect(filter);filter.connect(gain);gain.connect(master);source.start();
+  }
+  function bgmPulse(){
+    if(!enabled||document.hidden)return;
+    var note=pentatonic[bgmStep++%pentatonic.length];
+    voice(note,2.7,"sine",.022,0,bgmGain);voice(note*2,1.8,"triangle",.009,.18,bgmGain);
+    if(bgmStep%4===1)voice(73.42,4.2,"sine",.012,0,bgmGain);
+  }
+  function startBgm(){clearInterval(bgmTimer);bgmPulse();bgmTimer=setInterval(bgmPulse,2850)}
+  function stopBgm(){clearInterval(bgmTimer);bgmTimer=0}
+  window.playSfx=function(name){
+    if(!enabled)return;
+    var map={
+      click:function(){voice(330,.07,"triangle",.025)},
+      gather:function(){voice(130,.14,"triangle",.04);noise(.09,.018,500)},
+      wood:function(){noise(.11,.045,750);voice(105,.09,"square",.022,0);noise(.08,.025,500)},
+      pigment:function(){voice(392,.12,"sine",.03);voice(523,.16,"sine",.02,.08)},
+      produce:function(){voice(110,.22,"triangle",.035);voice(146.83,.2,"sine",.025,.11)},
+      decorate:function(){noise(.16,.012,1800);voice(440,.18,"sine",.025);voice(587.33,.28,"sine",.018,.12)},
+      fire:function(){noise(.5,.035,650);voice(82.41,.55,"sawtooth",.018)},
+      fail:function(){voice(220,.24,"triangle",.04);voice(164.81,.4,"triangle",.035,.2)},
+      success:function(){voice(261.63,.2,"sine",.035);voice(329.63,.24,"sine",.03,.13);voice(392,.42,"sine",.03,.28)},
+      deliver:function(){voice(196,.2,"triangle",.035);voice(293.66,.25,"triangle",.035,.14);voice(392,.42,"sine",.028,.3)},
+      day:function(){voice(146.83,.28,"sine",.028);voice(220,.4,"sine",.025,.2)},
+      event:function(){voice(98,.8,"sine",.045);voice(196,.65,"triangle",.018,.08)}
+    };(map[name]||map.click)();
+  };
+  window.toggleAudio=function(){
+    if(!ensure()){if(typeof showToast==="function")showToast("当前浏览器不支持声音播放。",false);return}
+    enabled=!enabled;if(enabled){ctx.resume();startBgm();playSfx("success")}else{stopBgm();ctx.suspend()}
+    var b=document.getElementById("audioBtn");if(b){b.setAttribute("aria-pressed",String(enabled));b.innerHTML='<span class="audio-wave">'+(enabled?'♫':'♩')+'</span> 声音：'+(enabled?'开':'关')}
+    if(typeof showToast==="function")showToast(enabled?"窑场环境声已开启":"声音已关闭");
+  };
+  document.addEventListener("click",function(e){var b=e.target.closest&&e.target.closest("button");if(b&&b.id!=="audioBtn")playSfx("click")},true);
+  document.addEventListener("visibilitychange",function(){if(!ctx||!enabled)return;if(document.hidden){stopBgm();ctx.suspend()}else{ctx.resume();startBgm()}});
+})();
+</script>
 <script>
 (function(){
   var eventData = {
