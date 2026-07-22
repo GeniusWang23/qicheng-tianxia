@@ -229,6 +229,12 @@ body>.puzzle-layer.show{display:grid!important;visibility:visible!important;opac
 @media(max-width:1050px){.map-container:before{inset:72px 278px 150px 220px}}
 @media(max-width:760px){.map-container:before{display:none}.map{width:1480px;min-height:620px}.mountain{left:35px}.forest{left:280px}.map>.site[style*="left:460px"]{left:520px!important}.map>.site[style*="left:640px"]{left:740px!important}.works{left:500px;top:320px}.kiln{left:980px;top:290px}.dock{left:1240px;top:340px}.minebtn{left:55px}.woodbtn{left:300px}.glazebtn{left:535px}.pigmentbtn{left:755px}.produce{left:530px;top:495px}.decoratebtn{left:720px;top:495px}.fire{left:990px;top:455px}.ship{left:1250px;top:505px}}
 </style>
+<style id="ledger-tutorial-overrides">
+.tutorial-welcome .veteran{background:#2d463d}.tutorial-next{float:right;margin-top:7px;background:#812d24;color:#f3ddb0;border:1px solid #392719;padding:7px 12px;cursor:pointer}.tutorial-target.tutorial-observe{pointer-events:none!important}.tutorial-target.tutorial-observe:after{content:"本课认识此处"}
+#eventCard{left:252px;bottom:8px;width:300px;height:130px}#eventCard h3:before{content:"伍 · ";color:var(--red)}.event-timeline{font-size:10px;line-height:1.45;max-height:84px;overflow:auto}.event-timeline article{border-left:2px solid #7d2c23;padding:2px 5px;margin:3px 0}.event-timeline time{color:#7d2c23;font-weight:900}.event-empty{color:#725f45}.event-active{color:#285044;font-weight:900}#logCard{left:564px!important}#logCard h3:before{content:"陆 · "!important}
+@media(max-width:1050px) and (min-width:761px){#eventCard{left:220px;width:260px}#logCard{left:490px!important}}
+@media(max-width:760px){.stats{grid-template-columns:repeat(4,1fr)!important}.stat{padding:4px 2px!important}#eventCard{position:relative;inset:auto;width:100%;height:auto;max-height:none;padding:12px}.event-timeline{max-height:180px}#logCard{left:auto!important}.tutorial-welcome-actions{flex-wrap:wrap}}
+</style>
 <style id="pages-path-fix">.map{background-image:linear-gradient(180deg,rgba(224,206,164,.08),rgba(38,27,17,.18)),url("map-panorama.png")!important}.puzzle-piece{background-image:url("porcelain-puzzle.jpg")!important}</style>
 </head>
 
@@ -254,6 +260,10 @@ body>.puzzle-layer.show{display:grid!important;visibility:visible!important;opac
       <div class="stat">声望<b id="fame">0</b></div>
 
       <div class="stat">品质<b id="quality">0</b></div>
+      <div class="stat">窑班<b id="workers">2</b></div>
+      <div class="stat">身份<b id="artisanRank">窑工</b></div>
+      <div class="stat">商誉<b id="merchantFavor">0</b></div>
+      <div class="stat">皇恩<b id="imperialFavor">0</b></div>
 
     </div>
 
@@ -332,10 +342,6 @@ body>.puzzle-layer.show{display:grid!important;visibility:visible!important;opac
 
       <div class="card-body"><div class="rows">
 
-        <span>窑班<b id="workers">2</b></span>
-        <span>身份<b id="artisanRank">窑工</b></span>
-        <span>商誉<b id="merchantFavor">0</b></span>
-        <span>皇恩<b id="imperialFavor">0</b></span>
         <span>体力<b id="staminaDisplay">100</b></span>
 
         <span>高岭土<b id="clay">0</b></span>
@@ -472,6 +478,8 @@ body>.puzzle-layer.show{display:grid!important;visibility:visible!important;opac
 
     </div>
 
+    <div class="float-card" id="eventCard"><h3 onclick="toggleCard('eventCard')">窑务账册 <span class="toggle">▼</span></h3><div class="card-body"><div class="event-timeline" id="eventTimeline"><div class="event-empty">尚无大事。御命、灾损与抉择会按日期记在这里。</div></div></div></div>
+
   </div>
 
   <aside class="quick-workbench" id="quickWorkbench" aria-label="匠作总台">
@@ -508,13 +516,13 @@ body>.puzzle-layer.show{display:grid!important;visibility:visible!important;opac
     <div class="mechanic-kicker">序章 · 入窑学艺</div>
     <h2>先识泥火，再掌一窑</h2>
     <p>把桩师傅会陪你亲手完成两件瓷器：从高岭土、釉料与松柴，到拉坯、彩绘、烧成和第一次交付。每次只需完成眼前一步，所得资源与首单进度会直接带入正式经营。</p>
-    <div class="tutorial-welcome-actions"><button class="tutorial-control" onclick="startTutorial()">开始第一课</button></div>
+    <div class="tutorial-welcome-actions"><button class="tutorial-control" onclick="startTutorial()">入窑学艺</button><button class="tutorial-control veteran" onclick="skipTutorialWelcome()">我是熟练工</button></div>
   </article>
 </section>
 
 <aside class="tutorial-panel" id="tutorialPanel" aria-live="polite">
   <div class="tutorial-master">师</div>
-  <div class="tutorial-copy"><small id="tutorialKicker">把桩师傅 · 第一课</small><h3 id="tutorialTitle">先识高岭土</h3><p id="tutorialText"></p><strong class="tutorial-rule" id="tutorialRule"></strong><div class="tutorial-progress"><i id="tutorialProgress"></i></div></div>
+  <div class="tutorial-copy"><small id="tutorialKicker">把桩师傅 · 第一课</small><h3 id="tutorialTitle">先识高岭土</h3><p id="tutorialText"></p><strong class="tutorial-rule" id="tutorialRule"></strong><button class="tutorial-next tutorial-control" id="tutorialNext" onclick="tutorialNextStep()" style="display:none">已阅，下一课</button><div class="tutorial-progress"><i id="tutorialProgress"></i></div></div>
 </aside>
 
 <section class="result-layer" id="resultLayer" aria-hidden="true">
@@ -554,7 +562,7 @@ body>.puzzle-layer.show{display:grid!important;visibility:visible!important;opac
   <h3 style="font-size:14px;color:#2c5f7c;margin:12px 0 4px">按钮作用</h3>
   <p style="font-size:12px;line-height:1.75"><b>采集四钮：</b>取得瓷土、松柴、釉料、颜料，各耗5体力。<br><b>制作坯体：</b>耗3土、1釉、8体力；窑班≥3人时通常产2坯。<br><b>彩绘装饰：</b>耗1素坯、1颜料、4体力，增加6品质；交付时每件彩绘瓷另加25%装饰溢价。<br><b>单件烧制：</b>耗1件坯、松柴与12体力，成功率显示在按钮上。<br><b>批量烧×3：</b>三件分别独立判定成功率，一次共耗20体力，并比单烧三次少耗1捆柴；结果会汇总显示烧成与损毁数量。<br><b>交付订单：</b>消耗成瓷换银、声望和订单进度。<br><b>请督造官调人：</b>玩家是窑工，不直接招募；花银请督造官向窑班调入一人，提高烧窑率及制坯效率，并增加每日工钱。<br><b>身份晋阶：</b>随工艺从窑工成长为熟手、作头，达到名匠后成为把桩师傅。<br><b>匠作总台：</b>完成第二笔订单后由行会送来工序牌，把采集、制坯、彩绘、烧制、交付集中在一处，地图按钮仍可使用。<br><b>一日排产：</b>完成8单后解锁；按现有成本自动补缺、制坯、彩绘、烧制和交付，遇到体力、资源或封航立即停止，不会凭空增加产物。<br><b>升级窑炉：</b>花银提高基础烧成率。<br><b>度过一日：</b>恢复体力、推进季节/税收/期限；后期可能触发带选择、冷却和连续后果的窑务事件。<br><b>请道士：</b>花银提高下一窑成功率。<br><b>难度：</b>切换税率、体力、费用和通关单数。<br><b>商人：</b>买卖原料；买入不再损害商誉，卖出和彩绘订单能积累商誉。<br><b>行帮：</b>选择长期专精，可付费改换。<br><b>强征：</b>以皇恩换劳力，连续使用会引发民怨和失败。<br><b>重开：</b>清空当前存档并重新开始。<br><b>成就：</b>查看一次性挑战与银两奖励。<br><b>拼瓷片：</b>推动空位旁的真实瓷器图像切片，依据器形与青花纹样复原明代藏品。</p>
   <h3 style="font-size:14px;color:#2c5f7c;margin:12px 0 4px">操作提示</h3>
-  <p style="font-size:12px;line-height:1.7">地图可按住拖动（手机手指滑动）| 底部面板点击标题折叠展开 | 每4天换季/每5天收税 | 体力不足从商人处买原料 | 强征3次民怨5次毁窑</p>
+  <p style="font-size:12px;line-height:1.7">地图可按住拖动（手机手指滑动）| 面板点击标题折叠展开 | 每4天换季/每5天收税 | 体力不足可向商人买料 | 强征会逐次增加民怨、怠工与逃亡风险，但不再固定第5次失败</p>
   <p style="margin-top:8px;font-size:11px;color:var(--muted)">以后再查看：点击顶部的<b>说明</b>按钮</p>
 </div>
 <!-- 反馈弹窗 -->
@@ -784,7 +792,7 @@ const CONFIG = {
     generation:1, familyName:"王", executionPending:false,
 
     craftsmanship:1.0, deathCause:"", quickWorkbenchUnlocked:false,
-    eventHistory:[], eventCooldowns:{}, activeModifiers:{}, eventChain:{}, pendingMechanicEvent:"", dispatchUnlocked:false,
+    eventHistory:[], eventTimeline:[], eventCooldowns:{}, activeModifiers:{}, eventChain:{}, pendingMechanicEvent:"", lastMechanicDay:0, dispatchUnlocked:false,
     tutorialSeen:false, tutorialActive:false, tutorialStep:0, tutorialFiresLeft:0
 
   },
@@ -844,6 +852,7 @@ class GameState {
       if (!Number.isFinite(this.stamina)) this.stamina = 0;
       if (!Number.isFinite(this.maxStamina)) this.maxStamina = this.diffConfig.maxStamina;
       if (!Array.isArray(this.eventHistory)) this.eventHistory = [];
+      if (!Array.isArray(this.eventTimeline)) this.eventTimeline = [];
       if (!this.eventCooldowns || typeof this.eventCooldowns !== "object") this.eventCooldowns = {};
       if (!this.activeModifiers || typeof this.activeModifiers !== "object") this.activeModifiers = {};
       if (!this.eventChain || typeof this.eventChain !== "object") this.eventChain = {};
@@ -980,6 +989,18 @@ const TUTORIAL_STEPS = [
   {action:"gather_wood",selector:"button[onclick=\"gather('wood')\"]",title:"第二次备柴",text:"批次不同，柴况也会变化。再备一批松柴，为彩绘坯入窑做准备。",rule:"消耗 5 体力 → 获得 5 松柴"},
   {action:"fire",selector:"button[onclick=\"fireKiln()\"]",title:"看火辨色",text:"把彩绘坯送入窑中。序章仍由师傅保底；正式经营后，每一次失败都要由窑户承担。",rule:"彩绘烧成 → 增加品质、售价与商誉"},
   {action:"deliver",selector:"button[onclick=\"deliver()\"]",title:"让瓷器走出窑门",text:"两件成瓷已经齐备。到昌江码头交付首单，银两、声望、商誉与皇恩才会真正开始流动。",rule:"交付 2 件成瓷 → 获得银两、声望与首单进度"}
+  ,{tour:true,selector:".stats",title:"先看窑户命脉",text:"顶部常驻银两、声望、品质、窑班、身份、商誉和皇恩。银两维持经营，商誉影响贸易，皇恩连接御命与隐藏结局。",rule:"经营课 · 状态栏无需打开面板"}
+  ,{tour:true,selector:"#invCard",title:"库房不是仓库数字",text:"体力和每一种原料都对应工序。缺什么再采什么，囤积成瓷还可能产生仓储成本。",rule:"经营课 · 先看瓶颈再劳作"}
+  ,{tour:true,selector:"#hireBtn",title:"调人要付工钱",text:"你是窑工掌作，扩充窑班要请督造官调人。人多能提高成功率，却会增加每日工钱。",rule:"管理课 · 按钮会标出调人银两"}
+  ,{tour:true,selector:"#upgradeBtn",title:"四级窑炉",text:"竖穴窑、龙窑、葫芦窑、镇窑逐级稳定火路。升级昂贵，应在订单压力与现金之间权衡。",rule:"管理课 · 当前窑型和下一级同步显示"}
+  ,{tour:true,selector:"button[onclick=\"hireTaoist()\"]",title:"道士只保下一把火",text:"请道士需30银，为下一窑增加临时成功率。它是昂贵保险，不是永久升级。",rule:"管理课 · 30银换一次控火加成"}
+  ,{tour:true,selector:"button[onclick=\"showMerchant()\"]",title:"商人解决短缺",text:"商人可以买卖原料，价格受商誉影响。后期无需为一份缺料反复拖地图，但便利要付银两。",rule:"贸易课 · 商誉越高，买卖条件越好"}
+  ,{tour:true,selector:"#guildBtn",title:"行帮是一项长期专精",text:"徽帮强化采集、都帮强化烧成、杂帮强化彩绘。首次加入免费，改换固定缴40银。",rule:"经营课 · 选定后改换有明确成本"}
+  ,{tour:true,selector:"#diffBtn",title:"难度开窑后落印",text:"简单、普通、困难分别要求8、12、16单，并改变恢复、事件和烧成压力。第一次开窑后不能再切换。",rule:"规则课 · 请在正式经营前决定"}
+  ,{tour:true,selector:".achieve-btn",title:"功名卷与隐藏结局",text:"成就不只奖励银两，也列出困难通关、不役一人和御前留名等特殊路线。",rule:"目标课 · 成就按钮会展开独立功名卷"}
+  ,{tour:true,selector:"#puzzleTrigger",title:"废瓷修复工课",text:"拼瓷片通过器形和纹样复原真实藏品，是独立的科普小游戏，也能获得少量品质与银两。",rule:"科普课 · 随时可从顶部进入"}
+  ,{tour:true,selector:"#eventCard",title:"窑务账册",text:"重大事件、你的选择、持续影响与后续日期都会进入时间线。后期不必靠记忆追踪因果。",rule:"事件课 · 账册按日期倒序记录"}
+  ,{tour:true,selector:"#orderCard",title:"工序牌与度过一日",text:"第二单后解锁工序牌，生产、交付和度日集中在其中；订单栏只保留管理决策。度日会结算工钱、税收、恢复与事件。",rule:"结业课 · 一旦开始教程，中途不能跳过"}
 ];
 
 function showTutorialWelcome() {
@@ -1010,9 +1031,15 @@ function startTutorial() {
   addLog("把桩师傅领你入窑，从识土、识火开始学艺。");G.save();renderTutorial();
 }
 
+function skipTutorialWelcome() {
+  G.tutorialSeen=true;G.tutorialActive=false;G.tutorialStep=TUTORIAL_STEPS.length;
+  var welcome=document.getElementById("tutorialWelcome");welcome.classList.remove("show");welcome.setAttribute("aria-hidden","true");
+  addLog("你以熟练工身份接掌窑务，序章不再展开。可随时打开玩法说明查阅规则。");G.save();render();showToast("已跳过序章 · 熟练工开局",true);
+}
+
 function renderTutorial() {
   var panel=document.getElementById("tutorialPanel");
-  document.querySelectorAll(".tutorial-target").forEach(function(el){el.classList.remove("tutorial-target")});
+  document.querySelectorAll(".tutorial-target").forEach(function(el){el.classList.remove("tutorial-target","tutorial-observe")});
   if(!G.tutorialActive){document.body.classList.remove("tutorial-running");if(panel)panel.classList.remove("show");return}
   var step=TUTORIAL_STEPS[G.tutorialStep]||TUTORIAL_STEPS[0];
   document.body.classList.add("tutorial-running");panel.classList.add("show");
@@ -1020,8 +1047,11 @@ function renderTutorial() {
   document.getElementById("tutorialTitle").textContent=step.title;document.getElementById("tutorialText").textContent=step.text;
   document.getElementById("tutorialRule").textContent=step.rule||"完成当前课业后进入下一步";
   document.getElementById("tutorialProgress").style.width=Math.round((G.tutorialStep/TUTORIAL_STEPS.length)*100)+"%";
-  document.querySelectorAll(step.selector).forEach(function(el){el.classList.add("tutorial-target")});
+  var nextBtn=document.getElementById("tutorialNext");if(nextBtn)nextBtn.style.display=step.tour?"inline-block":"none";
+  document.querySelectorAll(step.selector).forEach(function(el){el.classList.add("tutorial-target");if(step.tour)el.classList.add("tutorial-observe")});
 }
+
+function tutorialNextStep(){var step=TUTORIAL_STEPS[G.tutorialStep];if(!G.tutorialActive||!step||!step.tour)return;G.tutorialStep++;if(G.tutorialStep>=TUTORIAL_STEPS.length)return finishTutorial();G.save();renderTutorial()}
 
 function tutorialAllows(action) {
   if(!G.tutorialActive)return true;
@@ -1242,6 +1272,19 @@ function renderCraftTree(currentLevel) {
     '<div class="craft-future">后世余卷：注浆、喷釉、倒焰圆窑、隧道窑、气窑、电窑、浅绛彩与新彩属于更晚时期，不列入本局古代窑户主线。</div>';
 }
 
+function recordEvent(title, detail, kind) {
+  if (!Array.isArray(G.eventTimeline)) G.eventTimeline=[];
+  G.eventTimeline.unshift({day:G.day,title:title,detail:detail||"",kind:kind||"event"});
+  G.eventTimeline=G.eventTimeline.slice(0,24);
+}
+function renderEventTimeline() {
+  var el=document.getElementById("eventTimeline");if(!el)return;
+  var active=Object.keys(G.activeModifiers||{}).filter(function(k){return (G.activeModifiers[k].until||0)>=G.day}).map(function(k){var m=G.activeModifiers[k];return '<article class="event-active"><time>持续至第'+m.until+'日</time> '+m.label+'</article>'});
+  var chains=Object.keys(G.eventChain||{}).map(function(k){var c=G.eventChain[k];return '<article class="event-active"><time>第'+c.due+'日后续</time> '+(k==="sample"?"御样抽验":k==="injury"?"伤者归窑":k==="river"?"昌江复航":"连续事件")+'</article>'});
+  var history=(G.eventTimeline||[]).map(function(item){return '<article><time>第'+item.day+'日</time> <b>'+item.title+'</b><br>'+item.detail+'</article>'});
+  el.innerHTML=active.concat(chains,history).join("")||'<div class="event-empty">尚无大事。御命、灾损与抉择会按日期记在这里。</div>';
+}
+
 var DAILY_HISTORY_NOTES = [
   { title:"土 · 高岭", kicker:"白土并非天生就是瓷。", body:"高岭土耐火而可塑，开采后还要淘洗、沉淀与陈腐。山中一担白土，到了坯房往往只余可用泥料的一部分。" },
   { title:"泥 · 淘洗", kicker:"水替匠人分出粗细。", body:"瓷石粉碎后入水淘洗，较重的砂砾先沉，细泥悬浮后再引入沉淀池。泥料越净，烧成后的胎体越细密。" },
@@ -1460,7 +1503,7 @@ function render() {
     cBtn.disabled = false;
     cBtn.setAttribute("aria-disabled", conscriptUnlocked ? "false" : "true");
     cBtn.style.opacity = conscriptUnlocked ? "1" : ".62";
-    cBtn.textContent = !conscriptUnlocked ? "强征（皇恩10解锁）" : (G.conscriptCount >= 3 ? "强征（民怨）" : "强征劳役");
+    cBtn.textContent = !conscriptUnlocked ? "强征（皇恩10解锁）" : (G.conscriptCount >= 3 ? "强征（民怨" + G.conscriptCount + "）" : "强征劳役");
     cBtn.title = !conscriptUnlocked ? "完成订单、彩绘和御命可积累皇恩；达到10后解锁强征" : "强征提高体力上限，但连续使用会积累民怨";
 
     if (G.conscriptCount >= 3) cBtn.style.color = "#a00";
@@ -1548,6 +1591,7 @@ function render() {
   // 活动成就列表
 
   renderAchievements();
+  renderEventTimeline();
 
 }
 
@@ -2277,6 +2321,7 @@ function eligibleMechanicEvents() {
 
 function showMechanicEvent(evt) {
   if (!evt) return;
+  G.lastMechanicDay=G.day;
   playSfx("event");
   G.pendingMechanicEvent = evt.id;
   var layer=document.getElementById("mechanicEvent"), choices=document.getElementById("mechanicChoices");
@@ -2286,6 +2331,8 @@ function showMechanicEvent(evt) {
   choices.innerHTML="";
   evt.choices.forEach(function(choice,index){var b=document.createElement("button");b.textContent=choice.label;b.onclick=function(){chooseMechanicEvent(index)};choices.appendChild(b)});
   layer.classList.add("show");layer.setAttribute("aria-hidden","false");G.save();
+  var woodcutMap={tax_register:"oppression",sample_1:"oppression",injury_1:"injury",river_1:"river"};
+  if(woodcutMap[evt.id]&&window.showWoodcut)setTimeout(function(){showWoodcut(woodcutMap[evt.id])},180);
 }
 
 function chooseMechanicEvent(index) {
@@ -2299,6 +2346,7 @@ function chooseMechanicEvent(index) {
   document.getElementById("mechanicEvent").classList.remove("show");
   document.getElementById("mechanicEvent").setAttribute("aria-hidden","true");
   addLog("窑务抉择·"+evt.title+"："+evt.choices[index].label);
+  recordEvent(evt.title, "选择："+evt.choices[index].label, "choice");
   showToast("抉择已记入窑务账册",true);G.save();render();
 }
 
@@ -2306,6 +2354,7 @@ function maybeTriggerMechanicEvent() {
   if (G.orders < 8 || G.pendingMechanicEvent) return false;
   var due=MECHANIC_EVENTS.filter(function(evt){if(!evt.chain)return false;var s=G.eventChain[evt.chain];return s&&Number(s.due)<=G.day});
   var pool=due.length?due:eligibleMechanicEvents();
+  if(!due.length && G.day-(G.lastMechanicDay||0)<(G.difficulty===2?3:4))return false;
   var chance = G.difficulty === 2 ? .72 : (G.difficulty === 1 ? .56 : .42);
   if (!pool.length || (!due.length && Math.random()>=chance)) return false;
   showMechanicEvent(pool[Math.floor(Math.random()*pool.length)]);return true;
@@ -2579,6 +2628,7 @@ function nextDay() {
     const evt = eventPool[Math.floor(Math.random() * eventPool.length)];
 
     evt.effect(G);
+    recordEvent(evt.name, evt.desc, evt.good?"good":"bad");
 
     addLog("⚡ " + evt.name + "：" + evt.desc);
 
@@ -2663,31 +2713,20 @@ function doConscript() {
 
   G.conscriptCount = (G.conscriptCount || 0) + 1;
 
-  if (G.conscriptCount >= 5) {
-    triggerDefeat("民变毁窑", "五次强征耗尽了最后的忍耐。窑工砸开窑门，烧毁账册，官窑的秩序在火中崩塌。", "连续强征5次");
-    return;
-
-  }
-
+  var laborGain = Math.max(4, 20 - G.conscriptCount * 3);
+  G.maxStamina = (G.maxStamina || G.diffConfig.maxStamina) + laborGain;
+  G.stamina = G.maxStamina;
   if (G.conscriptCount >= 3) {
-
-    G.imperialFavor = Math.max(-50, (G.imperialFavor || 0) - 30);
-
-    addLog("多次强征劳役，民怨沸腾。皇帝好感大降。");
-
-    showToast("民怨沸腾！", false);
-
-  } else {
-
-    G.maxStamina = (G.maxStamina || G.diffConfig.maxStamina) + 20;
-
-    G.stamina = G.maxStamina;
-
-    addLog("奉旨强征劳役，体力上限永久+20。");
-
-    showToast("强征！体力上限+20");
-
-  }
+    var anger = 6 + G.conscriptCount * 3;
+    G.imperialFavor = Math.max(-100, (G.imperialFavor || 0) - anger);
+    G.fame = Math.max(0, G.fame - 2);
+    setModifier("wageMul", 1.15 + G.conscriptCount * .05, 3, "强征后的怠工");
+    if (Math.random() < Math.min(.55, .12 * G.conscriptCount)) { G.workers = Math.max(1, G.workers - 1); addLog("被征者逃离窑场，窑班减员。"); }
+    showToast("强征得劳力，但民怨与怠工加深", false);
+  } else showToast("强征劳役：体力上限+" + laborGain);
+  addLog("第" + G.conscriptCount + "次强征：体力上限+" + laborGain + "，后续代价已记入窑务账册。");
+  recordEvent("强征劳役", "第" + G.conscriptCount + "次；体力上限+" + laborGain + (G.conscriptCount >= 3 ? "，民怨与怠工加深" : ""), "oppression");
+  if (G.conscriptCount === 3 && window.showWoodcut) setTimeout(function(){ showWoodcut("oppression"); }, 180);
 
   render();
 
@@ -3149,11 +3188,13 @@ if (G.pendingMechanicEvent) {
   var eventData = {
     imperial:{title:"御命如山",quote:"瓷成，则贡；瓷败，则罪。官差只留下这一句话。",body:"御器并不只是荣耀。官府规定器形、数量与期限，原料、劳力与失败风险却由窑户承担。"},
     tongbin:{title:"童宾祭窑",quote:"火不肯成。童宾向窑门走去，身后是再也不敢出声的人群。",body:"童宾投窑存在多种传说版本。无论史实细节如何，它保存了窑工面对高风险烧成、官府催逼与集体苦难的历史记忆。"},
-    execution:{title:"秋后问斩",quote:"御窑的期限到了。失败的瓷器被埋入土中，失败的人却无处可藏。",body:"在权力体系中，工艺失败不再只是技术损失，而会转化为刑罚、债务与家族命运。"}
+    execution:{title:"秋后问斩",quote:"御窑的期限到了。失败的瓷器被埋入土中，失败的人却无处可藏。",body:"在权力体系中，工艺失败不再只是技术损失，而会转化为刑罚、债务与家族命运。"},
+    oppression:{title:"朱批压窑",quote:"一张薄纸落在案上，整座窑场便要改变火候、花样和活法。",body:"官样、窑籍与抽验把技术问题变成权力问题。收起木刻后，你仍需在窑务事件中亲自作出选择。"},
+    injury:{title:"火舌伤人",quote:"窑门一开，热浪卷走的不只是眉发。窑班都在看掌作如何处置伤者。",body:"烧窑风险由具体的人承担。照料伤者会损失工期与银钱，强迫开工则会改变窑班对你的信任。"},
+    river:{title:"昌江断流",quote:"船停在浑水里，成瓷堆在岸上。窑火不停，去路却断了。",body:"景德镇瓷器依赖水运。封航会把生产、仓储和商誉连成同一场危机。"}
   };
   window.showWoodcut = function(type){var d=eventData[type]||eventData.imperial;document.getElementById("woodcutTitle").textContent=d.title;document.getElementById("woodcutQuote").textContent=d.quote;document.getElementById("woodcutBody").textContent=d.body;var el=document.getElementById("woodcutEvent");el.classList.add("show");el.setAttribute("aria-hidden","false");};
   window.closeWoodcut = function(){var el=document.getElementById("woodcutEvent");el.classList.remove("show");el.setAttribute("aria-hidden","true");};
-  var header=document.querySelector("header");if(header){var btn=document.createElement("button");btn.className="help-btn woodcut-trigger";btn.textContent="木刻事件";btn.onclick=function(){showWoodcut("tongbin")};header.appendChild(btn)}
   if(typeof addLog==="function"){
     var oldAddLog=addLog;
     addLog=function(msg){oldAddLog(msg);if(/御命已至/.test(msg))setTimeout(function(){showWoodcut("imperial")},350);if(/童宾祭窑/.test(msg))setTimeout(function(){showWoodcut("tongbin")},350);if(/秋后问斩|满门抄斩/.test(msg))setTimeout(function(){showWoodcut("execution")},350)};
