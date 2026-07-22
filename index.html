@@ -125,6 +125,7 @@ h1{font-family:"ZCOOL XiaoWei";letter-spacing:.11em;margin:0;font-size:22px;font
 .achieve-item{display:flex;justify-content:space-between;border-bottom:1px dotted #b7a47b;padding:3px 0}
 
 .achieve-done{color:var(--gold)}.achieve-locked{color:#887a60}
+.achieve-btn{font-size:12px!important;padding:7px 12px!important;background:#812d24!important;color:#f5dfae!important;border:2px double #e1c379!important;position:relative;z-index:3}.achieve-list{position:fixed;left:50%;top:50%;transform:translate(-50%,-50%);z-index:13000;width:min(620px,92vw);max-height:76vh!important;overflow:auto;background:#dbc79a;border:3px double #39281b;box-shadow:14px 16px 0 #090503aa;padding:42px 18px 18px!important;font-size:12px!important}.achieve-list:before{content:"窑户功名卷 · 点击成就按钮收起";position:absolute;left:18px;top:14px;color:#862c23;font:900 16px "STKaiti","KaiTi",serif}.achieve-list .achieve-item{padding:8px 4px}.achieve-hidden{background:#2a2119;color:#d7c392;padding:5px}.result-layer.win .result-sheet{animation:victoryUnroll .8s cubic-bezier(.2,.8,.2,1)}.result-layer.win .result-sheet:after{content:"功成";position:absolute;right:34px;top:30px;border:5px double #8d2922;color:#8d2922;padding:9px;transform:rotate(-10deg);font:900 25px "STKaiti","KaiTi",serif;opacity:.72}@keyframes victoryUnroll{from{opacity:0;transform:scaleY(.08) translateY(-30px)}to{opacity:1;transform:none}}
 
 .guild-card{transition:transform .15s,box-shadow .15s;cursor:pointer}
 
@@ -181,14 +182,14 @@ header .manual-btn:hover,header .manual-btn:focus{background:#241a13!important;c
 .map-container:after{content:"按住地图拖动 · 先看瓶颈，再安排劳作";position:fixed;left:270px;top:79px;z-index:5;background:#211a15df;color:#e9d8aa;padding:5px 11px;font-size:10px;letter-spacing:.12em;pointer-events:none}
 .float-panels{position:fixed;inset:72px 0 0;display:block;padding:0;background:transparent;border:0;pointer-events:none;z-index:50}
 .float-card{position:absolute;display:block;pointer-events:auto;margin:0;border-radius:0;max-height:none;overflow:auto;padding:11px 12px}
-#invCard{left:10px;top:0;width:230px;max-height:calc(100vh - 88px)}#invCard h3:before{content:"壹 · ";color:var(--red)}#invCard .rows{grid-template-columns:1fr;gap:0}#invCard .rows span{padding:5px 2px;font-size:12px}#invCard .rows b{font-size:14px;color:var(--red)}#invCard .rows span:nth-child(7),#invCard .rows span:nth-child(8),#invCard .rows span:nth-child(9){color:var(--jade);font-weight:900}
+#invCard{left:10px;top:0;width:230px;max-height:calc(100vh - 88px)}#invCard h3:before{content:"壹 · ";color:var(--red)}#invCard .rows{grid-template-columns:1fr;gap:0}#invCard .rows span{padding:5px 2px;font-size:12px}#invCard .rows b{font-size:14px;color:var(--red)}#workers,#artisanRank,#merchantFavor,#imperialFavor{color:var(--jade)!important;font-weight:900}
 #orderCard{right:10px;top:0;width:300px;min-width:0!important;max-height:330px;border-width:1px!important;border-top:5px solid var(--red)!important}#orderCard h3:before{content:"贰 · ";color:var(--red)}#orderCard .orders{padding:7px;background:#c8b38166;border-left:3px solid var(--red)}#orderCard .actions{display:grid;grid-template-columns:repeat(3,1fr);gap:5px;margin-top:10px}#orderCard .action{min-height:34px;padding:5px 3px}#orderCard .achieve-btn{width:100%;margin-top:7px;padding:6px}
 #craftCard{right:10px;top:342px;width:300px;max-height:145px}#craftCard h3:before{content:"叁 · ";color:var(--red)}#merchantCard{right:10px;top:499px;width:300px;max-height:190px}#merchantCard h3:before{content:"肆 · ";color:var(--red)}
 .quick-workbench{position:fixed;left:270px;top:150px;z-index:80;width:min(650px,calc(100vw - 32px));background:#d8c59af2;border:2px solid #4a3825;box-shadow:6px 6px 0 #120c0870;padding:7px 10px;display:none;pointer-events:auto;touch-action:none}.quick-workbench.unlocked{display:block}.quick-workbench h3{margin:0 0 6px;font:700 17px "STKaiti","KaiTi",serif;color:#7b231b;display:flex;align-items:center;justify-content:space-between;cursor:move;user-select:none}.quick-actions{display:grid;grid-template-columns:repeat(5,1fr);gap:5px}.quick-actions button{background:#292016;color:#ead9ae;border:1px solid #100b07;padding:7px 3px;font-family:"STSong","SimSun",serif;cursor:pointer}.quick-actions button:hover{background:#7b231b}.quick-actions .accent{background:#724027}.quick-rank{color:#5b4931;font-size:12px;font-weight:normal;margin-left:auto;margin-right:10px}.quick-toggle{border:0;background:#7b231b;color:#ead9ae;padding:3px 8px;cursor:pointer;font:12px SimSun}.quick-workbench.folded{width:280px}.quick-workbench.folded .quick-actions,.quick-workbench.folded .quick-rank{display:none}.quick-workbench.folded h3{margin:0}
 #logCard{left:252px;right:322px;bottom:8px;height:130px;min-width:0}#logCard h3:before{content:"伍 · ";color:var(--red)}#logCard .log{max-height:82px;font-size:12px;line-height:1.65}
 .history-slip{right:333px;top:76px;width:250px;z-index:45}.float-card.collapsed{height:auto}.float-card.collapsed .card-body{display:none!important}
 @media(max-width:1050px){.map-container{margin-left:220px;margin-right:278px}.map-container:after{left:232px}.history-slip{display:none}#invCard{width:200px}#orderCard,#craftCard,#merchantCard{width:260px}#logCard{left:220px;right:278px}}
-@media(max-width:760px){header{gap:6px;padding:5px 8px}header h1{font-size:20px}.history-slip{display:none}.map-container{margin:0 0 150px;min-height:360px}.map-container:after{left:8px;top:68px}.float-panels{inset:auto 0 0;display:flex;height:145px;padding:4px 6px;background:#211a15e8;overflow-x:auto;gap:7px}.float-card,#invCard,#orderCard,#craftCard,#merchantCard,#logCard{position:relative;inset:auto;width:260px;min-width:260px;height:136px;max-height:136px;flex:0 0 260px}.float-card .card-body{max-height:96px;overflow:auto}#invCard .rows{grid-template-columns:1fr 1fr}#orderCard .actions{display:flex}.woodcut-event{grid-template-columns:1fr}.woodcut-visual{min-height:42vh}.woodcut-copy{padding:48px 24px}.woodcut-close{position:fixed}.quick-workbench{left:10px;top:145px;width:calc(100vw - 20px);padding:5px}.quick-actions{grid-template-columns:repeat(5,minmax(68px,1fr));overflow-x:auto}.quick-actions button{font-size:11px}.quick-workbench h3{font-size:14px}}
+@media(max-width:760px){body{overflow:auto}.game{min-height:100vh;padding-bottom:210px}header{position:sticky;top:0;gap:4px;padding:5px 6px;flex-wrap:wrap;z-index:100}header h1{font-size:18px}.seal{display:none}.stats{order:3;width:100%;display:grid;grid-template-columns:repeat(3,1fr)}.stat{text-align:center}.day-badge{font-size:12px}.audio-mixer{max-width:100%;overflow-x:auto}.history-slip{display:none}.map-container{margin:0;height:56vh;min-height:390px;overflow:auto;touch-action:pan-x pan-y}.map-container:after{left:8px;top:68px}.float-panels{position:relative;inset:auto;display:grid;height:auto;padding:8px;background:#211a15;overflow:visible;gap:8px}.float-card,#invCard,#orderCard,#craftCard,#merchantCard,#logCard{position:relative;inset:auto;width:100%;min-width:0;height:auto;max-height:none;padding:12px}.float-card .card-body{max-height:none;overflow:visible}#invCard .rows{grid-template-columns:1fr 1fr}#orderCard .actions{display:grid;grid-template-columns:repeat(2,1fr)}#orderCard .action,.action,.node,.quick-actions button{min-height:44px;font-size:13px}.woodcut-event{grid-template-columns:1fr;overflow:auto}.woodcut-visual{min-height:42vh}.woodcut-copy{padding:48px 24px}.woodcut-close{position:fixed}.quick-workbench,.quick-workbench.unlocked{position:fixed;left:6px!important;right:6px;top:auto!important;bottom:6px;width:auto;max-height:46vh;overflow:auto;padding:7px;touch-action:auto;z-index:1000}.quick-workbench h3{font-size:14px;cursor:default}.quick-actions{grid-template-columns:repeat(3,1fr);overflow:visible}.quick-actions button{font-size:12px}.quick-workbench.folded{width:auto}.tutorial-panel{bottom:8px;z-index:1500}.modal-box{width:94%;max-height:82vh}.result-sheet{max-height:90vh;overflow:auto}.puzzle-layer{overflow:auto}}
 </style>
 
 <style id="tutorial-theme">
@@ -331,6 +332,12 @@ body>.puzzle-layer.show{display:grid!important;visibility:visible!important;opac
 
       <div class="card-body"><div class="rows">
 
+        <span>窑班<b id="workers">2</b></span>
+        <span>身份<b id="artisanRank">窑工</b></span>
+        <span>商誉<b id="merchantFavor">0</b></span>
+        <span>皇恩<b id="imperialFavor">0</b></span>
+        <span>体力<b id="staminaDisplay">100</b></span>
+
         <span>高岭土<b id="clay">0</b></span>
 
         <span>松柴<b id="wood">0</b></span>
@@ -348,17 +355,6 @@ body>.puzzle-layer.show{display:grid!important;visibility:visible!important;opac
         <span>彩绘瓷<b id="paintedWare">0</b></span>
 
         <span>素瓷<b id="plainWare">0</b></span>
-
-        <span>体力<b id="staminaDisplay">100</b></span>
-
-        <span>窑班<b id="workers">2</b></span>
-        <span>身份<b id="artisanRank">窑工</b></span>
-
-        <span>商誉<b id="merchantFavor">0</b></span>
-
-        <span>皇恩<b id="imperialFavor">0</b></span>
-        <span>行帮<b id="guildType">未加入</b></span>
-          <span>码头<b id="boatType">小货船</b></span>
 
       </div></div>
 
@@ -396,15 +392,11 @@ body>.puzzle-layer.show{display:grid!important;visibility:visible!important;opac
 
           <button class="action" id="upgradeBtn" onclick="upgrade()">升级成：龙窑</button>
 
-          <button class="action" onclick="nextDay()">度过一日</button>
-
-          <button class="action" onclick="hireTaoist()">请道士</button>
-
-          <button class="action" onclick="fireKilnBatch(3)">批量烧×3</button>
+          <button class="action" onclick="hireTaoist()">请道士 · 30银</button>
 
           <button class="action" id="diffBtn" onclick="cycleDifficulty()">难度：中</button>
 
-          <button class="action" onclick="showMerchant()">商人</button>
+          <button class="action" onclick="showMerchant()">商人 · 买卖原料</button>
 
           <button class="action" id="guildBtn" onclick="showGuildSelect()">行帮：未加入</button>
 
@@ -454,7 +446,7 @@ body>.puzzle-layer.show{display:grid!important;visibility:visible!important;opac
 
     <!-- 商人看板 -->
 
-    <div class="float-card collapsed" id="merchantCard">
+    <div class="float-card" id="merchantCard">
 
       <h3 onclick="toggleCard('merchantCard')">商人 <span class="toggle">▶</span></h3>
 
@@ -486,7 +478,7 @@ body>.puzzle-layer.show{display:grid!important;visibility:visible!important;opac
     <h3 id="quickDragHandle"><span>匠作总台 · 工序牌</span><span class="quick-rank" id="quickRank">窑工掌作</span><button class="quick-toggle" type="button" onclick="toggleQuickWorkbench(event)">收起</button></h3>
     <div class="quick-actions">
       <button onclick="gather('clay')">采土</button><button onclick="gather('wood')">备柴</button><button onclick="gather('glaze')">取釉</button><button onclick="gather('pigment')">取彩</button><button onclick="produce()">练泥制坯</button>
-      <button class="accent" onclick="decorate()">彩绘装饰</button><button class="accent" onclick="fireKiln()">单件烧制</button><button class="accent" onclick="fireKilnBatch(3)">批量烧×3</button><button class="accent" onclick="deliver()">码头交付</button><button class="accent" id="dispatchBtn" onclick="runDailyDispatch()" style="display:none">一日排产</button>
+      <button class="accent" onclick="decorate()">彩绘装饰</button><button class="accent" onclick="fireKiln()">单件烧制</button><button class="accent" onclick="fireKilnBatch(3)">批量烧×3</button><button class="accent" onclick="deliver()">码头交付</button><button class="accent" onclick="nextDay()">度过一日</button><button class="accent" id="dispatchBtn" onclick="runDailyDispatch()" style="display:none">一日排产</button>
     </div>
   </aside>
 </main>
@@ -600,7 +592,7 @@ body>.puzzle-layer.show{display:grid!important;visibility:visible!important;opac
 
     <div style="font-size:15px;font-weight:700;color:#8b6914">徽帮 · 白土行</div>
 
-    <div style="font-size:12px;color:#5a4a2a">原料商 · 每次采集所得+20%（向上取整）</div>
+    <div style="font-size:12px;color:#5a4a2a">原料商 · 每次采集所得+20%（向上取整）</div><b class="guild-price">首次免费</b>
 
   </div>
 
@@ -608,7 +600,7 @@ body>.puzzle-layer.show{display:grid!important;visibility:visible!important;opac
 
     <div style="font-size:15px;font-weight:700;color:#1a3f56">都帮 · 窑柴行</div>
 
-    <div style="font-size:12px;color:#3d5a6a">窑工 · 烧窑成功率+10%</div>
+    <div style="font-size:12px;color:#3d5a6a">窑工 · 烧窑成功率+10%</div><b class="guild-price">首次免费</b>
 
   </div>
 
@@ -616,7 +608,7 @@ body>.puzzle-layer.show{display:grid!important;visibility:visible!important;opac
 
     <div style="font-size:15px;font-weight:700;color:#3a5a2a">杂帮 · 琢器行</div>
 
-    <div style="font-size:12px;color:#4a6a3a">创新者 · 彩绘成瓷品质额外+3</div>
+    <div style="font-size:12px;color:#4a6a3a">创新者 · 彩绘成瓷品质额外+3</div><b class="guild-price">首次免费</b>
 
   </div>
 
@@ -703,11 +695,11 @@ const CONFIG = {
 
   DIFFICULTY:[
 
-    { name:"简单", taxRate:0.10, winOrders:5, staminaRestore:80, maxStamina:200, hireCost:25, upgradeMul:1.0, desc:"轻松起步" },
+    { name:"简单", taxRate:0.12, winOrders:8, staminaRestore:70, maxStamina:190, hireCost:25, upgradeMul:1.0, eventChance:.35, badEventWeight:.45, firePenalty:0, desc:"游客体验 · 8单" },
 
-    { name:"普通", taxRate:0.20, winOrders:8, staminaRestore:45, maxStamina:150, hireCost:35, upgradeMul:1.5, desc:"中等挑战" },
+    { name:"普通", taxRate:0.22, winOrders:12, staminaRestore:42, maxStamina:145, hireCost:35, upgradeMul:1.6, eventChance:.48, badEventWeight:.60, firePenalty:.03, desc:"经营压力 · 12单" },
 
-    { name:"困难", taxRate:0.30, winOrders:12,staminaRestore:30, maxStamina:110, hireCost:50, upgradeMul:2.5, desc:"残酷生存" }
+    { name:"困难", taxRate:0.34, winOrders:16,staminaRestore:26, maxStamina:105, hireCost:55, upgradeMul:2.8, eventChance:.65, badEventWeight:.76, firePenalty:.08, desc:"御窑生存 · 16单" }
 
   ],
 
@@ -737,6 +729,10 @@ const CONFIG = {
 
     { id:"typhoon",     name:"飓风过境",       desc:"台风摧毁码头，部分存货被毁。",                     good:false, effect: g=>{g.ware=Math.max(0,g.ware-2)} },
     { id:"spy",         name:"间谍渗透",       desc:"对手安插间谍，烧窑效率骤降！下次烧窑成功率-20%。",   good:false, effect: g=>{g._fireRateBonus-=0.20} }
+    ,{ id:"clay_impurity",name:"瓷土夹砂",desc:"新到白土夹着细砂，只得淘洗重练。损失瓷土与体力。",good:false,effect:g=>{g.clay=Math.max(0,g.clay-4);g.stamina=Math.max(0,g.stamina-12)} }
+    ,{ id:"official_sample",name:"官差抽样",desc:"官差临时抽走一件成瓷验看，拒绝不得。",good:false,effect:g=>{g.ware=Math.max(0,g.ware-1);g.imperialFavor=Math.max(-100,g.imperialFavor-2)} }
+    ,{ id:"kiln_crack",name:"窑墙暗裂",desc:"窑墙出现暗裂，抢修耗去35银。",good:false,effect:g=>{g.silver=Math.max(0,g.silver-35)} }
+    ,{ id:"old_master",name:"老匠指火",desc:"过路老匠看出火路偏斜，指点下一窑。",good:true,effect:g=>{g._fireRateBonus+=.08;g.quality+=2} }
 
   ],
 
@@ -756,7 +752,10 @@ const CONFIG = {
 
     { id:"quality50",    name:"精益求精",     desc:"单件品质累计达50",check:g=>g.quality>=50,       reward:45 },
 
-    { id:"win_game",     name:"器成天下走",   desc:"通关任意难度",    check:g=>g.hasWon,            reward:80 }
+    { id:"win_game",     name:"器成天下走",   desc:"通关任意难度",    check:g=>g.hasWon,            reward:80 },
+    { id:"hard_win", name:"烈火真金", desc:"困难难度完成16笔订单", check:g=>g.hasWon&&g.difficulty===2, reward:160 },
+    { id:"no_conscript_win", name:"不役一人", desc:"未使用强征完成一局", check:g=>g.hasWon&&(g.conscriptCount||0)===0, reward:100 },
+    { id:"imperial_secret", name:"御前留名 · 隐藏", desc:"皇恩达到100，获敕授御瓷名匠结局", check:g=>(g.imperialFavor||0)>=100&&g._haremTriggered, reward:200 }
 
   ],
 
@@ -911,6 +910,7 @@ class GameState {
     r += Number(this._fireRateBonus) || 0;
     r += getModifierValue("fireRate", 0);
     if (this.guild === "du") r += CONFIG.GUILDS.du.fireBonus;
+    r -= Number(this.diffConfig.firePenalty) || 0;
 
     return Math.max(0.05, Math.min(r, CONFIG.FIRE.maxRate));
 
@@ -1072,7 +1072,7 @@ function renderAchievements() {
 
     const done = G.achievements.includes(a.id);
 
-    html += "<div class=\"achieve-item " + (done ? "achieve-done" : "achieve-locked") + "\">";
+    html += "<div class=\"achieve-item " + (done ? "achieve-done" : "achieve-locked") + (a.id.indexOf("secret")>=0 ? " achieve-hidden" : "") + "\">";
 
     html += "<span>" + (done ? "◆ " : "◇ ") + a.name + " — " + a.desc + "</span>";
 
@@ -1507,7 +1507,7 @@ function render() {
   var guild = G.guildInfo;
   if ($$.guildType) $$.guildType.textContent = guild ? guild.short : "未加入";
   if ($$.guildBtn) {
-    $$.guildBtn.textContent = guild ? "行帮：" + guild.short : "行帮：未加入";
+    $$.guildBtn.textContent = guild ? "换帮 · 40银（现" + guild.short + "）" : "加入行帮 · 首次免费";
     $$.guildBtn.title = guild ? guild.desc : "选择一个行帮获得长期加成";
   }
 
@@ -2024,6 +2024,7 @@ function deliver() {
   if (G.imperialFavor >= 100 && !G._haremTriggered) {
 
     G._haremTriggered = true;
+    checkAchievements();
 
     addLog("御前验瓷后降旨，敕授当代窑工为「御瓷名匠」，王家手艺录入官册。");
 
@@ -2305,7 +2306,8 @@ function maybeTriggerMechanicEvent() {
   if (G.orders < 8 || G.pendingMechanicEvent) return false;
   var due=MECHANIC_EVENTS.filter(function(evt){if(!evt.chain)return false;var s=G.eventChain[evt.chain];return s&&Number(s.due)<=G.day});
   var pool=due.length?due:eligibleMechanicEvents();
-  if (!pool.length || (!due.length && Math.random()>=.38)) return false;
+  var chance = G.difficulty === 2 ? .72 : (G.difficulty === 1 ? .56 : .42);
+  if (!pool.length || (!due.length && Math.random()>=chance)) return false;
   showMechanicEvent(pool[Math.floor(Math.random()*pool.length)]);return true;
 }
 
@@ -2364,11 +2366,13 @@ function triggerVictory() {
   if (G.hasWon) return;
   G.hasWon = true;
   G.wonAtDay = G.day;
-  addLog("🎉 通关！耗时 " + G.day + " 天，掌柜名扬天下！");
+  var targetDays = G.difficulty === 2 ? 58 : (G.difficulty === 1 ? 48 : 38);
+  var grade = G.day <= targetDays && G.imperialFavor >= 50 ? "天工卷" : (G.conscriptCount === 0 ? "仁匠卷" : "传世卷");
+  addLog("🎉 通关！耗时 " + G.day + " 天，结局评定：" + grade + "。");
   showToast("🎉 器成天下走！通关达成！", true);
   checkAchievements();
   G.save(); render();
-  showGameResult("win", "器成天下走", "一窑成器，百工留痕。王家瓷器经昌江走向天下，而匠人的名字终于被记入这卷家谱。");
+  showGameResult("win", grade + " · 器成天下走", "你在" + CONFIG.DIFFICULTY[G.difficulty].name + "难度下完成" + G.orders + "笔订单，用了" + G.day + "日。窑火、官命与人心共同写下这个结局；继续经营仍可追寻皇恩满百的隐藏功成卷。");
 }
 
 function triggerDefeat(title, copy, cause) {
@@ -2568,9 +2572,11 @@ function nextDay() {
     } else if (!mechanicTriggered && dayEventRoll < .40) {
       showDayEvent("history", DAY_HISTORY_STORIES[Math.floor(Math.random() * DAY_HISTORY_STORIES.length)]);
     }
-  } else if (Math.random() < 0.25) {
+  } else if (Math.random() < G.diffConfig.eventChance) {
 
-    const evt = CONFIG.EVENTS[Math.floor(Math.random() * CONFIG.EVENTS.length)];
+    var badEvents = CONFIG.EVENTS.filter(function(e){return !e.good}), goodEvents = CONFIG.EVENTS.filter(function(e){return e.good});
+    var eventPool = Math.random() < G.diffConfig.badEventWeight ? badEvents : goodEvents;
+    const evt = eventPool[Math.floor(Math.random() * eventPool.length)];
 
     evt.effect(G);
 
@@ -2604,6 +2610,7 @@ function nextDay() {
 
 
 function cycleDifficulty() {
+  if (G.orders > 0 || G.totalFires > 0) return showToast("开窑后难度已落印；如需更改请重开新卷。", false);
 
   G.difficulty = (G.difficulty + 1) % CONFIG.DIFFICULTY.length;
 
@@ -2826,6 +2833,7 @@ function showGuildSelect() {
   document.getElementById("guildCurrent").textContent = info
     ? "当前：" + info.name + "（" + info.desc + "）。改换行帮需40银。"
     : "当前尚未入帮。首次加入免费；改换行帮需缴40银整顿人脉。";
+  Array.from(document.querySelectorAll(".guild-price")).forEach(function(el){el.textContent = G.guild ? "改换需40银" : "首次加入免费";el.style.color="#852b22";el.style.fontSize="11px"});
   document.getElementById("guildOverlay").style.display = "block";
   document.getElementById("guildBox").style.display = "block";
 }
@@ -2844,7 +2852,7 @@ function selectGuild(id) {
   }
   var switching = !!G.guild;
   if (switching && G.silver < 40) return showToast("改换行帮需40银。", false);
-  if (switching) G.silver -= 40;
+  if (switching) { G.silver = Number(G.silver) - 40; addLog("改换行帮，缴纳整顿人脉费用40银。"); }
   G.guild = id;
   addLog((switching ? "重整人脉，改投" : "立下行规，加入") + next.name + "：" + next.desc + "。");
   showToast("已加入" + next.short + "：" + next.desc, true);
@@ -3013,6 +3021,7 @@ if (G.pendingMechanicEvent) {
     document.addEventListener("mouseup", function() { d=false; });
     // Touch support
     c.addEventListener("touchstart", function(e) {
+      if (window.matchMedia && window.matchMedia("(pointer:coarse)").matches) return;
       if (e.target.closest("button")) return;
       d=true; sx=e.touches[0].pageX-c.offsetLeft; sy=e.touches[0].pageY-c.offsetTop; sl=c.scrollLeft; st=c.scrollTop;
     }, {passive:false});
@@ -3168,7 +3177,7 @@ if (G.pendingMechanicEvent) {
   window.openPuzzle=function(){var layer=document.getElementById("puzzleLayer");if(!layer)return;if(layer.parentElement!==document.body)document.body.appendChild(layer);shufflePuzzle();layer.classList.add("show");layer.style.display="grid";layer.style.zIndex="9999";layer.setAttribute("aria-hidden","false")};
   window.closePuzzle=function(){var layer=document.getElementById("puzzleLayer");if(!layer)return;layer.classList.remove("show");layer.style.display="none";layer.setAttribute("aria-hidden","true")};
   var trigger=document.getElementById("puzzleTrigger");if(trigger)trigger.addEventListener("click",function(e){e.preventDefault();window.openPuzzle()});
-  var map=document.getElementById("mapContainer");if(map){map.style.touchAction="none";map.title="按住空白处拖动长卷地图"}
+  var map=document.getElementById("mapContainer");if(map){map.style.touchAction="pan-x pan-y";map.title="按住空白处拖动长卷地图"}
   build();
 })();
 </script>
