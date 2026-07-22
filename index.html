@@ -113,7 +113,7 @@ h1{font-family:"ZCOOL XiaoWei";letter-spacing:.11em;margin:0;font-size:22px;font
 /* Help/Feedback/Achievement buttons */
 
 .help-btn{background:#4a5a3a;color:#f9efd2;border:0;padding:5px 8px;font-family:inherit;font-size:11px;cursor:pointer}.help-btn:hover{background:#a74632}
-.audio-btn[aria-pressed="true"]{background:#2f6255!important;color:#fff5d6!important;border-color:#d2b564!important}.audio-btn .audio-wave{display:inline-block;min-width:1.2em}
+.audio-btn[aria-pressed="true"]{background:#2f6255!important;color:#fff5d6!important;border-color:#d2b564!important}.audio-btn .audio-wave{display:inline-block;min-width:1.2em}.audio-mixer{display:flex;align-items:center;gap:5px;padding:3px 7px;border:1px solid #59442e;background:#cfbb8d;color:#302318;font-size:10px;white-space:nowrap}.audio-mixer label{display:flex;align-items:center;gap:3px}.audio-mixer input[type="range"]{width:58px;height:4px;accent-color:#7f2c24;cursor:pointer}.audio-mixer output{min-width:22px;text-align:right;color:#7f2c24;font-weight:900}.audio-mixer select{max-width:96px;border:1px solid #624b31;background:#e1ce9d;color:#312317;font:10px "STSong","SimSun",serif;padding:2px;cursor:pointer}@media(max-width:850px){.audio-mixer input[type="range"]{width:42px}.audio-mixer output{display:none}.audio-mixer select{max-width:72px}}
 .craft-overview{display:grid;gap:7px}.craft-path{display:grid;grid-template-columns:repeat(7,minmax(62px,1fr));gap:3px;position:relative;padding-top:5px}.craft-path:before{content:"";position:absolute;left:5%;right:5%;top:27px;border-top:1px solid #5d472f;z-index:0}.craft-rank{position:relative;z-index:1;min-height:50px;padding:5px 2px;border:1px solid #5d472f;background:#cdb986;color:#4f412e;font:700 10px/1.25 "STSong","SimSun",serif;cursor:pointer}.craft-rank i{display:block;width:18px;height:18px;margin:0 auto 3px;border:1px solid #59452f;border-radius:50%;background:#d8c79d;font-style:normal;line-height:18px}.craft-rank.mastered{background:#a8af8d;color:#232b22}.craft-rank.current{background:#ead49b;color:#7c241d;border:2px solid #7c241d;box-shadow:2px 2px 0 #4e2e21}.craft-rank.current i{background:#872d24;color:#f3deb0;border-color:#872d24}.craft-rank.locked{filter:grayscale(.8);opacity:.62}.craft-detail{padding:9px;border:1px solid #665038;background:#e2cf9e99;box-shadow:inset 0 0 18px #5a402416}.craft-detail-head{display:flex;justify-content:space-between;gap:8px;align-items:center;border-bottom:1px dotted #725938;padding-bottom:5px;margin-bottom:6px}.craft-detail h4{margin:0;color:#7f2c24;font:900 16px "STKaiti","KaiTi",serif}.craft-detail small{color:#66543c}.craft-tech-grid{display:grid;grid-template-columns:1fr 1fr;gap:4px 8px;font-size:10px;line-height:1.45}.craft-tech-grid b{color:#334d42}.craft-effect{margin-top:7px;padding:5px 7px;background:#273f36;color:#efddb2;font-size:10px}.craft-progress{height:5px;background:#5b49352e;margin-top:6px}.craft-progress i{display:block;height:100%;background:#8a3026;transition:width .35s}.craft-future{font-size:9px;color:#725f44;margin-top:6px}@media(max-width:650px){.craft-path{grid-template-columns:repeat(4,1fr)}.craft-path:before{display:none}.craft-tech-grid{grid-template-columns:1fr}}
 
 .save-indicator{font-size:10px;color:#7a9a6a;margin-left:6px;opacity:.8}
@@ -260,7 +260,8 @@ body>.puzzle-layer.show{display:grid!important;visibility:visible!important;opac
 
     <button class="help-btn puzzle-trigger" id="puzzleTrigger" type="button">拼瓷片</button>
 
-    <button class="help-btn audio-btn" id="audioBtn" type="button" aria-pressed="false" onclick="toggleAudio()"><span class="audio-wave">♩</span> 声音：关</button>
+    <button class="help-btn audio-btn tutorial-control" id="audioBtn" type="button" aria-pressed="false" onclick="toggleAudio()"><span class="audio-wave">♩</span> 声音：关</button>
+    <div class="audio-mixer" aria-label="音乐与音量调节"><label title="选择生成式纯音乐">曲<select id="audioTrack"><option value="kiln_night">窑夜听风</option><option value="blue_river">青花水路</option><option value="ember">松柴微火</option><option value="scroll">匠心长卷</option></select></label><label title="背景音乐音量">乐<input id="bgmVolume" type="range" min="0" max="100" value="72"><output id="bgmVolumeOut">72</output></label><label title="按钮与场景音效音量">效<input id="sfxVolume" type="range" min="0" max="100" value="88"><output id="sfxVolumeOut">88</output></label></div>
 
     <span class="save-indicator" id="saveIndicator">已存档</span>
 
@@ -3048,35 +3049,46 @@ if (G.pendingMechanicEvent) {
 </section>
 <script>
 (function(){
-  var ctx=null, master=null, bgmGain=null, bgmTimer=0, bgmStep=0, enabled=false;
-  var pentatonic=[146.83,174.61,196.00,220.00,261.63,220.00,196.00,174.61];
+  var ctx=null, master=null, bgmGain=null, sfxGain=null, bgmTimer=0, bgmStep=0, enabled=false;
+  var audioTracks={
+    kiln_night:{interval:4300,notes:[146.83,220,196,174.61,146.83,164.81,196,220,261.63,220,196,164.81],wave:"sine",bass:73.42,label:"窑夜听风"},
+    blue_river:{interval:3300,notes:[196,220,261.63,293.66,261.63,220,196,164.81,196,261.63,220,174.61],wave:"triangle",bass:98,label:"青花水路"},
+    ember:{interval:3800,notes:[130.81,146.83,174.61,196,174.61,146.83,130.81,164.81,196,174.61],wave:"sine",bass:65.41,label:"松柴微火"},
+    scroll:{interval:3000,notes:[174.61,196,220,261.63,293.66,261.63,220,196,220,174.61,146.83,174.61],wave:"triangle",bass:87.31,label:"匠心长卷"}
+  };
+  var audioTrack="kiln_night";
+  var audioLevels={bgm:.72,sfx:.88};
+  try{var storedLevels=JSON.parse(localStorage.getItem("qicheng_audio_levels")||"null");if(storedLevels&&Number.isFinite(Number(storedLevels.bgm)))audioLevels.bgm=Math.max(0,Math.min(1,Number(storedLevels.bgm)));if(storedLevels&&Number.isFinite(Number(storedLevels.sfx)))audioLevels.sfx=Math.max(0,Math.min(1,Number(storedLevels.sfx)))}catch(e){}
+  try{var storedTrack=localStorage.getItem("qicheng_audio_track");if(audioTracks[storedTrack])audioTrack=storedTrack}catch(e){}
   function ensure(){
     if(ctx)return true;
     var AC=window.AudioContext||window.webkitAudioContext;
     if(!AC)return false;
-    ctx=new AC();master=ctx.createGain();master.gain.value=.9;master.connect(ctx.destination);
-    bgmGain=ctx.createGain();bgmGain.gain.value=.42;bgmGain.connect(master);return true;
+    ctx=new AC();master=ctx.createGain();master.gain.value=.96;master.connect(ctx.destination);
+    bgmGain=ctx.createGain();bgmGain.gain.value=audioLevels.bgm;bgmGain.connect(master);
+    sfxGain=ctx.createGain();sfxGain.gain.value=audioLevels.sfx;sfxGain.connect(master);return true;
   }
   function voice(freq,duration,type,volume,delay,destination){
     if(!enabled||!ensure())return;
     var now=ctx.currentTime+(delay||0),osc=ctx.createOscillator(),gain=ctx.createGain();
     osc.type=type||"sine";osc.frequency.setValueAtTime(freq,now);
     gain.gain.setValueAtTime(.0001,now);gain.gain.exponentialRampToValueAtTime(Math.max(.0002,volume||.035),now+.035);gain.gain.exponentialRampToValueAtTime(.0001,now+duration);
-    osc.connect(gain);gain.connect(destination||master);osc.start(now);osc.stop(now+duration+.04);
+    osc.connect(gain);gain.connect(destination||sfxGain||master);osc.start(now);osc.stop(now+duration+.04);
   }
   function noise(duration,volume,frequency){
     if(!enabled||!ensure())return;
     var length=Math.max(1,Math.floor(ctx.sampleRate*duration)),buffer=ctx.createBuffer(1,length,ctx.sampleRate),data=buffer.getChannelData(0);
     for(var i=0;i<length;i++)data[i]=(Math.random()*2-1)*(1-i/length);
-    var source=ctx.createBufferSource(),filter=ctx.createBiquadFilter(),gain=ctx.createGain();source.buffer=buffer;filter.type="lowpass";filter.frequency.value=frequency||900;gain.gain.value=volume||.025;source.connect(filter);filter.connect(gain);gain.connect(master);source.start();
+    var source=ctx.createBufferSource(),filter=ctx.createBiquadFilter(),gain=ctx.createGain();source.buffer=buffer;filter.type="lowpass";filter.frequency.value=frequency||900;gain.gain.value=volume||.025;source.connect(filter);filter.connect(gain);gain.connect(sfxGain||master);source.start();
   }
   function bgmPulse(){
     if(!enabled||document.hidden)return;
-    var note=pentatonic[bgmStep++%pentatonic.length];
-    voice(note,2.7,"sine",.11,0,bgmGain);voice(note*2,1.8,"triangle",.04,.18,bgmGain);
-    if(bgmStep%4===1)voice(73.42,4.2,"sine",.055,0,bgmGain);
+    var track=audioTracks[audioTrack],note=track.notes[bgmStep++%track.notes.length];
+    voice(note,4.6,track.wave,.14,0,bgmGain);voice(note*2,2.8,"sine",.055,.24,bgmGain);
+    if(bgmStep%3===1){voice(note*3,1.6,"sine",.025,.7,bgmGain);voice(note*4.02,1.25,"sine",.014,.72,bgmGain)}
+    if(bgmStep%4===1)voice(track.bass,6.8,"sine",.075,0,bgmGain);
   }
-  function startBgm(){clearInterval(bgmTimer);bgmPulse();bgmTimer=setInterval(bgmPulse,2850)}
+  function startBgm(){clearInterval(bgmTimer);bgmStep=0;bgmPulse();bgmTimer=setInterval(bgmPulse,audioTracks[audioTrack].interval)}
   function stopBgm(){clearInterval(bgmTimer);bgmTimer=0}
   window.playSfx=function(name){
     if(!enabled)return;
@@ -3101,6 +3113,24 @@ if (G.pendingMechanicEvent) {
     var b=document.getElementById("audioBtn");if(b){b.setAttribute("aria-pressed",String(enabled));b.innerHTML='<span class="audio-wave">'+(enabled?'♫':'♩')+'</span> 声音：'+(enabled?'开':'关')}
     if(typeof showToast==="function")showToast(enabled?"窑场环境声已开启":"声音已关闭");
   };
+  window.setAudioVolume=function(kind,value){
+    var normalized=Math.max(0,Math.min(1,Number(value)/100));audioLevels[kind]=normalized;
+    if(kind==="bgm"&&bgmGain)bgmGain.gain.setTargetAtTime(normalized,ctx.currentTime,.04);
+    if(kind==="sfx"&&sfxGain)sfxGain.gain.setTargetAtTime(normalized,ctx.currentTime,.04);
+    var out=document.getElementById(kind+"VolumeOut");if(out)out.value=Math.round(normalized*100);
+    try{localStorage.setItem("qicheng_audio_levels",JSON.stringify(audioLevels))}catch(e){}
+  };
+  window.setAudioTrack=function(id){
+    if(!audioTracks[id])return;audioTrack=id;bgmStep=0;
+    try{localStorage.setItem("qicheng_audio_track",id)}catch(e){}
+    if(enabled)startBgm();
+    if(typeof showToast==="function")showToast("曲目已切换：《"+audioTracks[id].label+"》");
+  };
+  function bindMixer(){
+    ["bgm","sfx"].forEach(function(kind){var input=document.getElementById(kind+"Volume"),out=document.getElementById(kind+"VolumeOut");if(!input)return;input.value=Math.round(audioLevels[kind]*100);if(out)out.value=input.value;input.addEventListener("input",function(){setAudioVolume(kind,input.value)});input.addEventListener("change",function(){if(kind==="sfx")playSfx("success")})});
+    var trackSelect=document.getElementById("audioTrack");if(trackSelect){trackSelect.value=audioTrack;trackSelect.addEventListener("change",function(){setAudioTrack(trackSelect.value)})}
+  }
+  if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",bindMixer);else bindMixer();
   document.addEventListener("click",function(e){var b=e.target.closest&&e.target.closest("button");if(b&&b.id!=="audioBtn")playSfx("click")},true);
   document.addEventListener("visibilitychange",function(){if(!ctx||!enabled)return;if(document.hidden){stopBgm();ctx.suspend()}else{ctx.resume();startBgm()}});
 })();
