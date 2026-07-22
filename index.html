@@ -114,6 +114,7 @@ h1{font-family:"ZCOOL XiaoWei";letter-spacing:.11em;margin:0;font-size:22px;font
 
 .help-btn{background:#4a5a3a;color:#f9efd2;border:0;padding:5px 8px;font-family:inherit;font-size:11px;cursor:pointer}.help-btn:hover{background:#a74632}
 .audio-btn[aria-pressed="true"]{background:#2f6255!important;color:#fff5d6!important;border-color:#d2b564!important}.audio-btn .audio-wave{display:inline-block;min-width:1.2em}
+.craft-overview{display:grid;gap:7px}.craft-path{display:grid;grid-template-columns:repeat(7,minmax(62px,1fr));gap:3px;position:relative;padding-top:5px}.craft-path:before{content:"";position:absolute;left:5%;right:5%;top:27px;border-top:1px solid #5d472f;z-index:0}.craft-rank{position:relative;z-index:1;min-height:50px;padding:5px 2px;border:1px solid #5d472f;background:#cdb986;color:#4f412e;font:700 10px/1.25 "STSong","SimSun",serif;cursor:pointer}.craft-rank i{display:block;width:18px;height:18px;margin:0 auto 3px;border:1px solid #59452f;border-radius:50%;background:#d8c79d;font-style:normal;line-height:18px}.craft-rank.mastered{background:#a8af8d;color:#232b22}.craft-rank.current{background:#ead49b;color:#7c241d;border:2px solid #7c241d;box-shadow:2px 2px 0 #4e2e21}.craft-rank.current i{background:#872d24;color:#f3deb0;border-color:#872d24}.craft-rank.locked{filter:grayscale(.8);opacity:.62}.craft-detail{padding:9px;border:1px solid #665038;background:#e2cf9e99;box-shadow:inset 0 0 18px #5a402416}.craft-detail-head{display:flex;justify-content:space-between;gap:8px;align-items:center;border-bottom:1px dotted #725938;padding-bottom:5px;margin-bottom:6px}.craft-detail h4{margin:0;color:#7f2c24;font:900 16px "STKaiti","KaiTi",serif}.craft-detail small{color:#66543c}.craft-tech-grid{display:grid;grid-template-columns:1fr 1fr;gap:4px 8px;font-size:10px;line-height:1.45}.craft-tech-grid b{color:#334d42}.craft-effect{margin-top:7px;padding:5px 7px;background:#273f36;color:#efddb2;font-size:10px}.craft-progress{height:5px;background:#5b49352e;margin-top:6px}.craft-progress i{display:block;height:100%;background:#8a3026;transition:width .35s}.craft-future{font-size:9px;color:#725f44;margin-top:6px}@media(max-width:650px){.craft-path{grid-template-columns:repeat(4,1fr)}.craft-path:before{display:none}.craft-tech-grid{grid-template-columns:1fr}}
 
 .save-indicator{font-size:10px;color:#7a9a6a;margin-left:6px;opacity:.8}
 
@@ -430,20 +431,10 @@ body>.puzzle-layer.show{display:grid!important;visibility:visible!important;opac
 
       <div class="card-body">
 
-        <div style="font-size:11px;color:var(--muted);margin-bottom:6px">市面主流工艺：<b id="marketLevel">新手(白色)</b></div>
-
-        <div style="font-size:12px;line-height:1.8">
-
-          <div id="craftCompare"></div>
-
-          <div style="margin-top:4px;font-size:11px;color:var(--muted);line-height:1.6">
-
-            ⬜白色 → 🟩绿色 → 🟦蓝色 → 🟪紫色 → 🟨黄色 → 🟥红色 → 🌈彩色<br>
-
-            高于市面：升值+3%/级 · 低于：贬值-2%/级
-
-          </div>
-
+        <div class="craft-overview">
+          <div style="font-size:11px;color:var(--muted)">市面主流：<b id="marketLevel">泥火初识</b>　<span id="craftCompare"></span></div>
+          <div class="craft-path" id="craftPath" aria-label="七级工艺窑谱"></div>
+          <div class="craft-detail" id="craftDetail"></div>
         </div>
 
       </div>
@@ -696,10 +687,13 @@ const CONFIG = {
   },
 
   CRAFT_LEVELS:[
-    {name:"新手", color:"白", fires:0}, {name:"熟手", color:"绿", fires:3},
-    {name:"巧匠", color:"蓝", fires:8}, {name:"名匠", color:"紫", fires:15},
-    {name:"大师", color:"金", fires:25}, {name:"宗师", color:"红", fires:40},
-    {name:"天工", color:"彩", fires:60}
+    {name:"泥火初识",short:"泥火",color:"白",fires:0,era:"基础手作",formula:"瓷石单一配方、草木灰釉",forming:"泥条盘筑、初级轮制",glazing:"刷釉、浸釉",firing:"平地堆烧、竖穴窑；辨识火色",decor:"刻花、划花、印花",ware:"灰陶碗、印纹陶瓶",effect:"掌握完整基础工序"},
+    {name:"二元配方",short:"二元",color:"绿",fires:3,era:"胎骨革新",formula:"瓷石＋高岭土二元配方",forming:"轮制拉坯、利坯修胎",glazing:"浸釉、荡釉",firing:"横穴窑、龙窑；初识还原焰",decor:"剔花、印坯、颜色釉",ware:"青白瓷执壶、影青刻花盘",effect:"采集各种原料额外＋1"},
+    {name:"青花料法",short:"青花",color:"蓝",fires:8,era:"釉下呈色",formula:"苏麻离青、平等青等钴料淘炼",forming:"印坯成型、镶器拼接",glazing:"罩透明釉、浇釉",firing:"龙窑、馒头窑；还原焰控制",decor:"青花釉下彩、镂雕",ware:"青花缠枝纹碗",effect:"控焰成熟，烧成成功率＋2%"},
+    {name:"釉里丹青",short:"釉里",color:"紫",fires:15,era:"高温绘色",formula:"釉果、釉灰精配；铜红料",forming:"复杂镶器、雕塑捏雕",glazing:"荡釉、浇釉、局部刷釉",firing:"馒头窑、葫芦窑；气氛分段控制",decor:"釉里红、青花釉里红",ware:"釉里红缠枝纹瓶",effect:"胎釉配合稳定，成瓷基础品质＋1"},
+    {name:"五彩合炉",short:"五彩",color:"金",fires:25,era:"釉上釉下合绘",formula:"矾红、绿彩、黄彩等釉上彩料",forming:"薄胎利坯、成套印坯",glazing:"吹釉、分区施釉",firing:"葫芦窑；高温后低温复烧",decor:"五彩、斗彩、颜色釉",ware:"成化斗彩鸡缸杯",effect:"彩绘成瓷额外品质＋2"},
+    {name:"御窑集成",short:"御窑",color:"红",fires:40,era:"官窑标准化",formula:"回青、珠明料分级与配比",forming:"大型镶器、同模成套",glazing:"吹釉、浸釉厚薄控制",firing:"蛋形镇窑；窑位与温度曲线控制",decor:"复合青花、五彩、单色釉",ware:"宣德青花大罐、霁红高足杯",effect:"装窑与火路优化，每窑少耗1捆柴"},
+    {name:"天工大成",short:"天工",color:"彩",fires:60,era:"诸艺融会",formula:"胎、釉、彩料依器定方",forming:"轮、印、镶、雕综合成型",glazing:"浸、荡、吹、浇、刷因器施用",firing:"镇窑精准控焰、分段升降温",decor:"青花、釉里红、斗彩、粉彩、珐琅彩融会",ware:"御窑名品与传世孤品",effect:"名器入册，所有订单结算额外＋10%"}
   ],
 
   STAMINA:   { max:200, gatherCost:5, dayRestore:30, lowThreshold:20 },
@@ -891,13 +885,13 @@ class GameState {
 
   get imperialExpired() { return this.imperial && this.imperialRemaining <= 0; }
 
-  get fireWoodCost() { return CONFIG.FIRE.woodBase + this.seasonInfo.woodExtra + getModifierValue("woodExtra", 0); }
+  get fireWoodCost() { return Math.max(1, CONFIG.FIRE.woodBase + this.seasonInfo.woodExtra + getModifierValue("woodExtra", 0) - ((this.craftLevel || 0) >= 5 ? 1 : 0)); }
 
   get diffConfig() { return CONFIG.DIFFICULTY[this.difficulty]; }
 
   get fireSuccessRate() {
 
-    let r = CONFIG.FIRE.baseRate + this.kiln * CONFIG.FIRE.kilnRateBonus + this.workers * CONFIG.FIRE.workerRateBonus;
+    let r = CONFIG.FIRE.baseRate + this.kiln * CONFIG.FIRE.kilnRateBonus + this.workers * CONFIG.FIRE.workerRateBonus + ((this.craftLevel || 0) >= 2 ? 0.02 : 0);
 
     // Seasonal effects
 
@@ -1220,6 +1214,33 @@ function sellResource(id, price) {
 
 // ======================== 渲染 ========================
 
+var craftPreviewLevel = null;
+function showCraftLevel(index) {
+  craftPreviewLevel = Math.max(0, Math.min(CONFIG.CRAFT_LEVELS.length - 1, Number(index) || 0));
+  renderCraftTree(Math.max(0, Math.min(CONFIG.CRAFT_LEVELS.length - 1, Number(G.craftLevel) || 0)));
+  playSfx("click");
+}
+function renderCraftTree(currentLevel) {
+  var path = document.getElementById("craftPath"), detail = document.getElementById("craftDetail");
+  if (!path || !detail) return;
+  if (craftPreviewLevel === null) craftPreviewLevel = currentLevel;
+  path.innerHTML = CONFIG.CRAFT_LEVELS.map(function(level, index){
+    var state = index < currentLevel ? "mastered" : (index === currentLevel ? "current" : "locked");
+    var mark = index < currentLevel ? "✓" : (index === currentLevel ? "印" : (index + 1));
+    return '<button class="craft-rank '+state+'" type="button" data-craft-level="'+index+'" title="'+level.name+' · 累计烧成'+level.fires+'件"><i>'+mark+'</i>'+level.short+'<br><small>'+level.fires+'件</small></button>';
+  }).join("");
+  Array.from(path.querySelectorAll("[data-craft-level]")).forEach(function(button){button.addEventListener("click",function(){showCraftLevel(button.getAttribute("data-craft-level"))})});
+  var level = CONFIG.CRAFT_LEVELS[craftPreviewLevel];
+  var stateText = craftPreviewLevel < currentLevel ? "已掌握" : (craftPreviewLevel === currentLevel ? "当前工艺" : "尚未掌握");
+  var next = CONFIG.CRAFT_LEVELS[currentLevel + 1];
+  var progress = next ? Math.max(0, Math.min(100, Math.round(((G.totalFires - CONFIG.CRAFT_LEVELS[currentLevel].fires) / (next.fires - CONFIG.CRAFT_LEVELS[currentLevel].fires)) * 100))) : 100;
+  detail.innerHTML = '<div class="craft-detail-head"><h4>第'+(craftPreviewLevel+1)+'级 · '+level.name+'</h4><small>'+level.era+' · '+stateText+'</small></div>'+
+    '<div class="craft-tech-grid"><span><b>原料配方</b><br>'+level.formula+'</span><span><b>成型工艺</b><br>'+level.forming+'</span><span><b>施釉技术</b><br>'+level.glazing+'</span><span><b>窑炉烧成</b><br>'+level.firing+'</span><span><b>装饰彩绘</b><br>'+level.decor+'</span><span><b>代表器物</b><br>'+level.ware+'</span></div>'+
+    '<div class="craft-effect">经营加成 · '+level.effect+'</div>'+
+    '<div class="craft-progress"><i style="width:'+progress+'%"></i></div><div style="font-size:9px;margin-top:3px">'+(next ? '当前累计烧成 '+G.totalFires+' 件；距离「'+next.name+'」还需 '+Math.max(0,next.fires-G.totalFires)+' 件。' : '七级圆满：传统窑业诸艺融会。')+'</div>'+
+    '<div class="craft-future">后世余卷：注浆、喷釉、倒焰圆窑、隧道窑、气窑、电窑、浅绛彩与新彩属于更晚时期，不列入本局古代窑户主线。</div>';
+}
+
 var DAILY_HISTORY_NOTES = [
   { title:"土 · 高岭", kicker:"白土并非天生就是瓷。", body:"高岭土耐火而可塑，开采后还要淘洗、沉淀与陈腐。山中一担白土，到了坯房往往只余可用泥料的一部分。" },
   { title:"泥 · 淘洗", kicker:"水替匠人分出粗细。", body:"瓷石粉碎后入水淘洗，较重的砂砾先沉，细泥悬浮后再引入沉淀池。泥料越净，烧成后的胎体越细密。" },
@@ -1499,6 +1520,7 @@ function render() {
     var gap = craftLevel - marketLevelIndex;
     $$.craftCompare.textContent = gap > 0 ? "领先市面 " + gap + " 级 · 订单升值 " + (gap * 3) + "%" : (gap < 0 ? "落后市面 " + (-gap) + " 级 · 订单贬值 " + ((-gap) * 2) + "%" : "与市面工艺相当 · 标准售价");
   }
+  renderCraftTree(craftLevel);
 
   var artisanRanks = ["窑工", "熟手窑工", "作头", "把桩师傅", "把桩师傅", "御窑名师", "一代宗匠"];
   var artisanRank = artisanRanks[craftLevel] || "窑工";
@@ -1548,7 +1570,8 @@ function gather(type) {
 
   if (G.stamina < CONFIG.STAMINA.gatherCost) return showToast("体力不足，无法劳作。", false);
 
-  const gained = G.guild === "hui" ? Math.ceil(n * CONFIG.GUILDS.hui.gatherMul) : n;
+  let gained = G.guild === "hui" ? Math.ceil(n * CONFIG.GUILDS.hui.gatherMul) : n;
+  if ((G.craftLevel || 0) >= 1) gained += 1;
 
   // 冬天伐松柴：大雪封山，体力消耗+3
 
@@ -1746,8 +1769,10 @@ function fireKiln() {
   else { G.plainWare = (G.plainWare || 0) + 1; }
 
   let q = CONFIG.FIRE.qualityBase + G.kiln + G.seasonInfo.qualityBonus;
+  if ((G.craftLevel || 0) >= 3) q += 1;
 
   if (usePainted) q += CONFIG.DECORATE.qualityBonus;
+  if (usePainted && (G.craftLevel || 0) >= 4) q += 2;
   if (usePainted && G.guild === "za") q += CONFIG.GUILDS.za.paintedQuality;
 
   if (G._nextFireBonus > 0) { q += G._nextFireBonus; G._nextFireBonus = 0; }
@@ -1934,7 +1959,9 @@ function deliver() {
 
   var boatBonus = G.boatInfo.bonus || 0;
 
-  G.silver += Math.floor(G.orderSilver * (1 + craftLvlBonus + boatBonus)) + paintedPremium;
+  var tianGongBonus = G.craftLevel >= 6 ? 0.10 : 0;
+  G.silver += Math.floor(G.orderSilver * (1 + craftLvlBonus + boatBonus + tianGongBonus)) + paintedPremium;
+  if (tianGongBonus) addLog("天工名器入册，订单额外升值10%。");
 
   if (paintedPremium > 0) addLog("彩绘装饰溢价：交付" + paintedDeliver + "件，+" + paintedPremium + "银");
 
@@ -3027,8 +3054,8 @@ if (G.pendingMechanicEvent) {
     if(ctx)return true;
     var AC=window.AudioContext||window.webkitAudioContext;
     if(!AC)return false;
-    ctx=new AC();master=ctx.createGain();master.gain.value=.55;master.connect(ctx.destination);
-    bgmGain=ctx.createGain();bgmGain.gain.value=.13;bgmGain.connect(master);return true;
+    ctx=new AC();master=ctx.createGain();master.gain.value=.9;master.connect(ctx.destination);
+    bgmGain=ctx.createGain();bgmGain.gain.value=.42;bgmGain.connect(master);return true;
   }
   function voice(freq,duration,type,volume,delay,destination){
     if(!enabled||!ensure())return;
@@ -3046,26 +3073,26 @@ if (G.pendingMechanicEvent) {
   function bgmPulse(){
     if(!enabled||document.hidden)return;
     var note=pentatonic[bgmStep++%pentatonic.length];
-    voice(note,2.7,"sine",.022,0,bgmGain);voice(note*2,1.8,"triangle",.009,.18,bgmGain);
-    if(bgmStep%4===1)voice(73.42,4.2,"sine",.012,0,bgmGain);
+    voice(note,2.7,"sine",.11,0,bgmGain);voice(note*2,1.8,"triangle",.04,.18,bgmGain);
+    if(bgmStep%4===1)voice(73.42,4.2,"sine",.055,0,bgmGain);
   }
   function startBgm(){clearInterval(bgmTimer);bgmPulse();bgmTimer=setInterval(bgmPulse,2850)}
   function stopBgm(){clearInterval(bgmTimer);bgmTimer=0}
   window.playSfx=function(name){
     if(!enabled)return;
     var map={
-      click:function(){voice(330,.07,"triangle",.025)},
-      gather:function(){voice(130,.14,"triangle",.04);noise(.09,.018,500)},
-      wood:function(){noise(.11,.045,750);voice(105,.09,"square",.022,0);noise(.08,.025,500)},
-      pigment:function(){voice(392,.12,"sine",.03);voice(523,.16,"sine",.02,.08)},
-      produce:function(){voice(110,.22,"triangle",.035);voice(146.83,.2,"sine",.025,.11)},
-      decorate:function(){noise(.16,.012,1800);voice(440,.18,"sine",.025);voice(587.33,.28,"sine",.018,.12)},
-      fire:function(){noise(.5,.035,650);voice(82.41,.55,"sawtooth",.018)},
-      fail:function(){voice(220,.24,"triangle",.04);voice(164.81,.4,"triangle",.035,.2)},
-      success:function(){voice(261.63,.2,"sine",.035);voice(329.63,.24,"sine",.03,.13);voice(392,.42,"sine",.03,.28)},
-      deliver:function(){voice(196,.2,"triangle",.035);voice(293.66,.25,"triangle",.035,.14);voice(392,.42,"sine",.028,.3)},
-      day:function(){voice(146.83,.28,"sine",.028);voice(220,.4,"sine",.025,.2)},
-      event:function(){voice(98,.8,"sine",.045);voice(196,.65,"triangle",.018,.08)}
+      click:function(){voice(330,.07,"triangle",.075)},
+      gather:function(){voice(130,.14,"triangle",.12);noise(.09,.06,500)},
+      wood:function(){noise(.11,.14,750);voice(105,.09,"square",.07,0);noise(.08,.08,500)},
+      pigment:function(){voice(392,.12,"sine",.09);voice(523,.16,"sine",.065,.08)},
+      produce:function(){voice(110,.22,"triangle",.11);voice(146.83,.2,"sine",.075,.11)},
+      decorate:function(){noise(.16,.04,1800);voice(440,.18,"sine",.08);voice(587.33,.28,"sine",.06,.12)},
+      fire:function(){noise(.5,.13,650);voice(82.41,.55,"sawtooth",.07)},
+      fail:function(){voice(220,.24,"triangle",.13);voice(164.81,.4,"triangle",.11,.2)},
+      success:function(){voice(261.63,.2,"sine",.11);voice(329.63,.24,"sine",.095,.13);voice(392,.42,"sine",.09,.28)},
+      deliver:function(){voice(196,.2,"triangle",.12);voice(293.66,.25,"triangle",.11,.14);voice(392,.42,"sine",.09,.3)},
+      day:function(){voice(146.83,.28,"sine",.09);voice(220,.4,"sine",.08,.2)},
+      event:function(){voice(98,.8,"sine",.14);voice(196,.65,"triangle",.06,.08)}
     };(map[name]||map.click)();
   };
   window.toggleAudio=function(){
