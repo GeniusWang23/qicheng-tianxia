@@ -235,7 +235,10 @@ body>.puzzle-layer.show{display:grid!important;visibility:visible!important;opac
 @media(max-width:1050px) and (min-width:761px){#eventCard{left:220px;width:260px}#logCard{left:490px!important}}
 @media(max-width:760px){.stats{grid-template-columns:repeat(4,1fr)!important}.stat{padding:4px 2px!important}#eventCard{position:relative;inset:auto;width:100%;height:auto;max-height:none;padding:12px}.event-timeline{max-height:180px}#logCard{left:auto!important}.tutorial-welcome-actions{flex-wrap:wrap}}
 </style>
-<style id="pages-path-fix">.map{background-image:linear-gradient(180deg,rgba(224,206,164,.08),rgba(38,27,17,.18)),url("map-panorama.png")!important}.puzzle-piece{background-image:url("porcelain-puzzle.jpg")!important}</style>
+<style id="ink-map-art">
+.map .art.ink-scene{position:relative;overflow:hidden;background:#cbbb91!important;color:#281f17;font-size:11px!important;isolation:isolate}.ink-scene:after{content:"";position:absolute;inset:0;background:repeating-linear-gradient(165deg,transparent 0 9px,#2b21161b 10px 11px);mix-blend-mode:multiply;pointer-events:none}.ink-caption{position:absolute;right:6px;bottom:4px;z-index:2;color:#3d3022;font:700 10px "STKaiti","KaiTi",serif;letter-spacing:.12em}.ink-mountain i{position:absolute;bottom:12px;width:0;height:0;border-left:38px solid transparent;border-right:38px solid transparent;border-bottom:72px solid #332b22;filter:drop-shadow(8px 4px 0 #77664c)}.ink-mountain i:nth-child(1){left:8px}.ink-mountain i:nth-child(2){left:74px;transform:scale(.78)}.ink-mountain i:after{content:"";position:absolute;left:-15px;top:38px;border-left:15px solid transparent;border-right:15px solid transparent;border-bottom:27px solid #d8caa5}.ink-forest i{position:absolute;bottom:12px;width:5px;height:48px;background:#3a3024}.ink-forest i:before,.ink-forest i:after{content:"";position:absolute;left:50%;transform:translateX(-50%);border-left:24px solid transparent;border-right:24px solid transparent;border-bottom:38px solid #485344}.ink-forest i:before{top:-16px}.ink-forest i:after{top:1px;transform:translateX(-50%) scale(.75)}.ink-forest i:nth-child(1){left:28px}.ink-forest i:nth-child(2){left:83px;height:56px}.ink-forest i:nth-child(3){left:135px;height:42px}.ink-mine:before{content:"";position:absolute;left:12px;right:12px;top:18px;height:38px;background:repeating-linear-gradient(0deg,#554632 0 3px,#b4a278 4px 10px);clip-path:polygon(0 78%,18% 30%,40% 65%,62% 10%,100% 70%,100% 100%,0 100%)}.ink-pigment:before{background:repeating-linear-gradient(0deg,#315d68 0 3px,#b4a278 4px 10px)}.ink-workshop{display:grid!important;grid-template-columns:repeat(4,1fr);align-items:end!important;padding:12px!important;gap:8px}.ink-workshop .shop{height:76px!important;background:#c9b78d!important;border:2px solid #33271c!important;clip-path:polygon(8% 20%,50% 0,92% 20%,92% 100%,8% 100%)}.ink-workshop .shop span{margin-top:28px;display:block}.ink-kiln:before{content:"";position:absolute;left:28px;right:28px;bottom:13px;height:64px;border:7px solid #30241a;border-bottom-width:12px;border-radius:52% 52% 8% 8%;background:radial-gradient(circle at 50% 72%,#9a3b27 0 10%,#2a2119 11% 24%,#a8966e 25%)}.ink-kiln:after{content:attr(data-kiln);position:absolute;right:7px;bottom:4px;color:#d8c69b;font:700 10px KaiTi;z-index:2}.ink-dock:before{content:"";position:absolute;left:0;right:0;bottom:0;height:45%;background:repeating-linear-gradient(0deg,#315b62 0 2px,#91a89d 3px 9px)}.ink-dock i{position:absolute;left:35px;bottom:25px;width:88px;height:24px;background:#2d271f;clip-path:polygon(0 0,100% 0,82% 100%,18% 100%)}.ink-dock i:before{content:"";position:absolute;left:42px;bottom:20px;width:2px;height:50px;background:#2d271f}.ink-dock i:after{content:"";position:absolute;left:44px;bottom:27px;border-top:22px solid transparent;border-bottom:22px solid transparent;border-left:32px solid #d8c69b}.ink-dock:after{content:attr(data-boat);position:absolute;right:6px;bottom:5px;color:#eee2bd;font:700 10px KaiTi;z-index:2}
+</style>
+<style id="pages-path-fix">.map{background-image:linear-gradient(#c7b6891f,#c7b6891f),url("map-panorama.png")!important}.puzzle-piece{background-image:url("porcelain-puzzle.jpg")!important}</style>
 </head>
 
 <body>
@@ -290,23 +293,23 @@ body>.puzzle-layer.show{display:grid!important;visibility:visible!important;opac
 
 
 
-      <section class="site mountain" data-note="clay" tabindex="0"><h2>高岭山</h2><div class="art" style="background:#607659;display:flex;align-items:center;justify-content:center;font-size:50px">⛰️🏔️🪨</div></section>
+      <section class="site mountain" data-note="clay" tabindex="0"><h2>高岭山</h2><div class="art ink-scene ink-mountain"><i></i><i></i><span class="ink-caption">白土矿脉</span></div></section>
 
       <button class="node minebtn" data-note="clay" onclick="gather('clay')">采高岭土 +6 体力-5</button>
 
 
 
-      <section class="site forest" data-note="wood" tabindex="0"><h2>松柴林</h2><div class="art" style="background:#86a584;display:flex;align-items:center;justify-content:center;font-size:48px">🌲🌳🪵🌲</div></section>
+      <section class="site forest" data-note="wood" tabindex="0"><h2>松柴林</h2><div class="art ink-scene ink-forest"><i></i><i></i><i></i><span class="ink-caption">伐薪晒柴</span></div></section>
 
       <button class="node woodbtn" data-note="wood" onclick="gather('wood')">伐松柴 +5 体力-5</button>
 
-      <section class="site" data-note="glaze" tabindex="0" style="left:460px;top:20px;width:160px"><h2>釉石坡</h2><div class="art" style="background:#7a6a4a;display:flex;align-items:center;justify-content:center;font-size:32px;height:70px">♥💎✨</div></section><button class="node glazebtn" data-note="glaze" onclick="gather('glaze')" title="釉料：制作素坯的必需原料">♥ 采釉料 +3 体力-5</button>
+      <section class="site" data-note="glaze" tabindex="0" style="left:460px;top:20px;width:160px"><h2>釉石坡</h2><div class="art ink-scene ink-mine" style="height:70px"><span class="ink-caption">釉果釉灰</span></div></section><button class="node glazebtn" data-note="glaze" onclick="gather('glaze')" title="釉料：制作素坯的必需原料">采釉料 +3 体力-5</button>
 
-      <section class="site" data-note="pigment" tabindex="0" style="left:640px;top:20px;width:160px"><h2>颜料矿</h2><div class="art" style="background:#5a5a2a;display:flex;align-items:center;justify-content:center;font-size:32px;height:70px">🎨💎🖌️</div></section><button class="node pigmentbtn" data-note="pigment" onclick="gather('pigment')">◆ 采颜料 +3 体力-5</button>
+      <section class="site" data-note="pigment" tabindex="0" style="left:640px;top:20px;width:160px"><h2>颜料矿</h2><div class="art ink-scene ink-mine ink-pigment" style="height:70px"><span class="ink-caption">钴料矿层</span></div></section><button class="node pigmentbtn" data-note="pigment" onclick="gather('pigment')">采颜料 +3 体力-5</button>
 
 
 
-      <section class="site works" data-note="produce" tabindex="0"><h2>瓷作坊</h2><div class="art"><div class="shop"><span>练泥坊</span></div><div class="shop"><span>拉坯坊</span></div><div class="shop"><span>🎨画坯</span></div><div class="shop"><span>☀️晒坯</span></div></div></section>
+      <section class="site works" data-note="produce" tabindex="0"><h2>瓷作坊</h2><div class="art ink-scene ink-workshop"><div class="shop"><span>练泥</span></div><div class="shop"><span>拉坯</span></div><div class="shop"><span>画坯</span></div><div class="shop"><span>晒坯</span></div></div></section>
 
       <button class="node produce" data-note="produce" onclick="produce()">制作坯体 体力-8</button>
 
@@ -314,13 +317,13 @@ body>.puzzle-layer.show{display:grid!important;visibility:visible!important;opac
 
 
 
-      <section class="site kiln" data-note="fire" tabindex="0"><h2 id="kilnTitle">竖穴窑</h2><div class="art" id="kilnArt" style="background:#3a2a1a;display:flex;align-items:center;justify-content:center;font-size:48px">🔥🏺🔥</div></section>
+      <section class="site kiln" data-note="fire" tabindex="0"><h2 id="kilnTitle">竖穴窑</h2><div class="art ink-scene ink-kiln" id="kilnArt" data-kiln="竖穴窑"></div></section>
 
       <button class="node fire" data-note="fire" onclick="fireKiln()">竖穴窑·入窑烧制 体力-12</button>
 
 
 
-      <section class="site dock" data-note="deliver" tabindex="0"><h2 id="dockTitle">昌江码头 · 小货船</h2><div class="art" id="dockArt" style="background:#5f9e9e;display:flex;align-items:center;justify-content:center;font-size:42px">⛵📦⚓</div></section>
+      <section class="site dock" data-note="deliver" tabindex="0"><h2 id="dockTitle">昌江码头 · 小货船</h2><div class="art ink-scene ink-dock" id="dockArt" data-boat="小货船"><i></i></div></section>
 
       <button class="node ship" data-note="deliver" onclick="deliver()">交付订单</button>
 
@@ -348,9 +351,9 @@ body>.puzzle-layer.show{display:grid!important;visibility:visible!important;opac
 
         <span>松柴<b id="wood">0</b></span>
 
-        <span>♥釉料<b id="glaze">0</b></span>
+        <span>釉料<b id="glaze">0</b></span>
 
-        <span>◆颜料<b id="pigment">0</b></span>
+        <span>颜料<b id="pigment">0</b></span>
 
         <span>素坯<b id="blank">0</b></span>
 
@@ -398,7 +401,7 @@ body>.puzzle-layer.show{display:grid!important;visibility:visible!important;opac
 
           <button class="action" id="upgradeBtn" onclick="upgrade()">升级成：龙窑</button>
 
-          <button class="action" onclick="hireTaoist()">请道士 · 30银</button>
+          <button class="action" onclick="hireTaoist()">请道士 · 30银</button><button class="action" onclick="nextDay()">度过一日</button>
 
           <button class="action" id="diffBtn" onclick="cycleDifficulty()">难度：中</button>
 
@@ -426,7 +429,7 @@ body>.puzzle-layer.show{display:grid!important;visibility:visible!important;opac
 
     <div class="float-card" id="craftCard">
 
-      <h3 onclick="toggleCard('craftCard')">工艺 <span id="craftBadge" style="font-size:12px;color:var(--muted)">新手</span> <span class="toggle">▶</span></h3>
+      <h3 onclick="toggleCard('craftCard')">工艺 <span id="craftBadge" style="font-size:12px;color:var(--muted)">新手</span> <span class="toggle">▼</span></h3>
 
       <div class="card-body">
 
@@ -454,7 +457,7 @@ body>.puzzle-layer.show{display:grid!important;visibility:visible!important;opac
 
     <div class="float-card" id="merchantCard">
 
-      <h3 onclick="toggleCard('merchantCard')">商人 <span class="toggle">▶</span></h3>
+      <h3 onclick="toggleCard('merchantCard')">商人 <span class="toggle">▼</span></h3>
 
       <div class="card-body" id="merchantBody">
 
@@ -675,10 +678,10 @@ const CONFIG = {
   UPGRADE:   { cost:90, types:[{name:"竖穴窑",failRate:0.40,nextCost:60},{name:"龙窑",failRate:0.25,nextCost:150},{name:"葫芦窑",failRate:0.15,nextCost:350},{name:"镇窑",failRate:0.08,nextCost:999999}] },
 
   BOATS: [
-    {name:"小货船", minOrders:0, bonus:0, icon:"⛵📦⚓"},
-    {name:"昌江货船", minOrders:3, bonus:0.05, icon:"⛵⛵📦"},
-    {name:"鄱湖船队", minOrders:6, bonus:0.10, icon:"🚢⛵🚢"},
-    {name:"御瓷贡船", minOrders:10, bonus:0.15, icon:"🚢🏺⚓"}
+    {name:"小货船", minOrders:0, bonus:0},
+    {name:"昌江货船", minOrders:3, bonus:0.05},
+    {name:"鄱湖船队", minOrders:6, bonus:0.10},
+    {name:"御瓷贡船", minOrders:10, bonus:0.15}
   ],
 
   GUILDS: {
@@ -1518,7 +1521,7 @@ function render() {
   var kilnArt = document.getElementById("kilnArt");
   if (kilnTitle) kilnTitle.textContent = kilnInfo.name;
   if (kilnNav) kilnNav.textContent = kilnInfo.name;
-  if (kilnArt) kilnArt.textContent = ["🕳️🔥🏺", "🔥🏺🔥", "🔥🏺♨️", "🏯🔥🏺"][kilnIndex];
+  if (kilnArt) kilnArt.setAttribute("data-kiln", kilnInfo.name);
   if (upgBtn) {
     if (nextKiln) {
       var displayCost = Math.floor(kilnInfo.nextCost * G.diffConfig.upgradeMul);
@@ -1546,7 +1549,7 @@ function render() {
   var dockArt = document.getElementById("dockArt");
   if (boatType) boatType.textContent = boat.name + (boat.bonus ? " +" + Math.round(boat.bonus * 100) + "%" : "");
   if (dockTitle) dockTitle.textContent = "昌江码头 · " + boat.name;
-  if (dockArt) dockArt.textContent = boat.icon;
+  if (dockArt) dockArt.setAttribute("data-boat", boat.name);
   var guild = G.guildInfo;
   if ($$.guildType) $$.guildType.textContent = guild ? guild.short : "未加入";
   if ($$.guildBtn) {
@@ -2838,6 +2841,7 @@ function toggleCard(id) {
   if (!el) return;
 
   el.classList.toggle("collapsed");
+  var toggle=el.querySelector("h3 .toggle");if(toggle)toggle.textContent=el.classList.contains("collapsed")?"▶":"▼";
 
   // Auto-render merchant when expanded
 
@@ -3033,7 +3037,9 @@ G.save = function() {
 
 
 
+document.querySelectorAll(".float-card").forEach(function(card){card.classList.remove("collapsed");var t=card.querySelector("h3 .toggle");if(t)t.textContent="▼"});
 render();
+renderMerchant();
 if (!G.tutorialSeen && !G.tutorialActive) setTimeout(showTutorialWelcome, 60);
 if (G.tutorialActive) setTimeout(renderTutorial, 70);
 if (G.pendingMechanicEvent) {
