@@ -249,10 +249,11 @@ body>.puzzle-layer.show{display:grid!important;visibility:visible!important;opac
 </style>
 <style id="early-feedback-theatre">
 .tourist-hook{margin:8px auto 14px;padding:10px 14px;max-width:560px;border-left:4px solid #8a2f25;background:#ead9ad88;color:#493522;font-weight:700;text-align:left}
+.opening-difficulty{margin:14px auto 8px}.opening-difficulty>span{display:block;margin-bottom:7px;color:#6f281f;font-weight:900;letter-spacing:.12em}.opening-difficulty-buttons{display:grid;grid-template-columns:repeat(3,1fr);gap:7px}.tutorial-welcome .opening-difficulty button{padding:10px 7px;background:#d8c394;color:#2e2116;border:1px solid #5c452c}.tutorial-welcome .opening-difficulty button b{display:block;font-size:15px}.tutorial-welcome .opening-difficulty button small{display:block;margin-top:3px;font-size:10px;font-weight:400}.tutorial-welcome .opening-difficulty button.selected{background:#762b22;color:#f2dfb4;box-shadow:inset 0 0 0 2px #d5b66c,3px 3px 0 #1b100988}
 .flying-resource{position:fixed;z-index:15050;min-width:54px;padding:5px 8px;border:1px solid #4b3521;background:#e5d1a0;color:#6f241d;box-shadow:3px 3px 0 #140c0788;font:900 12px "STKaiti","KaiTi",serif;pointer-events:none;transition:transform .62s cubic-bezier(.2,.75,.25,1),opacity .62s}
 .narrative-whisper{position:fixed;left:50%;top:112px;z-index:10050;max-width:min(620px,88vw);transform:translate(-50%,-12px);padding:9px 28px;color:#2a1d13;background:#dec99bea;border-top:1px solid #6b4c2e;border-bottom:1px solid #6b4c2e;box-shadow:0 7px 22px #120b0755;font:700 13px/1.7 "STKaiti","KaiTi",serif;letter-spacing:.05em;opacity:0;pointer-events:none;transition:.28s}.narrative-whisper.show{opacity:1;transform:translate(-50%,0)}
 .kiln-reveal{position:fixed;inset:0;z-index:14500;display:grid;place-items:center;background:#130b06c9;opacity:0;visibility:hidden;pointer-events:none;transition:.22s}.kiln-reveal.show{opacity:1;visibility:visible;pointer-events:auto}.kiln-stage{position:relative;width:min(520px,90vw);min-height:300px;display:grid;place-items:center;text-align:center;color:#f0dfb4;background:radial-gradient(circle at 50% 70%,#8f3a20 0 8%,#2b1910 34%,#100a07 72%);border:3px double #b5965c;box-shadow:0 0 70px #b34b2866}.kiln-stage:before{content:"";position:absolute;left:22%;right:22%;bottom:28px;height:170px;border:12px solid #1a100b;border-bottom-width:25px;border-radius:52% 52% 8% 8%;box-shadow:inset 0 0 45px #db6f35aa}.kiln-steam{position:absolute;left:50%;top:40px;width:110px;height:120px;transform:translateX(-50%);background:radial-gradient(ellipse at 30% 80%,#eee8d188,transparent 55%),radial-gradient(ellipse at 70% 50%,#eee8d166,transparent 58%);filter:blur(6px);animation:steamRise 1.15s ease-out infinite}.kiln-copy{position:relative;z-index:2;margin-top:-25px;padding:14px 25px}.kiln-copy small{color:#d7a768;letter-spacing:.22em}.kiln-copy h2{margin:8px 0;font:900 36px "STKaiti","KaiTi",serif}.kiln-copy p{margin:0;color:#e0cda3}.kiln-reveal.fail .kiln-stage{filter:grayscale(.75)}.kiln-reveal.fail .kiln-copy h2{color:#d47762}@keyframes steamRise{from{opacity:.25;transform:translate(-50%,25px) scale(.8)}to{opacity:.8;transform:translate(-50%,-20px) scale(1.2)}}
-@media(max-width:760px){.narrative-whisper{top:150px}.kiln-stage{min-height:250px}.kiln-copy h2{font-size:29px}}
+@media(max-width:760px){.opening-difficulty-buttons{grid-template-columns:1fr}.narrative-whisper{top:150px}.kiln-stage{min-height:250px}.kiln-copy h2{font-size:29px}}
 </style>
 <style id="pages-path-fix">.map{background-image:linear-gradient(#c7b6891f,#c7b6891f),url("map-panorama.png")!important}.puzzle-piece{background-image:url("porcelain-puzzle.jpg")!important}</style>
 </head>
@@ -291,7 +292,7 @@ body>.puzzle-layer.show{display:grid!important;visibility:visible!important;opac
     <button class="help-btn puzzle-trigger" id="puzzleTrigger" type="button">拼瓷片</button>
 
     <button class="help-btn audio-btn tutorial-control" id="audioBtn" type="button" aria-pressed="false" onclick="toggleAudio()"><span class="audio-wave">♩</span> 声音：关</button>
-    <div class="audio-mixer" aria-label="音乐与音量调节"><label title="选择生成式纯音乐">曲<select id="audioTrack"><option value="kiln_night">窑夜听风</option><option value="blue_river">青花水路</option><option value="ember">松柴微火</option><option value="scroll">匠心长卷</option></select></label><label title="背景音乐音量">乐<input id="bgmVolume" type="range" min="0" max="100" value="72"><output id="bgmVolumeOut">72</output></label><label title="按钮与场景音效音量">效<input id="sfxVolume" type="range" min="0" max="100" value="88"><output id="sfxVolumeOut">88</output></label></div>
+    <div class="audio-mixer" aria-label="音乐与音量调节"><label title="选择瓷韵背景音乐">曲<select id="audioTrack"><option value="part01">瓷韵选曲 · 一</option><option value="part02">瓷韵选曲 · 二</option><option value="part03">瓷韵选曲 · 三</option><option value="part04">瓷韵选曲 · 四</option><option value="part05">瓷韵选曲 · 五</option><option value="part06">瓷韵选曲 · 六</option><option value="part07">瓷韵选曲 · 七</option><option value="part08">瓷韵选曲 · 八</option><option value="part09">瓷韵选曲 · 九</option><option value="part10">瓷韵选曲 · 十</option><option value="part11">瓷韵选曲 · 十一</option><option value="part12">瓷韵选曲 · 十二</option></select></label><label title="背景音乐音量">乐<input id="bgmVolume" type="range" min="0" max="100" value="72"><output id="bgmVolumeOut">72</output></label><label title="按钮与场景音效音量">效<input id="sfxVolume" type="range" min="0" max="100" value="88"><output id="sfxVolumeOut">88</output></label></div>
 
     <span class="save-indicator" id="saveIndicator">已存档</span>
 
@@ -535,6 +536,7 @@ body>.puzzle-layer.show{display:grid!important;visibility:visible!important;opac
     <div class="mechanic-kicker">序章 · 入窑学艺</div>
     <h2>先识泥火，再掌一窑</h2>
     <p class="tourist-hook">这里就是景德镇：昌江水运、高岭土矿、窑火千年。你白天看过的窑炉与瓷器，现在交到你手里。</p>
+    <div class="opening-difficulty"><span>先为这一卷落下难度印记</span><div class="opening-difficulty-buttons"><button type="button" data-opening-difficulty="0" onclick="setOpeningDifficulty(0)"><b>易 · 游客体验</b><small>8单通关，恢复宽裕</small></button><button type="button" data-opening-difficulty="1" onclick="setOpeningDifficulty(1)"><b>中 · 经营压力</b><small>12单通关，完整策略</small></button><button type="button" data-opening-difficulty="2" onclick="setOpeningDifficulty(2)"><b>难 · 御窑生存</b><small>16单通关，失败风险更高</small></button></div></div>
     <p>把桩师傅会陪你亲手完成两件瓷器：从高岭土、釉料与松柴，到拉坯、彩绘、烧成和第一次交付。每次只需完成眼前一步，所得资源与首单进度会直接带入正式经营。</p>
     <div class="tutorial-welcome-actions"><button class="tutorial-control" onclick="startTutorial()">入窑学艺</button><button class="tutorial-control veteran" onclick="skipTutorialWelcome()">我是熟练工</button></div>
   </article>
@@ -1030,7 +1032,23 @@ const TUTORIAL_STEPS = [
 
 function showTutorialWelcome() {
   var el=document.getElementById("tutorialWelcome");if(!el)return;
+  renderOpeningDifficulty();
   el.classList.add("show");el.setAttribute("aria-hidden","false");
+}
+
+function renderOpeningDifficulty(){
+  document.querySelectorAll("[data-opening-difficulty]").forEach(function(btn){
+    var selected=Number(btn.getAttribute("data-opening-difficulty"))===Number(G.difficulty);
+    btn.classList.toggle("selected",selected);btn.setAttribute("aria-pressed",String(selected));
+  });
+}
+
+function setOpeningDifficulty(index){
+  if(G.orders>0||G.totalFires>0)return showToast("第一窑已经落火，难度不能再改。请重开新卷后选择。",false);
+  G.difficulty=Math.max(0,Math.min(CONFIG.DIFFICULTY.length-1,Number(index)||0));
+  G.maxStamina=G.diffConfig.maxStamina;G.stamina=G.maxStamina;
+  renderOpeningDifficulty();G.save();render();
+  showToast("新卷难度："+G.diffConfig.name+" · "+G.diffConfig.desc,true);
 }
 
 let _narrativeTimer = null;
@@ -3215,14 +3233,14 @@ if (G.pendingMechanicEvent) {
 </section>
 <script>
 (function(){
-  var ctx=null, master=null, bgmGain=null, sfxGain=null, bgmTimer=0, bgmStep=0, enabled=false;
+  var ctx=null, master=null, sfxGain=null, bgmAudio=null, enabled=false;
   var audioTracks={
-    kiln_night:{interval:4300,notes:[146.83,220,196,174.61,146.83,164.81,196,220,261.63,220,196,164.81],wave:"sine",bass:73.42,label:"窑夜听风"},
-    blue_river:{interval:3300,notes:[196,220,261.63,293.66,261.63,220,196,164.81,196,261.63,220,174.61],wave:"triangle",bass:98,label:"青花水路"},
-    ember:{interval:3800,notes:[130.81,146.83,174.61,196,174.61,146.83,130.81,164.81,196,174.61],wave:"sine",bass:65.41,label:"松柴微火"},
-    scroll:{interval:3000,notes:[174.61,196,220,261.63,293.66,261.63,220,196,220,174.61,146.83,174.61],wave:"triangle",bass:87.31,label:"匠心长卷"}
+    part01:{src:"bgm/part-01.mp3",label:"瓷韵选曲 · 一"},part02:{src:"bgm/part-02.mp3",label:"瓷韵选曲 · 二"},part03:{src:"bgm/part-03.mp3",label:"瓷韵选曲 · 三"},
+    part04:{src:"bgm/part-04.mp3",label:"瓷韵选曲 · 四"},part05:{src:"bgm/part-05.mp3",label:"瓷韵选曲 · 五"},part06:{src:"bgm/part-06.mp3",label:"瓷韵选曲 · 六"},
+    part07:{src:"bgm/part-07.mp3",label:"瓷韵选曲 · 七"},part08:{src:"bgm/part-08.mp3",label:"瓷韵选曲 · 八"},part09:{src:"bgm/part-09.mp3",label:"瓷韵选曲 · 九"},
+    part10:{src:"bgm/part-10.mp3",label:"瓷韵选曲 · 十"},part11:{src:"bgm/part-11.mp3",label:"瓷韵选曲 · 十一"},part12:{src:"bgm/part-12.mp3",label:"瓷韵选曲 · 十二"}
   };
-  var audioTrack="kiln_night";
+  var audioTrack="part01";
   var audioLevels={bgm:.72,sfx:.88};
   try{var storedLevels=JSON.parse(localStorage.getItem("qicheng_audio_levels")||"null");if(storedLevels&&Number.isFinite(Number(storedLevels.bgm)))audioLevels.bgm=Math.max(0,Math.min(1,Number(storedLevels.bgm)));if(storedLevels&&Number.isFinite(Number(storedLevels.sfx)))audioLevels.sfx=Math.max(0,Math.min(1,Number(storedLevels.sfx)))}catch(e){}
   try{var storedTrack=localStorage.getItem("qicheng_audio_track");if(audioTracks[storedTrack])audioTrack=storedTrack}catch(e){}
@@ -3231,7 +3249,6 @@ if (G.pendingMechanicEvent) {
     var AC=window.AudioContext||window.webkitAudioContext;
     if(!AC)return false;
     ctx=new AC();master=ctx.createGain();master.gain.value=.96;master.connect(ctx.destination);
-    bgmGain=ctx.createGain();bgmGain.gain.value=audioLevels.bgm;bgmGain.connect(master);
     sfxGain=ctx.createGain();sfxGain.gain.value=audioLevels.sfx;sfxGain.connect(master);return true;
   }
   function voice(freq,duration,type,volume,delay,destination){
@@ -3247,15 +3264,14 @@ if (G.pendingMechanicEvent) {
     for(var i=0;i<length;i++)data[i]=(Math.random()*2-1)*(1-i/length);
     var source=ctx.createBufferSource(),filter=ctx.createBiquadFilter(),gain=ctx.createGain();source.buffer=buffer;filter.type="lowpass";filter.frequency.value=frequency||900;gain.gain.value=volume||.025;source.connect(filter);filter.connect(gain);gain.connect(sfxGain||master);source.start();
   }
-  function bgmPulse(){
-    if(!enabled||document.hidden)return;
-    var track=audioTracks[audioTrack],note=track.notes[bgmStep++%track.notes.length];
-    voice(note,4.6,track.wave,.14,0,bgmGain);voice(note*2,2.8,"sine",.055,.24,bgmGain);
-    if(bgmStep%3===1){voice(note*3,1.6,"sine",.025,.7,bgmGain);voice(note*4.02,1.25,"sine",.014,.72,bgmGain)}
-    if(bgmStep%4===1)voice(track.bass,6.8,"sine",.075,0,bgmGain);
+  function ensureBgm(){
+    var track=audioTracks[audioTrack];if(!track)return null;
+    if(!bgmAudio){bgmAudio=new Audio();bgmAudio.id="bgmPlayer";bgmAudio.hidden=true;bgmAudio.loop=true;bgmAudio.preload="metadata";document.body.appendChild(bgmAudio)}
+    if(!bgmAudio.src||!bgmAudio.src.endsWith(track.src)){bgmAudio.src=track.src;bgmAudio.load()}
+    bgmAudio.volume=audioLevels.bgm;return bgmAudio;
   }
-  function startBgm(){clearInterval(bgmTimer);bgmStep=0;bgmPulse();bgmTimer=setInterval(bgmPulse,audioTracks[audioTrack].interval)}
-  function stopBgm(){clearInterval(bgmTimer);bgmTimer=0}
+  function startBgm(){var audio=ensureBgm();if(!audio||document.hidden)return;audio.play().then(function(){delete audio.dataset.playError}).catch(function(err){audio.dataset.playError=(err&&err.name)||"play-blocked";if(!audio.dataset.retryBound){audio.dataset.retryBound="1";document.addEventListener("pointerdown",function retryBgm(){delete audio.dataset.retryBound;if(enabled&&!document.hidden)audio.play().catch(function(){})},{once:true,capture:true})}})}
+  function stopBgm(){if(bgmAudio)bgmAudio.pause()}
   window.playSfx=function(name){
     if(!enabled)return;
     var map={
@@ -3281,15 +3297,15 @@ if (G.pendingMechanicEvent) {
   };
   window.setAudioVolume=function(kind,value){
     var normalized=Math.max(0,Math.min(1,Number(value)/100));audioLevels[kind]=normalized;
-    if(kind==="bgm"&&bgmGain)bgmGain.gain.setTargetAtTime(normalized,ctx.currentTime,.04);
+    if(kind==="bgm"&&bgmAudio)bgmAudio.volume=normalized;
     if(kind==="sfx"&&sfxGain)sfxGain.gain.setTargetAtTime(normalized,ctx.currentTime,.04);
     var out=document.getElementById(kind+"VolumeOut");if(out)out.value=Math.round(normalized*100);
     try{localStorage.setItem("qicheng_audio_levels",JSON.stringify(audioLevels))}catch(e){}
   };
   window.setAudioTrack=function(id){
-    if(!audioTracks[id])return;audioTrack=id;bgmStep=0;
+    if(!audioTracks[id])return;audioTrack=id;
     try{localStorage.setItem("qicheng_audio_track",id)}catch(e){}
-    if(enabled)startBgm();
+    if(bgmAudio){bgmAudio.pause();bgmAudio.src=audioTracks[id].src;bgmAudio.load()}if(enabled)startBgm();
     if(typeof showToast==="function")showToast("曲目已切换：《"+audioTracks[id].label+"》");
   };
   function bindMixer(){
