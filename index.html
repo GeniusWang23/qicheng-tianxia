@@ -247,6 +247,13 @@ body>.puzzle-layer.show{display:grid!important;visibility:visible!important;opac
 .produce,.decoratebtn{top:390px}.fire{top:355px}.ship{top:445px}
 @media(max-width:760px){.minebtn{top:140px}.woodbtn{top:120px}.glazebtn{top:132px}.pigmentbtn{top:145px}.produce,.decoratebtn{top:370px}.fire{top:340px}.ship{top:420px}}
 </style>
+<style id="early-feedback-theatre">
+.tourist-hook{margin:8px auto 14px;padding:10px 14px;max-width:560px;border-left:4px solid #8a2f25;background:#ead9ad88;color:#493522;font-weight:700;text-align:left}
+.flying-resource{position:fixed;z-index:15050;min-width:54px;padding:5px 8px;border:1px solid #4b3521;background:#e5d1a0;color:#6f241d;box-shadow:3px 3px 0 #140c0788;font:900 12px "STKaiti","KaiTi",serif;pointer-events:none;transition:transform .62s cubic-bezier(.2,.75,.25,1),opacity .62s}
+.narrative-whisper{position:fixed;left:50%;top:112px;z-index:10050;max-width:min(620px,88vw);transform:translate(-50%,-12px);padding:9px 28px;color:#2a1d13;background:#dec99bea;border-top:1px solid #6b4c2e;border-bottom:1px solid #6b4c2e;box-shadow:0 7px 22px #120b0755;font:700 13px/1.7 "STKaiti","KaiTi",serif;letter-spacing:.05em;opacity:0;pointer-events:none;transition:.28s}.narrative-whisper.show{opacity:1;transform:translate(-50%,0)}
+.kiln-reveal{position:fixed;inset:0;z-index:14500;display:grid;place-items:center;background:#130b06c9;opacity:0;visibility:hidden;pointer-events:none;transition:.22s}.kiln-reveal.show{opacity:1;visibility:visible;pointer-events:auto}.kiln-stage{position:relative;width:min(520px,90vw);min-height:300px;display:grid;place-items:center;text-align:center;color:#f0dfb4;background:radial-gradient(circle at 50% 70%,#8f3a20 0 8%,#2b1910 34%,#100a07 72%);border:3px double #b5965c;box-shadow:0 0 70px #b34b2866}.kiln-stage:before{content:"";position:absolute;left:22%;right:22%;bottom:28px;height:170px;border:12px solid #1a100b;border-bottom-width:25px;border-radius:52% 52% 8% 8%;box-shadow:inset 0 0 45px #db6f35aa}.kiln-steam{position:absolute;left:50%;top:40px;width:110px;height:120px;transform:translateX(-50%);background:radial-gradient(ellipse at 30% 80%,#eee8d188,transparent 55%),radial-gradient(ellipse at 70% 50%,#eee8d166,transparent 58%);filter:blur(6px);animation:steamRise 1.15s ease-out infinite}.kiln-copy{position:relative;z-index:2;margin-top:-25px;padding:14px 25px}.kiln-copy small{color:#d7a768;letter-spacing:.22em}.kiln-copy h2{margin:8px 0;font:900 36px "STKaiti","KaiTi",serif}.kiln-copy p{margin:0;color:#e0cda3}.kiln-reveal.fail .kiln-stage{filter:grayscale(.75)}.kiln-reveal.fail .kiln-copy h2{color:#d47762}@keyframes steamRise{from{opacity:.25;transform:translate(-50%,25px) scale(.8)}to{opacity:.8;transform:translate(-50%,-20px) scale(1.2)}}
+@media(max-width:760px){.narrative-whisper{top:150px}.kiln-stage{min-height:250px}.kiln-copy h2{font-size:29px}}
+</style>
 <style id="pages-path-fix">.map{background-image:linear-gradient(#c7b6891f,#c7b6891f),url("map-panorama.png")!important}.puzzle-piece{background-image:url("porcelain-puzzle.jpg")!important}</style>
 </head>
 
@@ -527,6 +534,7 @@ body>.puzzle-layer.show{display:grid!important;visibility:visible!important;opac
   <article class="tutorial-welcome-sheet">
     <div class="mechanic-kicker">序章 · 入窑学艺</div>
     <h2>先识泥火，再掌一窑</h2>
+    <p class="tourist-hook">这里就是景德镇：昌江水运、高岭土矿、窑火千年。你白天看过的窑炉与瓷器，现在交到你手里。</p>
     <p>把桩师傅会陪你亲手完成两件瓷器：从高岭土、釉料与松柴，到拉坯、彩绘、烧成和第一次交付。每次只需完成眼前一步，所得资源与首单进度会直接带入正式经营。</p>
     <div class="tutorial-welcome-actions"><button class="tutorial-control" onclick="startTutorial()">入窑学艺</button><button class="tutorial-control veteran" onclick="skipTutorialWelcome()">我是熟练工</button></div>
   </article>
@@ -536,6 +544,11 @@ body>.puzzle-layer.show{display:grid!important;visibility:visible!important;opac
   <div class="tutorial-master">师</div>
   <div class="tutorial-copy"><small id="tutorialKicker">把桩师傅 · 第一课</small><h3 id="tutorialTitle">先识高岭土</h3><p id="tutorialText"></p><strong class="tutorial-rule" id="tutorialRule"></strong><button class="tutorial-next tutorial-control" id="tutorialNext" onclick="tutorialNextStep()" style="display:none">已阅，下一课</button><div class="tutorial-progress"><i id="tutorialProgress"></i></div></div>
 </aside>
+
+<div class="narrative-whisper" id="narrativeWhisper" aria-live="polite"></div>
+<section class="kiln-reveal" id="kilnReveal" aria-hidden="true">
+  <div class="kiln-stage"><div class="kiln-steam"></div><div class="kiln-copy"><small id="kilnRevealKicker">开窑 · 验火</small><h2 id="kilnRevealTitle">成瓷出窑</h2><p id="kilnRevealText"></p></div></div>
+</section>
 
 <section class="result-layer" id="resultLayer" aria-hidden="true">
   <article class="result-sheet">
@@ -562,7 +575,7 @@ body>.puzzle-layer.show{display:grid!important;visibility:visible!important;opac
   <h3 style="font-size:14px;color:#a8362c;margin:12px 0 4px">背景与设定</h3>
   <p style="font-size:12px;line-height:1.7">你姓王，从零开始白手起家。景德镇三大行帮——徽帮(原料商)、都帮(窑工)、杂帮(创新者)，加入其一获得对应特权。皇帝随时下御命，做不出来满门抄斩；商人来来往往，有好感才有好价钱。四季轮转影响生产效率，冬天最难熬。</p>
   <h3 style="font-size:14px;color:#2c5f7c;margin:12px 0 4px">核心流程</h3>
-  <p style="font-size:12px;line-height:1.8"><b>首次游玩进入“序章·入窑学艺”：</b>把桩师傅一次只开放一个目标按钮，并解释本步原因、消耗和产出；完成两件瓷器和第一笔订单后进入正式经营，刷新会从当前课业继续。采集与制作完成时，左侧库存会闪烁并浮出数值变化，支持的手机还会产生轻触震动。<br>正式流程：1 采集原料（体力各5）→ 2 制坯（体力8，窑班3人产出翻倍）→ 3 彩绘（可选，体力4，增加品质与售价）→ 4 烧窑（体力12，非100%成功）→ 5 交付订单并自然积累皇恩</p>
+  <p style="font-size:12px;line-height:1.8"><b>首次游玩进入“序章·入窑学艺”：</b>把桩师傅一次只开放一个目标按钮，并解释本步原因、消耗和产出。第一窑会受控开裂，师傅提供备用坯让玩家立即重烧；首单完成后触发“天青入宫”高光并获得赏银与皇恩。完成两件瓷器和第一笔订单后进入正式经营，刷新会从当前课业继续。采集与制作会出现飞入库房的数值、库存闪烁和轻触震动；烧窑会先播放开窑演出，再允许继续操作。<br>正式流程：1 采集原料（体力各5）→ 2 制坯（体力8，窑班3人产出翻倍）→ 3 彩绘（可选，体力4，增加品质与售价）→ 4 烧窑（体力12，非100%成功）→ 5 交付订单并自然积累皇恩</p>
   <h3 style="font-size:14px;color:#5a7a3a;margin:12px 0 4px">通关条件</h3>
   <p style="font-size:12px;line-height:1.6">完成市集订单即可通关：简单5单 / 普通8单 / 困难12单<br>隐藏结局：皇恩达到100→敕授御瓷名匠 / 随机触发→窑神祭</p>
   <h3 style="font-size:14px;color:#a8362c;margin:12px 0 4px">失败条件</h3>
@@ -805,7 +818,7 @@ const CONFIG = {
 
     craftsmanship:1.0, deathCause:"", quickWorkbenchUnlocked:false,
     eventHistory:[], eventTimeline:[], eventCooldowns:{}, activeModifiers:{}, eventChain:{}, pendingMechanicEvent:"", lastMechanicDay:0, dispatchUnlocked:false,
-    tutorialSeen:false, tutorialActive:false, tutorialStep:0, tutorialFiresLeft:0
+    tutorialSeen:false, tutorialActive:false, tutorialStep:0, tutorialFiresLeft:0, tutorialFirstFireFailed:false, tutorialPalaceReward:false
 
   },
 
@@ -1020,6 +1033,50 @@ function showTutorialWelcome() {
   el.classList.add("show");el.setAttribute("aria-hidden","false");
 }
 
+let _narrativeTimer = null;
+let _kilnRevealTimer = null;
+let _batchFiring = false;
+
+function showNarrative(text, duration) {
+  var el = document.getElementById("narrativeWhisper");
+  if (!el || !text) return;
+  el.textContent = text;
+  el.classList.add("show");
+  clearTimeout(_narrativeTimer);
+  _narrativeTimer = setTimeout(function(){ el.classList.remove("show"); }, duration || 2600);
+}
+
+function showKilnReveal(success, title, text, duration) {
+  if (_batchFiring) return;
+  var el = document.getElementById("kilnReveal");
+  if (!el) return;
+  clearTimeout(_kilnRevealTimer);
+  el.classList.toggle("fail", !success);
+  document.getElementById("kilnRevealKicker").textContent = success ? "开窑 · 验火" : "开窑 · 惜碎";
+  document.getElementById("kilnRevealTitle").textContent = title;
+  document.getElementById("kilnRevealText").textContent = text || "";
+  el.classList.add("show"); el.setAttribute("aria-hidden", "false");
+  _kilnRevealTimer = setTimeout(function(){ el.classList.remove("show");el.setAttribute("aria-hidden","true"); }, duration || 1450);
+}
+
+function flyResourceToInventory(id, label, delta) {
+  var target = document.getElementById(id);
+  var source = document.activeElement;
+  if (!target || !target.parentElement || !source || source.tagName !== "BUTTON") return;
+  var a = source.getBoundingClientRect(), b = target.parentElement.getBoundingClientRect();
+  var token = document.createElement("span");
+  token.className = "flying-resource";
+  token.textContent = (delta >= 0 ? "+" : "") + delta + " " + label;
+  token.style.left = (a.left + a.width / 2 - 28) + "px";
+  token.style.top = (a.top + a.height / 2 - 12) + "px";
+  document.body.appendChild(token);
+  requestAnimationFrame(function(){ requestAnimationFrame(function(){
+    token.style.transform = "translate(" + (b.left + b.width / 2 - a.left - a.width / 2) + "px," + (b.top + b.height / 2 - a.top - a.height / 2) + "px) scale(.72)";
+    token.style.opacity = ".12";
+  }); });
+  setTimeout(function(){ token.remove(); }, 700);
+}
+
 function hapticFeedback(kind) {
   try {
     if (navigator.vibrate) navigator.vibrate(kind === "success" ? [18,28,24] : (kind === "error" ? [45,25,45] : 18));
@@ -1028,6 +1085,7 @@ function hapticFeedback(kind) {
 
 function inventoryFeedback(id, delta, staminaCost, label) {
   var value=document.getElementById(id), stamina=document.getElementById("staminaDisplay");
+  flyResourceToInventory(id,label||id,delta);
   if(value&&value.parentElement){
     var row=value.parentElement;row.classList.remove("inventory-flash");void row.offsetWidth;row.classList.add("inventory-flash");
     var float=document.createElement("em");float.className="resource-float";float.textContent=(label||id)+" "+(delta>=0?"+":"")+delta+(staminaCost?" · 体力-"+staminaCost:"");row.appendChild(float);
@@ -1054,6 +1112,11 @@ function renderTutorial() {
   document.querySelectorAll(".tutorial-target").forEach(function(el){el.classList.remove("tutorial-target","tutorial-observe")});
   if(!G.tutorialActive){document.body.classList.remove("tutorial-running");if(panel)panel.classList.remove("show");return}
   var step=TUTORIAL_STEPS[G.tutorialStep]||TUTORIAL_STEPS[0];
+  if(step.action==="fire" && !G.tutorialFirstFireFailed && G.tutorialStep < 6){
+    step=Object.assign({},step,{title:"第一窑未必成",text:"真正的窑火不会照着教程行事。把坯送进去，先记住火候失手是什么声音。",rule:"第一次试火将展示烧窑失败；师傅留有备用坯，可立即重烧"});
+  }else if(step.action==="fire" && G.tutorialFirstFireFailed && G.tutorialStep < 6){
+    step=Object.assign({},step,{title:"碎过瓷，才算入行",text:"把桩师傅把备用坯递给你：失败不是重来，而是辨认泥、柴与火的代价。现在重新开窑。",rule:"再次烧制由师傅守火 → 必定获得第一件成瓷"});
+  }
   document.body.classList.add("tutorial-running");panel.classList.add("show");
   document.getElementById("tutorialKicker").textContent="把桩师傅 · 第"+(G.tutorialStep+1)+"课 / "+TUTORIAL_STEPS.length;
   document.getElementById("tutorialTitle").textContent=step.title;document.getElementById("tutorialText").textContent=step.text;
@@ -1664,6 +1727,11 @@ function gather(type) {
 
   showToast(msgs[type]);
 
+  if (G.orders === 0) {
+    var firstNarration={clay:"高岭土并非天生就是瓷。淘洗、沉淀与陈腐之后，它才肯听匠人的手。",wood:"一窑瓷器要吞下成山的松柴；窑火背后，是整片山林与无数脚力。",glaze:"釉在高温里化成玻璃般的薄层，遮住泥胎，也放大每一道火候差错。",pigment:"钴料入笔时近乎灰黑，只有经历窑火，才显出青花的蓝。"};
+    showNarrative(firstNarration[type]);
+  }
+
   var gatherLabels={clay:"高岭土",wood:"松柴",glaze:"釉料",pigment:"颜料"};
   inventoryFeedback(type,gained,staminaCost,gatherLabels[type]);
 
@@ -1705,6 +1773,8 @@ function produce() {
 
   showToast("制成 " + output + " 件素坯" + (output > 1 ? "！" : "。"));
 
+  if (G.orders === 0) showNarrative("坯壁薄一分易塌，厚一分难透。拉坯不是塑形，是与旋转的泥争一口平衡。");
+
   inventoryFeedback("blank",output,p.staminaCost,"素坯");
 
   tutorialActionDone("produce");
@@ -1740,6 +1810,8 @@ function decorate() {
   addLog("画匠在素坯上施彩，制成彩绘坯1件；烧成后增加品质并获得订单装饰溢价。");
 
   showToast("彩绘坯完成！");
+
+  if (G.orders === 0) showNarrative("这一笔入窑前黯淡无光；若火候相助，出窑后便可能成为御器厂也认可的上品。");
 
   inventoryFeedback("paintedBlank",1,d.staminaCost,"彩绘坯");
 
@@ -1786,19 +1858,30 @@ function fireKiln() {
   // 临时成功率只在真正烧窑时消费，界面刷新不会吃掉加成。
   G._fireRateBonus = 0;
 
-  const roll = G.tutorialActive ? 0 : Math.random();
+  const forcedTutorialFailure = G.tutorialActive && !G.tutorialFirstFireFailed && G.tutorialStep < 6;
+  const roll = forcedTutorialFailure ? 1 : (G.tutorialActive ? 0 : Math.random());
 
   if (roll > rate) {
+
+    if (forcedTutorialFailure) {
+      G.tutorialFirstFireFailed = true;
+      G.blank += 1;
+      addLog("序章试火失手，坯体开裂。把桩师傅取出备用坯，令你辨过碎声后重新烧制。");
+      showNarrative("把桩师傅：没事，碎过瓷才算入行。记住这声裂响，再开一窑。", 3300);
+      showKilnReveal(false,"第一窑 · 碎","火候冲得太急，坯身沿肩部开裂。师傅已留下备用坯。",1800);
+    }
 
     var fr = ["冬季潮湿，素坯未干透","松柴受潮，火力不足","窑温不均，坯体变形","釉料偏差，流釉粘连","装窑过密，火焰不通"];
   addLog("烧制失败：" + fr[Math.floor(Math.random()*fr.length)]);
 
-    showToast("烧制失败！", false);
+    showToast(forcedTutorialFailure ? "第一窑开裂 · 师傅留下备用坯" : "烧制失败！", false);
+    if (!forcedTutorialFailure) showKilnReveal(false,"惜碎","一窑柴火化作裂纹；损失已经写进账册。",1450);
     setTimeout(function(){ playSfx("fail"); }, 150);
 
     hapticFeedback("error");
 
     G.save(); render();
+    if (forcedTutorialFailure) renderTutorial();
 
     return;
 
@@ -1856,6 +1939,8 @@ function fireKiln() {
   addLog("出窑：" + wareName + "，品质 +" + q + "。" + extra);
 
   showToast("成瓷出窑，品质 +" + q + "！");
+  showKilnReveal(true,wareName,"窑门开启，蒸汽散去。品质 +"+q+"，成瓷已收入库房。",1550);
+  if (usePainted) showNarrative("这件彩绘瓷放在御器厂里，也算得上一件上品。",2800);
   setTimeout(function(){ playSfx("success"); }, 180);
 
   inventoryFeedback("ware",1,CONFIG.FIRE.staminaCost,"成瓷");
@@ -1885,10 +1970,13 @@ function fireKilnBatch(count) {
   G.stamina += normalStamina - batchStamina;
   G.wood += normalWood - batchWood;
   var wareBefore = G.ware || 0;
+  _batchFiring = true;
   for (var i = 0; i < count; i++) fireKiln();
+  _batchFiring = false;
   var successCount = (G.ware || 0) - wareBefore;
   addLog("整窑批烧：装入" + count + "件，烧成" + successCount + "件，损毁" + (count-successCount) + "件；共耗体力" + batchStamina + "、松柴" + batchWood + "。");
   showToast("批烧完成：" + successCount + "/" + count + " 件烧成", successCount === count);
+  showKilnReveal(successCount > 0,"整窑开门 · "+successCount+"件成瓷","装入"+count+"件，烧成"+successCount+"件，损毁"+(count-successCount)+"件。",1750);
   G.save(); render();
 }
 
@@ -1937,6 +2025,8 @@ function deliver() {
 
   if (!tutorialAllows("deliver")) return;
 
+  var tutorialFirstDelivery = G.tutorialActive && G.orders === 0 && !G.tutorialPalaceReward;
+
   if (getModifierValue("dockBlocked", 0)) return showToast("昌江封航，码头暂不能交付；请等待事件到期。", false);
 
   if (G.imperialExpired) return showToast("御命已过期，请先度过一日。", false);
@@ -1972,6 +2062,7 @@ function deliver() {
     addLog("御命圆满！官窑题款，声望大振，皇恩+20。");
 
     showToast("御命圆满！声望大振！", true);
+    showNarrative("贡瓷入宫，器物得名；账册上却仍只写着窑户与工役。",3200);
 
     checkAchievements();
 
@@ -2137,6 +2228,17 @@ function deliver() {
   if (merchantBonus > 0) { addLog("商人好感带来的溢价：" + merchantBonus + "银"); }
 
   G.orders++;
+
+  if (tutorialFirstDelivery) {
+    G.tutorialPalaceReward = true;
+    G.silver += 20;
+    G.imperialFavor = Math.min(100,(G.imperialFavor||0)+5);
+    addLog("序章高光：天青如意瓶随昌江贡船送入宫中，赏银20两，皇恩+5。");
+    showNarrative("天青如意瓶送入皇宫。御前只见一抹青色，而你记得它经历过的泥、柴、裂纹与火。",4200);
+    showKilnReveal(true,"天青入宫","皇帝赏银 20 两 · 皇恩 +5",2300);
+  } else if (G.orders === 1) {
+    showNarrative("第一笔订单沿昌江启程。瓷器有了去处，窑工的名字仍留在烟尘里。",3000);
+  }
 
   if (!G.dispatchUnlocked && G.orders >= 8) {
     G.dispatchUnlocked = true;
@@ -2737,6 +2839,7 @@ function doConscript() {
     showToast("强征得劳力，但民怨与怠工加深", false);
   } else showToast("强征劳役：体力上限+" + laborGain);
   addLog("第" + G.conscriptCount + "次强征：体力上限+" + laborGain + "，后续代价已记入窑务账册。");
+  showNarrative(G.conscriptCount < 3 ? "王大人的差役又来了。新增的劳力沉默进窑，街巷里却多了几扇紧闭的门。" : "征令压过窑火声。百姓敢怒不敢言，窑班也开始有人趁夜逃走。",3600);
   recordEvent("强征劳役", "第" + G.conscriptCount + "次；体力上限+" + laborGain + (G.conscriptCount >= 3 ? "，民怨与怠工加深" : ""), "oppression");
   if (G.conscriptCount === 3 && window.showWoodcut) setTimeout(function(){ showWoodcut("oppression"); }, 180);
 
