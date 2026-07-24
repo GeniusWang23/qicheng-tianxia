@@ -992,10 +992,13 @@ function showToast(msg, isGood) {
 
 }
 
+const RUNTIME_LOG_LIMIT = 60;
+const _runtimeLogs = [];
+function escapeLogText(value){return String(value).replace(/[&<>"']/g,function(ch){return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[ch]})}
 function addLog(msg) {
-
-  $$.log.innerHTML = "第" + G.day + "日 · " + msg + "<br>" + $$.log.innerHTML;
-
+  _runtimeLogs.unshift("第" + G.day + "日 · " + msg);
+  if (_runtimeLogs.length > RUNTIME_LOG_LIMIT) _runtimeLogs.length = RUNTIME_LOG_LIMIT;
+  $$.log.innerHTML = _runtimeLogs.map(escapeLogText).join("<br>");
 }
 
 
@@ -1082,6 +1085,8 @@ function flyResourceToInventory(id, label, delta) {
   var source = document.activeElement;
   if (!target || !target.parentElement || !source || source.tagName !== "BUTTON") return;
   var a = source.getBoundingClientRect(), b = target.parentElement.getBoundingClientRect();
+  var existingTokens=document.querySelectorAll(".flying-resource");
+  if(existingTokens.length>=6)existingTokens[0].remove();
   var token = document.createElement("span");
   token.className = "flying-resource";
   token.textContent = (delta >= 0 ? "+" : "") + delta + " " + label;
@@ -1106,6 +1111,7 @@ function inventoryFeedback(id, delta, staminaCost, label) {
   flyResourceToInventory(id,label||id,delta);
   if(value&&value.parentElement){
     var row=value.parentElement;row.classList.remove("inventory-flash");void row.offsetWidth;row.classList.add("inventory-flash");
+    var oldFloat=row.querySelector(".resource-float");if(oldFloat)oldFloat.remove();
     var float=document.createElement("em");float.className="resource-float";float.textContent=(label||id)+" "+(delta>=0?"+":"")+delta+(staminaCost?" · 体力-"+staminaCost:"");row.appendChild(float);
     setTimeout(function(){float.remove();row.classList.remove("inventory-flash")},1100);
   }
@@ -1339,6 +1345,7 @@ function sellResource(id, price) {
 // ======================== 渲染 ========================
 
 var craftPreviewLevel = null;
+var craftRenderedLevel = null;
 function showCraftLevel(index) {
   craftPreviewLevel = Math.max(0, Math.min(CONFIG.CRAFT_LEVELS.length - 1, Number(index) || 0));
   renderCraftTree(Math.max(0, Math.min(CONFIG.CRAFT_LEVELS.length - 1, Number(G.craftLevel) || 0)));
@@ -1348,12 +1355,15 @@ function renderCraftTree(currentLevel) {
   var path = document.getElementById("craftPath"), detail = document.getElementById("craftDetail");
   if (!path || !detail) return;
   if (craftPreviewLevel === null) craftPreviewLevel = currentLevel;
-  path.innerHTML = CONFIG.CRAFT_LEVELS.map(function(level, index){
-    var state = index < currentLevel ? "mastered" : (index === currentLevel ? "current" : "locked");
-    var mark = index < currentLevel ? "✓" : (index === currentLevel ? "印" : (index + 1));
-    return '<button class="craft-rank '+state+'" type="button" data-craft-level="'+index+'" title="'+level.name+' · 累计烧成'+level.fires+'件"><i>'+mark+'</i>'+level.short+'<br><small>'+level.fires+'件</small></button>';
-  }).join("");
-  Array.from(path.querySelectorAll("[data-craft-level]")).forEach(function(button){button.addEventListener("click",function(){showCraftLevel(button.getAttribute("data-craft-level"))})});
+  if(craftRenderedLevel!==currentLevel||!path.children.length){
+    craftRenderedLevel=currentLevel;
+    path.innerHTML = CONFIG.CRAFT_LEVELS.map(function(level, index){
+      var state = index < currentLevel ? "mastered" : (index === currentLevel ? "current" : "locked");
+      var mark = index < currentLevel ? "✓" : (index === currentLevel ? "印" : (index + 1));
+      return '<button class="craft-rank '+state+'" type="button" data-craft-level="'+index+'" title="'+level.name+' · 累计烧成'+level.fires+'件"><i>'+mark+'</i>'+level.short+'<br><small>'+level.fires+'件</small></button>';
+    }).join("");
+    Array.from(path.querySelectorAll("[data-craft-level]")).forEach(function(button){button.addEventListener("click",function(){showCraftLevel(button.getAttribute("data-craft-level"))})});
+  }
   var level = CONFIG.CRAFT_LEVELS[craftPreviewLevel];
   var stateText = craftPreviewLevel < currentLevel ? "已掌握" : (craftPreviewLevel === currentLevel ? "当前工艺" : "尚未掌握");
   var next = CONFIG.CRAFT_LEVELS[currentLevel + 1];
@@ -3233,7 +3243,7 @@ if (G.pendingMechanicEvent) {
 </section>
 <script>
 (function(){
-  var ctx=null, master=null, sfxGain=null, bgmAudio=null, enabled=false;
+  var ctx=null, master=null, sfxGain=null, bgmAudio=null, enabled=false,lastSfxAt=0;
   var audioTracks={
     part01:{src:"bgm/part-01.mp3",label:"瓷韵选曲 · 一"},part02:{src:"bgm/part-02.mp3",label:"瓷韵选曲 · 二"},part03:{src:"bgm/part-03.mp3",label:"瓷韵选曲 · 三"},
     part04:{src:"bgm/part-04.mp3",label:"瓷韵选曲 · 四"},part05:{src:"bgm/part-05.mp3",label:"瓷韵选曲 · 五"},part06:{src:"bgm/part-06.mp3",label:"瓷韵选曲 · 六"},
@@ -3257,12 +3267,13 @@ if (G.pendingMechanicEvent) {
     osc.type=type||"sine";osc.frequency.setValueAtTime(freq,now);
     gain.gain.setValueAtTime(.0001,now);gain.gain.exponentialRampToValueAtTime(Math.max(.0002,volume||.035),now+.035);gain.gain.exponentialRampToValueAtTime(.0001,now+duration);
     osc.connect(gain);gain.connect(destination||sfxGain||master);osc.start(now);osc.stop(now+duration+.04);
+    osc.onended=function(){try{osc.disconnect();gain.disconnect()}catch(e){}};
   }
   function noise(duration,volume,frequency){
     if(!enabled||!ensure())return;
     var length=Math.max(1,Math.floor(ctx.sampleRate*duration)),buffer=ctx.createBuffer(1,length,ctx.sampleRate),data=buffer.getChannelData(0);
     for(var i=0;i<length;i++)data[i]=(Math.random()*2-1)*(1-i/length);
-    var source=ctx.createBufferSource(),filter=ctx.createBiquadFilter(),gain=ctx.createGain();source.buffer=buffer;filter.type="lowpass";filter.frequency.value=frequency||900;gain.gain.value=volume||.025;source.connect(filter);filter.connect(gain);gain.connect(sfxGain||master);source.start();
+    var source=ctx.createBufferSource(),filter=ctx.createBiquadFilter(),gain=ctx.createGain();source.buffer=buffer;filter.type="lowpass";filter.frequency.value=frequency||900;gain.gain.value=volume||.025;source.connect(filter);filter.connect(gain);gain.connect(sfxGain||master);source.start();source.onended=function(){try{source.disconnect();filter.disconnect();gain.disconnect();source.buffer=null}catch(e){}};
   }
   function ensureBgm(){
     var track=audioTracks[audioTrack];if(!track)return null;
@@ -3274,6 +3285,7 @@ if (G.pendingMechanicEvent) {
   function stopBgm(){if(bgmAudio)bgmAudio.pause()}
   window.playSfx=function(name){
     if(!enabled)return;
+    var nowMs=Date.now();if(name==="click"&&nowMs-lastSfxAt<55)return;lastSfxAt=nowMs;
     var map={
       click:function(){voice(330,.07,"triangle",.075)},
       gather:function(){voice(130,.14,"triangle",.12);noise(.09,.06,500)},
